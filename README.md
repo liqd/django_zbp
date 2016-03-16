@@ -36,5 +36,5 @@ $ ./manage.py load_bplan
 $ ./manage.py runserver
 ```
 
-go to http://localhost:8000/admin/ or http://localhost:8000/api/
+go to http://localhost:8000/admin/
 
