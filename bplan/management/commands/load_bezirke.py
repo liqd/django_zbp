@@ -2,6 +2,7 @@ import os, json
 
 from tqdm import tqdm
 
+from django.utils.text import slugify
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.contrib.gis.gdal import DataSource
@@ -21,8 +22,9 @@ class Command(BaseCommand):
         for feature in tqdm(data_source[0]):
             polygon = GEOSGeometry(str(feature.geom))
             name = feature.get("spatial_alias")
+            slug = slugify(name)
 
-            print(polygon)
 
-            bezirk = Bezirk.objects.create(name=name, polygon=polygon)
+
+            bezirk = Bezirk.objects.create(name=name, polygon=polygon, slug=slug)
             print(bezirk)
