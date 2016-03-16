@@ -76,6 +76,73 @@ class Command(BaseCommand):
                 festsg_am = None
 
             try:
+                bbg_anfang = dateutil.parser.parse(feature.get("bbg_anfang"))
+            except Exception as e:
+                bbg_anfang = None
+
+            try:
+                bbg_ende = dateutil.parser.parse(feature.get("bbg_ende"))
+            except Exception as e:
+                bbg_ende = None
+
+            try:
+                aul_anfang = dateutil.parser.parse(feature.get("aul_anfang"))
+            except Exception as e:
+                aul_anfang = None
+
+            try:
+                aul_ende = dateutil.parser.parse(feature.get("aul_ende"))
+            except Exception as e:
+                aul_ende = None
+
+            www = feature.get("ausleg_www")
+            if www:
+                ausleg_www = www.split('"')[1]
+            else:
+                ausleg_www = None
+
+
+            scan = feature.get("scan_www")
+            if scan:
+                scan_www = scan.split('"')[1]
+            else:
+                scan_www = None
+
+            grund = feature.get("grund_www")
+            if grund:
+                grund_www = grund.split('"')[1]
+                print(grund_www)
+            else:
+                grund_www = None
+
+            try:
+                gml_id = feature.get("gml_id")
+            except Exception as e:
+                gml_id = None
+
+            try:
+                fsg_gvbl_n = feature.get("fsg_gvbl_n")
+            except Exception as e:
+                fsg_gvbl_n = None
+
+            try:
+                fsg_gvbl_s = feature.get("fsg_gvbl_s")
+            except Exception as e:
+                fsg_gvbl_s = None
+
+            try:
+                fsg_gvbl_d = dateutil.parser.parse(feature.get("fsg_gvbl_d"))
+            except Exception as e:
+                fsg_gvbl_d = None
+
+            try:
+                normkontr = feature.get("normkontr")
+            except Exception as e:
+                normkontr = None
+
+
+
+            try:
                 bplan = BPlan.objects.create(
                     bplanID = bplanID,
                     planname = planname,
@@ -91,36 +158,21 @@ class Command(BaseCommand):
                     afs_l_aend = afs_l_aend,
                     festg = festg,
                     festsg_von = festsg_von,
-                    festsg_am = festsg_am
+                    festsg_am = festsg_am,
+                    bbg_anfang = bbg_anfang,
+                    bbg_ende = bbg_ende,
+                    aul_anfang = aul_anfang,
+                    aul_ende = aul_ende,
+                    ausleg_www = ausleg_www,
+                    scan_www = scan_www,
+                    grund_www = grund_www,
+                    gml_id = gml_id,
+                    fsg_gvbl_n = fsg_gvbl_n,
+                    fsg_gvbl_s = fsg_gvbl_s,
+                    fsg_gvbl_d = fsg_gvbl_d,
+                    normkontr = normkontr
                     )
                 print(str(bplan) + " ERSTELLT")
             except Exception as e:
                 print(e)
                 pass
-
-'''
-
-
-
-
-
-    #  Anfangs und End der frühzeitigen Bürgerbeteiligung
-    bbg_anfang = models.DateField(blank=True, null=True)
-    bbg_ende = models.DateField(blank=True, null=True)
-
-    # Anfang und Ende der öffentlichen Auslegung
-    aul_anfang = models.DateField(blank=True, null=True)
-    aul_ende = models.DateField(blank=True, null=True)
-
-    # Links
-    ausleg_www = models.URLField(max_length=256,blank=True, null=True)
-    scan_www = models.URLField(max_length=256, blank=True, null=True)
-    grund_www = models.URLField(max_length=256, blank=True, null=True)
-
-    # Sontiges
-    gml_id = models.CharField(max_length=50, blank=True, null=True)
-    fsg_gvbl_n = models.CharField(max_length=50, blank=True, null=True)
-    fsg_gvbl_s = models.CharField(max_length=50, blank=True, null=True)
-    fsg_gvbl_d = models.DateField(blank=True, null=True)
-    normkontr = models.CharField(max_length=50, blank=True, null=True)
-    '''
