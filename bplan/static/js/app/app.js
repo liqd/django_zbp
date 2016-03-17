@@ -29,12 +29,21 @@ app.controller('MapController',['$scope', 'PlacesService',function($scope,Places
 
 	$scope.createMap = function(){
         map = L.map('map');
-            L.tileLayer('http://maps.berlinonline.de/tile/bdemarker/{z}/{x}/{y}.png', {
+            //L.tileLayer('http://maps.berlinonline.de/tile/bdemarker/{z}/{x}/{y}.png', {
+            L.tileLayer('http://tiles.codefor.de/bbs-berlin/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy;',
             maxZoom: 18
         }).addTo(map);
 
+        var style = {
+            "color": "#808080",
+            "weight": 2,
+            "opacity": 1,
+            "fillOpacity": 0
+        };
+
         districtLayer = L.geoJson($scope.places.district).addTo(map);
+        districtLayer.setStyle(style);
 		map.fitBounds(districtLayer);
     };
 
