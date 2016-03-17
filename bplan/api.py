@@ -14,9 +14,8 @@ class CustomPagination(GeoJsonPagination):
 class BezirkViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Bezirk.objects.all()
     serializer_class = BezirkSerializer
-    pagination_class = CustomPagination
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('name',)
+    filter_fields = ('name', 'slug')
 
 class OrtsteilViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ortsteil.objects.all()
