@@ -29,6 +29,7 @@ DATABASES = {
 
 ``` bash
 $ ./manage.py migrate
+$ ./manage.py bower install
 $ ./manage.py createsuperuser
 $ ./manage.py load_bezirke
 $ ./manage.py load_ortsteile
