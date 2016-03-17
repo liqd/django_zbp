@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ bezirk.name }}{% endblock %}
+
+{% block area %}{{ bezirk.slug }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid" ng-app="app">
+	<div class="row" ng-controller="MapController">
+		<div class="col-md-12">
+        	<div id="map"></div>
+    	</div>
+	</div>
+</div>
+
+{% endblock %}
