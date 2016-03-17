@@ -11,6 +11,6 @@ router.register(r'ortsteile', OrtsteilViewSet, base_name='ortsteil')
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
-    url(r'^berlin/$', TemplateView.as_view(template_name="berlin.html"), name='berlin'),
+    url(r'^berlin/$', TemplateView.as_view(template_name="bplan/berlin.html"), name='berlin'),
     url(r'^berlin/(?P<slug>[a-z]+)/', BezirkDetailView.as_view(), name='bezirk')
 ]
