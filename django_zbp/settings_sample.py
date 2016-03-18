@@ -28,6 +28,9 @@ ALLOWED_HOSTS = []
 
 POSTGIS_VERSION = ( 2, 1 )
 
+TIME_ZONE = 'Europe/Berlin'
+
+USE_TZ = True
 
 # Application definition
 

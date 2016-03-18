@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework_gis.pagination import GeoJsonPagination
+from .filters import StatusFilter
 from .serializers import BezirkSerializer
 from .serializers import OrtsteilSerializer
 from .serializers import BPlanSerializer
@@ -33,7 +34,7 @@ class OrtsteilViewSet(viewsets.ReadOnlyModelViewSet):
 class BPlanViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BPlan.objects.all()
     serializer_class = BPlanSerializer
-    # pagination_class = CustomPagination
-    filter_backends = (filters.DjangoFilterBackend,)
+    pagination_class = CustomPagination
+    filter_backends = (filters.DjangoFilterBackend, StatusFilter)
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
