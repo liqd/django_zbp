@@ -69,18 +69,41 @@ app.controller('MapController',['$scope', '$http', 'PlacesService',function($sco
             params: params
         }).then(function successCallback(response) {
                 cluster = response.data;
-                var markers = L.markerClusterGroup({ disableClusteringAtZoom: 14 });
-            var geojson = L.geoJson(cluster);
-            markers.addLayer(geojson);
-            markers.on('click', function (marker) {
-                if(angular.isUndefined(marker.layer.polygon)){
-                    var content = marker.layer.feature.properties;
-                    var polygon = L.geoJson(content.multipolygon).addTo(map);
-                    marker.layer.polygon = polygon;
-                }
-                else {
-                    map.removeLayer(marker.layer.polygon);
-                    delete marker.layer.polygon;
+                var markers = L.markerClusterGroup({
+                    disableClusteringAtZoom: 14,
+                });
+
+                var geojsonMarkerOptions = {
+                    radius: 8,
+                    fillColor: "#00A6DE",
+                    weight: 0,
+                    opacity: 0,
+                    fillOpacity: 1
+                };
+                var geojson = L.geoJson(cluster, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.circleMarker(latlng, geojsonMarkerOptions);
+                    }
+                });
+                markers.addLayer(geojson);
+                markers.on('click', function (marker) {
+                    if(angular.isUndefined(marker.layer.polygon)){
+
+                        var style = {
+                            "color": "#00A6DE",
+                            "weight": 0.5,
+                            "opacity": 1,
+                            "fillOpacity": 0.3
+                        };
+
+                        var content = marker.layer.feature.properties;
+                        var polygon = L.geoJson(content.multipolygon).addTo(map).bringToBack();
+                        polygon.setStyle(style);
+                        marker.layer.polygon = polygon;
+                    }
+                    else {
+                        map.removeLayer(marker.layer.polygon);
+                        delete marker.layer.polygon;
                 }
             });
             markers.addTo(map);

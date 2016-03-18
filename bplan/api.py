@@ -34,7 +34,7 @@ class OrtsteilViewSet(viewsets.ReadOnlyModelViewSet):
 class BPlanViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BPlan.objects.all()
     serializer_class = BPlanSerializer
-    pagination_class = CustomPagination
+    # pagination_class = CustomPagination
     filter_backends = (filters.DjangoFilterBackend, StatusFilter)
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
