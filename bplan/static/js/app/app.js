@@ -69,7 +69,7 @@ app.controller('MapController',['$scope', '$http', 'PlacesService',function($sco
             params: params
         }).then(function successCallback(response) {
                 cluster = response.data;
-                var markers = L.markerClusterGroup({ disableClusteringAtZoom: 15 });
+                var markers = L.markerClusterGroup({ disableClusteringAtZoom: 14 });
             var geojson = L.geoJson(cluster);
             markers.addLayer(geojson);
             markers.on('click', function (marker) {
