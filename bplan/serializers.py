@@ -2,6 +2,8 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from rest_framework import serializers
 from .models import Bezirk
 from .models import Ortsteil
+from .models import BPlan
+
 
 class OrtsteilSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
 
@@ -15,7 +17,13 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
 
     class Meta:
         model = Bezirk
-        fields = ('name', 'polygon','ortsteile')
+        fields = ('name', 'slug', 'polygon', 'ortsteile', 'pk')
         geo_field = 'polygon'
 
 
+class BPlanSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = BPlan
+        id_field = False
+        geo_field = 'point'
