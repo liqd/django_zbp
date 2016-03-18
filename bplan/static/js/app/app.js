@@ -29,8 +29,8 @@ app.controller('MapController',['$scope', '$http', 'PlacesService',function($sco
 
 	$scope.createMap = function(){
         map = L.map('map');
-            L.tileLayer('http://maps.berlinonline.de/tile/bdemarker/{z}/{x}/{y}.png', {
-            //L.tileLayer('http://tiles.codefor.de/bbs-berlin/{z}/{x}/{y}.png', {
+            //L.tileLayer('http://maps.berlinonline.de/tile/bdemarker/{z}/{x}/{y}.png', {
+            L.tileLayer('http://tiles.codefor.de/bbs-berlin/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy;',
             maxZoom: 18
         }).addTo(map);
@@ -53,70 +53,40 @@ app.controller('MapController',['$scope', '$http', 'PlacesService',function($sco
 
         $scope.createMap();
 
+        params = {};
+
+        if(area){
+            params.bezirk__slug = area;
+            params.afs_behoer = "Bezirksamt";
+        }
+        /*else {
+            params.afs_behoer = "Senat";
+        }*/
+
         $http({
             method: 'GET',
             url: '/api/bplaene/',
-            params: {bezirk__slug: area}
+            params: params
         }).then(function successCallback(response) {
                 cluster = response.data;
-                var markers = L.markerClusterGroup();
+                var markers = L.markerClusterGroup({ disableClusteringAtZoom: 15 });
             var geojson = L.geoJson(cluster);
             markers.addLayer(geojson);
+            markers.on('click', function (marker) {
+                if(angular.isUndefined(marker.layer.polygon)){
+                    var content = marker.layer.feature.properties;
+                    var polygon = L.geoJson(content.multipolygon).addTo(map);
+                    marker.layer.polygon = polygon;
+                }
+                else {
+                    map.removeLayer(marker.layer.polygon);
+                    delete marker.layer.polygon;
+                }
+            });
             markers.addTo(map);
         }, function errorCallback(response) {
             console.log(response);
         });
-
-        //$scope.createClusterLayer();
-
-        /*angular.forEach(PlacesService.data, function (v,k){
-            v.id = k;
-            var marker = L.marker([v.geometry.coordinates[1], v.geometry.coordinates[0]]);
-            var popup = L.popup().setContent('<b>' + v.properties.adresse + '</b>');
-            marker.itemkey = k;
-            marker.popup = popup;
-            marker.bindPopup(marker.popup);
-
-            marker.on('click', function (e) {
-                $timeout(function() {
-                    $scope.places.activeItem = $scope.places.data[e.target.itemkey];
-                    var string = $scope.places.activeItem.properties.bezirke[0] +e.target.itemkey;
-                    var element = angular.element('#' + string);
-                    var scrollContainer = angular.element('#scroll-container');
-                    scrollContainer.scrollToElement(element, 10, 300);
-                })
-            });
-
-            marker.on('dblclick', function (e){
-                if(angular.isUndefined($scope.places.proposalItem)){
-                    $scope.places.proposalItem = $scope.places.data[e.target.itemkey];
-                }
-                else{
-                   $($scope.places.proposalItem.marker._icon).removeClass("highlighted");
-                   $scope.places.proposalItem = $scope.places.data[e.target.itemkey];
-                }
-                $scope.$parent.showProposal($scope.places.data[e.target.itemkey]);
-                $scope.$parent.$apply();
-                $(marker._icon).addClass("highlighted");
-                marker.openPopup();
-                var location = new L.LatLng(marker._latlng.lat, marker._latlng.lng);
-                map.panTo(location);
-            });
-
-            v.marker = marker;
-            marker.data = v;
-            //markers.addLayer(marker);
-
-            for(var i = 0; i<$scope.places.districtClusters.length; i++){
-                if($scope.places.districtClusters[i].name === v.properties.bezirke[0]){
-                    $scope.places.districtClusters[i].markers.addLayer(marker);
-                    $scope.places.districtClusters[i].count = $scope.places.districtClusters[i].count + 1;
-                    $scope.places.districtClusters[i].data.push(v);
-                }
-            }
-        });*/
-
-        //$scope.createDistrictLayer();
     });
 }]);
 
