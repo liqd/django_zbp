@@ -24,13 +24,13 @@ app.factory('PlacesService',['$http', '$q', '$window', function($http, $q, $wind
     return places;
 }]);
 
-app.controller('MapController',['$scope', 'PlacesService',function($scope,PlacesService) {
+app.controller('MapController',['$scope', '$http', 'PlacesService',function($scope, $http, PlacesService) {
 	$scope.places = PlacesService;
 
 	$scope.createMap = function(){
         map = L.map('map');
-            //L.tileLayer('http://maps.berlinonline.de/tile/bdemarker/{z}/{x}/{y}.png', {
-            L.tileLayer('http://tiles.codefor.de/bbs-berlin/{z}/{x}/{y}.png', {
+            L.tileLayer('http://maps.berlinonline.de/tile/bdemarker/{z}/{x}/{y}.png', {
+            //L.tileLayer('http://tiles.codefor.de/bbs-berlin/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy;',
             maxZoom: 18
         }).addTo(map);
@@ -45,11 +45,27 @@ app.controller('MapController',['$scope', 'PlacesService',function($scope,Places
         districtLayer = L.geoJson($scope.places.district).addTo(map);
         districtLayer.setStyle(style);
 		map.fitBounds(districtLayer);
+        currentZoom = map.getZoom();
+        map.options.minZoom = currentZoom;
     };
 
 	PlacesService.init().then( function() {
 
         $scope.createMap();
+
+        $http({
+            method: 'GET',
+            url: '/api/bplaene/',
+            params: {bezirk__slug: area}
+        }).then(function successCallback(response) {
+                cluster = response.data;
+                var markers = L.markerClusterGroup();
+            var geojson = L.geoJson(cluster);
+            markers.addLayer(geojson);
+            markers.addTo(map);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
 
         //$scope.createClusterLayer();
 
