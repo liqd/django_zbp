@@ -26,11 +26,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-POSTGIS_VERSION = ( 2, 1 )
+POSTGIS_VERSION = (2, 1)
 
 TIME_ZONE = 'Europe/Berlin'
 
 USE_TZ = True
+
 
 # Application definition
 
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     'djangobower',
-    'bplan'
+    'bplan',
+    'compressor',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -58,6 +60,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+X_FRAME_OPTIONS = 'ALLOW-FROM SAMEDOMAIN'
 
 ROOT_URLCONF = 'django_zbp.urls'
 
@@ -94,7 +98,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -112,6 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
 
 
 # Internationalization
@@ -141,9 +148,14 @@ STATICFILES_FINDERS = [
     'djangobower.finders.BowerFinder',
 ]
 
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'bplan', 'static', 'third-party')
+BOWER_COMPONENTS_ROOT = os.path.join(
+    BASE_DIR, 'bplan', 'static', 'third-party')
 BOWER_INSTALLED_APPS = (
     'jquery',
-    'underscore',
     'leaflet',
+    'leaflet.markercluster',
+    'bootstrap',
+    'angular',
+    'fontawesome',
+    'bootstrap-sass'
 )

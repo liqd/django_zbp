@@ -1,0 +1,19 @@
+.nav {
+	padding: 15px 0 15px 0;
+}
+
+.nav-map-list-switch {
+	& a {
+		color: $gray-lighter;
+		& i {
+			padding-right: 10px;
+		}
+	}
+	& .active {
+		color: $gray-light;
+	}
+}
+
+.no-padding {
+	padding: 0 !important;
+}
