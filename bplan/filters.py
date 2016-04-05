@@ -12,6 +12,6 @@ class StatusFilter(filters.BaseFilterBackend):
             if statustype == "bbg":
                 # FIXME: get local time (DLS)
                 return queryset.filter(bbg_anfang__lte=date).filter(bbg_ende__gte=date)
-            elif statustype == "aul":
+            if statustype == "aul":
                 return queryset.filter(aul_anfang__lte=date).filter(aul_ende__gte=date)
         return queryset

@@ -1,0 +1,27 @@
+<div class="col-md-12 bplan-list-item bplan-list-item-{{ status }}">
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <div><b>Bplannummer</b></div>
+            <div>{{ bplan.properties.planname }}</div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <div><b>Bezirk</b></div>
+            <div>{{ bezirk }}</div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <div><b>Aktueller Status</b></div>
+            <div>{{ status_text }}</div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <div><b>Enddatum</b></div>
+            <div data-ng-if="bplan.properties.aul_ende">{{ bplan.properties.aul_ende }}</div>
+            <div data-ng-if="bplan.properties.bbg_ende">{{ bplan.properties.bbg_ende }}</div>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 bplan-list-item-description">
+            <div><b>Beschreibung</b></div>
+            <div>{{ bplan.properties.bereich }}</div>
+        </div>
+    </div>-->
+</div>

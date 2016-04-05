@@ -46,33 +46,11 @@
                     </div>
                     <div class="row" ng-controller="ListController">
                         <div class="col-md-12" data-ng-show="currentView === 'list'">
-                        <div class="row" data-ng-repeat="bplan in places.bplaene.features">
-                            <div class="col-md-12 bplan-list-item">
-                                <div class="row">
-                                    <div class="col-xs-3 col-sm-3 col-md-3">
-                                        <div><b>Bplannummer</b></div>
-                                        <div>{{ bplan.properties.planname }}</div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3">
-                                        <div><b>Bezirk</b></div>
-                                        <div>{{ places.district.features[0].properties.name }}</div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3">
-                                        <div><b>Aktueller Status</b></div>
-                                        <div>Bla</div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3">
-                                        <div><b>Enddatum</b></div>
-                                        <div>Bla</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-3 col-sm-3 col-md-3 bplan-list-item-description">
-                                        <div><b>Beschreibung</b></div>
-                                        <div>{{ bplan.properties.bereich }}</div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="row" data-ng-repeat="bplan in places.status_aul.data.features">
+                            <listitem status="'aul'" bplan="bplan" bezirk="places.district.features[0].properties.name"></listitem>
+                        </div>
+                        <div class="row" data-ng-repeat="bplan in places.status_bbg.data.features">
+                            <listitem status="'bbg'" bplan="bplan" bezirk="places.district.features[0].properties.name"></listitem>
                         </div>
                         </div>
                     </div>
@@ -87,6 +65,11 @@
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet/dist/leaflet.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet.markercluster/dist/leaflet.markercluster.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/app.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/shared/services/placeService.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/shared/controllers/viewController.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/components/map/mapControllers.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/components/list/listControllers.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/components/list/listDirectives.js' %}"></script>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
