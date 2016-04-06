@@ -44,14 +44,31 @@
                             <div id="map"></div>
                         </div>
                     </div>
-                    <div class="row" ng-controller="ListController">
-                        <div class="col-md-12" data-ng-show="currentView === 'list'">
-                        <div class="row" data-ng-repeat="bplan in places.status_aul.data.features">
-                            <listitem status="'aul'" bplan="bplan" bezirk="places.district.features[0].properties.name"></listitem>
+                    <div data-ng-controller="ListController" data-ng-if="currentView === 'list'">
+                        <div class="row">
+                            <div class="col-md-12 pull-right">
+                                <nav>
+                                    <ul class="pagination">
+                                        <li>
+                                            <a data-ng-if="previous" data-ng-click="previousPage()" href="" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-ng-if="next" data-ng-click="nextPage()" href="" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
-                        <div class="row" data-ng-repeat="bplan in places.status_bbg.data.features">
-                            <listitem status="'bbg'" bplan="bplan" bezirk="places.district.features[0].properties.name"></listitem>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-12" data-ng-show="currentView === 'list'">
+                                <div class="row" data-ng-repeat="bplan in places.simple_list.data.results">
+                                    <listitem status="bplan.status" bplan="bplan"></listitem>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

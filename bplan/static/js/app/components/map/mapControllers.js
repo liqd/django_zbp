@@ -61,7 +61,7 @@ angular.module('app.map.controllers',[])
                     delete marker.layer.polygon;
             }
         });
-        markers.addTo(map);
+
     }
 
     PlacesService.initMap().then( function() {
@@ -71,28 +71,47 @@ angular.module('app.map.controllers',[])
         var markers_aul = L.markerClusterGroup({
             disableClusteringAtZoom: 10,
         });
+        markers_aul.addTo(map);
 
         var markers_bbg = L.markerClusterGroup({
             disableClusteringAtZoom: 10,
         });
+        markers_bbg.addTo(map);
 
         var markers_festg = L.markerClusterGroup({
             disableClusteringAtZoom: 14,
+            animate: true,
+            animateAddingMarkers: true
         });
+        markers_festg.addTo(map);
 
-        PlacesService.initBplaene({'status':'aul'}, $scope.places.status_aul).then(function () {
-            var status_aul = $scope.places.status_aul.data;
+        var markers_imVerfahren = L.markerClusterGroup({
+            disableClusteringAtZoom: 14,
+            animate: true,
+            animateAddingMarkers: true
+        });
+        markers_imVerfahren.addTo(map);
+
+        PlacesService.initMapBplaene({'status':'aul'}, $scope.places.status_aul).then(function () {
+            var status_aul = $scope.places.status_aul;
             addGeojson('#28d582', 8, markers_aul, map, status_aul);
 
-            PlacesService.initBplaene({'status':'bbg'}, $scope.places.status_bbg).then(function () {
-                var status_bbg = $scope.places.status_bbg.data;
+            PlacesService.initMapBplaene({'status':'bbg'}, $scope.places.status_bbg).then(function () {
+                var status_bbg = $scope.places.status_bbg;
                 addGeojson('#ff8a2c', 8, markers_bbg, map, status_bbg);
 
-                PlacesService.initBplaene({'festg':'True'}, $scope.places.status_festg).then(function () {
-                        var status_festg = $scope.places.status_festg.data;
+                PlacesService.initMapBplaene({'status':'imVerfahren'}, $scope.places.status_imVerfahren).then(function () {
+                    var status_imVerfahren = $scope.places.status_imVerfahren;
+                    addGeojson('#e72323', 4, markers_imVerfahren, map, status_imVerfahren);
+
+                    PlacesService.initMapBplaene({'festg':'True'}, $scope.places.status_festg).then(function () {
+                        var status_festg = $scope.places.status_festg;
                         addGeojson('#47c6dd', 4, markers_festg, map, status_festg);
+                    });
                 });
             });
         });
     });
+
 }]);
+

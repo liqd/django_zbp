@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Bezirk
 from .models import Ortsteil
 from .models import BPlan
+from datetime import datetime
 
 
 class OrtsteilSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
@@ -21,7 +22,37 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
         geo_field = 'polygon'
 
 
-class BPlanSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
+class SimpleBezirkSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bezirk
+        fields = ('name',)
+
+
+class SimpleBPlanSerializer(serializers.ModelSerializer):
+    status = serializers.SerializerMethodField()
+    bezirk = SimpleBezirkSerializer()
+
+    class Meta:
+        model = BPlan
+        exclude = ('multipolygon', 'point')
+
+    def get_status(self, object):
+        if object.festg:
+            return 'festg'
+        else:
+            date = datetime.now().date()
+            if (object.bbg_anfang and object.bbg_anfang <= date) and (object.bbg_ende and date <= object.bbg_ende):
+                return 'bbg'
+            elif (object.aul_anfang and object.aul_anfang <= date) and (object.aul_ende and date <= object.aul_ende):
+                return 'aul'
+            else:
+                return 'imVerfahren'
+
+
+class BPlanSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
+    status = serializers.SerializerMethodField()
+    bezirk = SimpleBezirkSerializer()
 
     class Meta:
         model = BPlan
