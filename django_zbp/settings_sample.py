@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': '',
         'USER': '',
         'PASSWORD': '',
-        'HOST': '',
+        'HOST': '127.0.0.1',
         'PORT': '',
     }
 }
@@ -153,7 +153,7 @@ BOWER_COMPONENTS_ROOT = os.path.join(
 BOWER_INSTALLED_APPS = (
     'jquery',
     'leaflet',
-    'leaflet.markercluster',
+    'leaflet.markercluster#v0.4.0-hotfix.1',
     'bootstrap',
     'angular',
     'fontawesome',
