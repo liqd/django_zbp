@@ -22,7 +22,7 @@ class Command(BaseCommand):
         for feature in tqdm(data_source[0]):
             polygon = GEOSGeometry(str(feature.geom))
             name = feature.get("spatial_alias")
-            bezirk = feature.get("BEZIRK")
+            bezirk = feature.get("BEZIRK").replace(u'\xf6', 'oe')
 
             bezirks_model = Bezirk.objects.get(name=bezirk)
 
