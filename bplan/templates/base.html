@@ -1,4 +1,4 @@
-{% load static %}
+{% load compress static %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -14,17 +14,67 @@
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/leaflet/dist/leaflet.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/MarkerCluster.Custom.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/font-awesome/css/font-awesome.min.css' %}">
+
+        {% compress css %}
+            <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/all.scss' %}" />
+        {% endcompress %}
+
         <script type="text/javascript">
-			area = "{% block area %}{% endblock %}";
-		</script>
+            area = "{% block area %}{% endblock %}";
+        </script>
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
+        {% verbatim %}
         <div>
-            {% block content %}{% endblock %}
+            <div class="container-fluid" ng-app="app">
+                <div class="row" ng-controller="ViewController">
+                    <div class="no-padding col-md-12">
+                        <div class="nav">
+                            <div class="nav-map-list-switch">
+                            <a href="" data-ng-class="{active: currentView == 'map'}" data-ng-click="setView('map');"><i class="fa fa-map-o fa-lg"></i></a>
+                            <a href="" data-ng-class="{active: currentView =='list'}"data-ng-click="setView('list');"><i class="fa fa-list fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-controller="MapController">
+                        <div class="col-md-12" data-ng-show="currentView === 'map'">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                    <div data-ng-controller="ListController" data-ng-if="currentView === 'list'">
+                        <div class="row">
+                            <div class="col-md-12 pull-right">
+                                <nav>
+                                    <ul class="pagination">
+                                        <li>
+                                            <a data-ng-if="previous" data-ng-click="previousPage()" href="" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-ng-if="next" data-ng-click="nextPage()" href="" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" data-ng-show="currentView === 'list'">
+                                <div class="row" data-ng-repeat="bplan in places.simple_list.data.results">
+                                    <listitem status="bplan.status" bplan="bplan"></listitem>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        {% endverbatim %}
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'third-party/bower_components/jquery/dist/jquery.min.js' %}"></script>
@@ -32,6 +82,11 @@
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet/dist/leaflet.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet.markercluster/dist/leaflet.markercluster.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/app.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/shared/services/placeService.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/shared/controllers/viewController.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/components/map/mapControllers.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/components/list/listControllers.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/components/list/listDirectives.js' %}"></script>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
