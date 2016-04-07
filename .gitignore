@@ -6,3 +6,8 @@ db.sqlite3
 .DS_Store
 django_zbp/settings.py
 /bplan/static/third-party/bower_components/
+lib
+bin/activate*
+bin/easy_install*
+bin/pip*
+bin/python*
