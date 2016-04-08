@@ -21,8 +21,8 @@ class Command(BaseCommand):
 
         for feature in tqdm(data_source[0]):
             polygon = GEOSGeometry(str(feature.geom))
-            name = feature.get("spatial_alias")
-            slug = slugify(name)
+            name = feature.get('spatial_alias')
+            slug = slugify(name.replace('ö', 'oe').replace('ä', 'ae').replace('ü','ue'))
 
 
 
