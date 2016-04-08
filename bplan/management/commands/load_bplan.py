@@ -66,7 +66,7 @@ class Command(BaseCommand):
 
             point = Point(multipolygon[0].centroid.x,multipolygon[0].centroid.y)
             bereich = feature.get("bereich")
-            b = feature.get("bezirk").replace(u'\xf6', 'oe')
+            b = feature.get("bezirk")
             bezirk = Bezirk.objects.get(name=b)
 
             # check whether point is within the first polygon
@@ -77,6 +77,7 @@ class Command(BaseCommand):
                     pass
             except:
                 pass
+
             # Verantwortlichkeiten
             afs_behoer = feature.get("afs_behoer")
 
