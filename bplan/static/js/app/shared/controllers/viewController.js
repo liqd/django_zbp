@@ -2,7 +2,7 @@
 
 angular.module('app.shared.controllers.viewController',[])
 
-.controller('ViewController',['$scope', 'PlacesService',function($scope, PlacesService) {
+.controller('ViewController',['$scope', '$rootScope', 'PlacesService',function($scope, $rootScope, PlacesService) {
     $scope.area = area;
     $scope.places = PlacesService;
     $scope.currentView = 'map';
@@ -10,4 +10,9 @@ angular.module('app.shared.controllers.viewController',[])
     $scope.setView = function(type) {
         $scope.currentView = type;
     }
+
+    $scope.updateFilter = function() {
+    	$rootScope.$broadcast('filter:updated');
+    }
+
 }]);

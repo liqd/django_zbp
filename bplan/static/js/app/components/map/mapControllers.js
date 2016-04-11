@@ -26,34 +26,89 @@ angular.module('app.map.controllers',[])
         return map;
     };
 
-    var addGeojson = function(color, radius, markers, map, cluster) {
+    var addGeojson = function(markers, map, cluster) {
 
-        var polygonstyle = {
-                'color': color,
-                'weight': 0.5,
-                'opacity': 1,
-                'fillOpacity': 0.3
-            }
-
-        var markerOptions = {
-                radius: radius,
-                fillColor: color,
-                weight: 0,
-                opacity: 0,
-                fillOpacity: 1
-            };
-
-        var geojson = L.geoJson(cluster, {
+        $scope.geojson = L.geoJson(cluster, {
             pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, markerOptions);
+                switch (feature.properties.status) {
+                    case 'aul': return L.circleMarker(latlng, {
+                        radius: 8,
+                        fillColor: '#28d582',
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 1
+                    });
+                    case 'bbg': return L.circleMarker(latlng, {
+                        radius: 8,
+                        fillColor: '#ff8a2c',
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 1
+                    });
+                    case 'festg': return L.circleMarker(latlng, {
+                        radius: 4,
+                        fillColor: '#47c6dd',
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 1
+                    });
+                    case 'imVerfahren': return L.circleMarker(latlng, {
+                        radius: 4,
+                        fillColor: '#e72323',
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 1
+                    });
+                }
+            },
+            filter: function(feature, layer) {
+                var status = feature.properties.status;
+                return $scope.places.filters[status];
             }
         });
-        markers.addLayer(geojson);
+        markers.addLayer($scope.geojson);
         markers.on('click', function (marker) {
                 if(angular.isUndefined(marker.layer.polygon)){
                     var content = marker.layer.feature.properties;
                     var polygon = L.geoJson(content.multipolygon).addTo(map).bringToBack();
-                    polygon.setStyle(polygonstyle);
+                    switch (content.status) {
+                        case 'aul':
+                            var polygonstyle = {
+                                'color': '#28d582',
+                                'weight': 0.5,
+                                'opacity': 1,
+                                'fillOpacity': 0.3
+                            };
+                            polygon.setStyle(polygonstyle);
+                            break;
+                        case 'bbg':
+                            var polygonstyle = {
+                                'color': '#ff8a2c',
+                                'weight': 0.5,
+                                'opacity': 1,
+                                'fillOpacity': 0.3
+                            };
+                            polygon.setStyle(polygonstyle);
+                            break;
+                        case 'festg':
+                            var polygonstyle = {
+                                'color': '#47c6dd',
+                                'weight': 0.5,
+                                'opacity': 1,
+                                'fillOpacity': 0.3
+                            };
+                            polygon.setStyle(polygonstyle);
+                            break;
+                        case 'imVerfahren':
+                            var polygonstyle = {
+                                'color': '#e72323',
+                                'weight': 0.5,
+                                'opacity': 1,
+                                'fillOpacity': 0.3
+                            };
+                            polygon.setStyle(polygonstyle);
+                            break;
+                    }
                     marker.layer.polygon = polygon;
                 }
                 else {
@@ -66,52 +121,22 @@ angular.module('app.map.controllers',[])
 
     PlacesService.initMap().then( function() {
 
-        var map = createMap();
+        $scope.map = createMap();
 
-        var markers_aul = L.markerClusterGroup({
-            disableClusteringAtZoom: 10,
-        });
-        markers_aul.addTo(map);
-
-        var markers_bbg = L.markerClusterGroup({
-            disableClusteringAtZoom: 10,
-        });
-        markers_bbg.addTo(map);
-
-        var markers_festg = L.markerClusterGroup({
+        $scope.markers = L.markerClusterGroup({
             disableClusteringAtZoom: 14,
-            animate: true,
-            animateAddingMarkers: true
         });
-        markers_festg.addTo(map);
+        $scope.markers.addTo($scope.map);
 
-        var markers_imVerfahren = L.markerClusterGroup({
-            disableClusteringAtZoom: 14,
-            animate: true,
-            animateAddingMarkers: true
-        });
-        markers_imVerfahren.addTo(map);
-
-        PlacesService.initMapBplaene({'status':'aul'}, $scope.places.status_aul).then(function () {
-            var status_aul = $scope.places.status_aul;
-            addGeojson('#28d582', 8, markers_aul, map, status_aul);
-
-            PlacesService.initMapBplaene({'status':'bbg'}, $scope.places.status_bbg).then(function () {
-                var status_bbg = $scope.places.status_bbg;
-                addGeojson('#ff8a2c', 8, markers_bbg, map, status_bbg);
-
-                PlacesService.initMapBplaene({'status':'imVerfahren'}, $scope.places.status_imVerfahren).then(function () {
-                    var status_imVerfahren = $scope.places.status_imVerfahren;
-                    addGeojson('#e72323', 4, markers_imVerfahren, map, status_imVerfahren);
-
-                    PlacesService.initMapBplaene({'festg':'True'}, $scope.places.status_festg).then(function () {
-                        var status_festg = $scope.places.status_festg;
-                        addGeojson('#47c6dd', 4, markers_festg, map, status_festg);
-                    });
-                });
-            });
+        PlacesService.initMapBplaene({}, $scope.places.map_markers.features).then(function () {
+            addGeojson($scope.markers, $scope.map, $scope.places.map_markers);
         });
     });
+
+    $scope.$on('filter:updated', function(event,data) {
+        $scope.markers.clearLayers();
+        addGeojson($scope.markers, $scope.map, $scope.places.map_markers);
+   });
 
 }]);
 

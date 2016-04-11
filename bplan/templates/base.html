@@ -32,30 +32,69 @@
             <div class="container-fluid" ng-app="app">
                 <div class="row" ng-controller="ViewController">
                     <div class="no-padding col-md-12">
-                        <div class="nav">
-                            <div class="nav-map-list-switch">
-                            <a href="" data-ng-class="{active: currentView == 'map'}" data-ng-click="setView('map');"><i class="fa fa-map-o fa-lg"></i></a>
-                            <a href="" data-ng-class="{active: currentView =='list'}"data-ng-click="setView('list');"><i class="fa fa-list fa-lg"></i></a>
-                            </div>
-                        </div>
+                        <ul class="nav nav-pills">
+                            <li role="presentation">
+                                <a href="" data-ng-class="{active: currentView == 'map'}" data-ng-click="setView('map');"><i class="fa fa-map-o fa-lg"></i></a>
+                            </li>
+                            <li role="presentation">
+                                <a href="" data-ng-class="{active: currentView =='list'}"data-ng-click="setView('list');"><i class="fa fa-list fa-lg"></i></a>
+                            </li>
+                            <li role="presentation" class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                  Dropdown <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <div class="checkbox">
+                                            <label>
+                                              <input type="checkbox" data-ng-model="places.filters.bbg" data-ng-change="updateFilter()"> Frühzeitige Öffentlichkeitsbeteiligung
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox">
+                                            <label>
+                                              <input type="checkbox" data-ng-model="places.filters.aul" data-ng-change="updateFilter()"> Öffentliche Auslegung
+                                            </label>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox" data-ng-model="places.filters.imVerfahren" data-ng-change="updateFilter()"> Im Verfahren
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox" data-ng-model="places.filters.festg" data-ng-change="updateFilter()"> Festgesetzt
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+
                     </div>
                     <div class="row" ng-controller="MapController">
                         <div class="col-md-12" data-ng-show="currentView === 'map'">
                             <div id="map"></div>
                         </div>
                     </div>
-                    <div data-ng-controller="ListController" data-ng-if="currentView === 'list'">
+                    <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
                         <div class="row">
                             <div class="col-md-12 pull-right">
                                 <nav>
                                     <ul class="pagination">
                                         <li>
-                                            <a data-ng-if="previous" data-ng-click="previousPage()" href="" aria-label="Previous">
+                                            <a data-ng-if="currentPage > 0" data-ng-click="previousPage()" href="" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a data-ng-if="next" data-ng-click="nextPage()" href="" aria-label="Next">
+                                            <a data-ng-if="currentPage <= places.simple_list.length/pageSize - 1" data-ng-click="nextPage()" href="" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
@@ -65,7 +104,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12" data-ng-show="currentView === 'list'">
-                                <div class="row" data-ng-repeat="bplan in places.simple_list.data.results">
+                                <div class="row" data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
                                     <listitem status="bplan.status" bplan="bplan"></listitem>
                                 </div>
                             </div>
@@ -78,6 +117,8 @@
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'third-party/bower_components/jquery/dist/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'third-party/bower_components/lodash/dist/lodash.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'third-party/bower_components/bootstrap/js/dropdown.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/angular/angular.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet/dist/leaflet.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet.markercluster/dist/leaflet.markercluster.js' %}"></script>
