@@ -3,6 +3,10 @@ from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_gis.pagination import GeoJsonPagination
 from .filters import StatusFilter
+from .filters import AulFilter
+from .filters import BbgFilter
+from .filters import FestgFilter
+from .filters import ImVerfahrenFilter
 from .serializers import BezirkSerializer
 from .serializers import OrtsteilSerializer
 from .serializers import BPlanSerializer
@@ -42,7 +46,7 @@ class BPlanViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BPlan.objects.all()
     serializer_class = BPlanSerializer
     pagination_class = CustomGeoJsonPagination
-    filter_backends = (filters.DjangoFilterBackend, StatusFilter)
+    filter_backends = (filters.DjangoFilterBackend, StatusFilter, AulFilter, BbgFilter, FestgFilter, ImVerfahrenFilter)
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
 
@@ -51,6 +55,6 @@ class SimpleBPlanViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BPlan.objects.all()
     serializer_class = SimpleBPlanSerializer
     pagination_class = CustomPagination
-    filter_backends = (filters.DjangoFilterBackend, StatusFilter)
+    filter_backends = (filters.DjangoFilterBackend, StatusFilter, AulFilter, BbgFilter, FestgFilter, ImVerfahrenFilter)
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
