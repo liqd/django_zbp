@@ -47,12 +47,12 @@ class BPlan(models.Model):
     festsg_am = models.DateField(blank=True, null=True)
 
     #  Anfangs und End der frühzeitigen Bürgerbeteiligung
-    bbg_anfang = models.DateField(blank=True, null=True)
-    bbg_ende = models.DateField(blank=True, null=True)
+    bbg_anfang = models.DateField(db_index=True, blank=True, null=True)
+    bbg_ende = models.DateField(db_index=True, blank=True, null=True)
 
     # Anfang und Ende der öffentlichen Auslegung
-    aul_anfang = models.DateField(blank=True, null=True)
-    aul_ende = models.DateField(blank=True, null=True)
+    aul_anfang = models.DateField(db_index=True, blank=True, null=True)
+    aul_ende = models.DateField(db_index=True, blank=True, null=True)
 
     # Links
     ausleg_www = models.URLField(max_length=256,blank=True, null=True)
@@ -68,5 +68,11 @@ class BPlan(models.Model):
 
     def __str__(self):
         return self.planname
+
+    class Meta:
+        index_together = [
+            ["bbg_anfang", "bbg_ende"],
+            ["aul_anfang", "aul_ende"]
+        ]
 
 
