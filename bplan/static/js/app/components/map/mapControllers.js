@@ -2,13 +2,15 @@
 
 angular.module('app.map.controllers',[])
 
-.controller('MapController',['$scope', '$window', 'PlacesService',function($scope, $window, PlacesService) {
+.controller('MapController',['$scope', '$window', '$timeout','PlacesService',function($scope, $window, $timeout, PlacesService) {
     $scope.places = PlacesService;
     $scope.polygons = {};
     $scope.polygons.aul = [];
     $scope.polygons.bbg = [];
     $scope.polygons.festg = [];
     $scope.polygons.imVerfahren = [];
+
+    $scope.popupOpen = false;
 
     var DISTRICTSTYLE = {
         'color': '#808080',
@@ -95,6 +97,10 @@ angular.module('app.map.controllers',[])
                 polygon.setStyle(style);
                 marker.multipolygon = polygon;
                 marker.on('click', function (e) {
+                    $timeout(function() {
+                        $scope.popupOpen = true;
+                        setTimeout(function(){ map.invalidateSize()}, 100);
+                    })
                     if(map.hasLayer(this.multipolygon)){
                         map.removeLayer(this.multipolygon);
                     }
@@ -117,8 +123,6 @@ angular.module('app.map.controllers',[])
             disableClusteringAtZoom: 14,
         });
         $scope.markers.addTo($scope.map);
-        console.log($scope.markers.getChildCount);
-
         PlacesService.initMapBplaene({}, $scope.places.map_markers.features).then(function () {
             addGeojson($scope.markers, $scope.map, $scope.places.map_markers);
         });
@@ -136,6 +140,11 @@ angular.module('app.map.controllers',[])
         $scope.markers.clearLayers();
         addGeojson($scope.markers, $scope.map, $scope.places.map_markers);
    });
+
+    $scope.closePopup = function() {
+        $scope.popupOpen = false;
+        setTimeout(function(){ $scope.map.invalidateSize()}, 200);
+    }
 
 }]);
 

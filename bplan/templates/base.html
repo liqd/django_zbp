@@ -79,8 +79,17 @@
 
                     </div>
                     <div class="row" ng-controller="MapController">
-                        <div class="col-md-12" data-ng-show="currentView === 'map'">
+                        <div data-ng-class="{'col-md-12 col-sm-12 col-xs-12' : !popupOpen, 'col-md-6 col-sm-6 col-xs-6': popupOpen}" data-ng-show="currentView === 'map'" class="no-right-padding">
                             <div id="map"></div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding" data-ng-show="currentView === 'map' && popupOpen">
+                            <div class="popup">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="pull-right" ng-click="closePopup()">close</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
