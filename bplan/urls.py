@@ -11,7 +11,7 @@ router = routers.DefaultRouter()
 router.register(r'bezirke', BezirkViewSet, base_name='bezirk')
 router.register(r'ortsteile', OrtsteilViewSet, base_name='ortsteil')
 router.register(r'bplaene', BPlanViewSet, base_name='bplan')
-router.register(r'bplaene_simple', SimpleBPlanViewSet, base_name='bplan')
+router.register(r'bplaene_simple', SimpleBPlanViewSet, base_name='bplan_simple')
 
 
 urlpatterns = [
