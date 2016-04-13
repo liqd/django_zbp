@@ -2,6 +2,7 @@ Django==1.9.4
 django-appconf==1.0.1
 django-bower==5.1.0
 django-compressor==2.0
+django-debug-toolbar==1.4
 django-filter==0.13.0
 django-libsass==0.6
 djangorestframework==3.3.3
@@ -14,4 +15,5 @@ pytz==2016.1
 rcssmin==1.0.6
 rjsmin==1.0.12
 six==1.10.0
+sqlparse==0.1.19
 tqdm==3.8.0

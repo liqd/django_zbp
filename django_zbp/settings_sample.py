@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'djangobower',
     'bplan',
     'compressor',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE_CLASSES = [
