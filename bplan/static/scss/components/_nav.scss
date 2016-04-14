@@ -1,13 +1,65 @@
 .nav {
 	padding: 15px 0 15px 0;
-}
+	font-size: 14px;
+	color: $gray-light;
+	font-family: 'Arimo', serif;
 
-.nav-map-list-switch {
-	& a {
-		color: $gray-lighter;
+	& li {
+		& a {
+			color: $gray-light;
+			padding: 2px 7px 2px 7px;
+
+			& i {
+				margin-top: 5px;
+			}
+		}
+		& a:hover {
+			background-color: #fff;
+			text-decoration: none;
+		}
+		& a:focus {
+			background-color: #fff;
+			text-decoration: none;
+		}
+		& .active {
+			color: $gray-dark;
+		}
 	}
-	& .active {
-		color: $gray-light;
+	& .dropdown {
+		border: 1px solid $gray-lighter;
+	}
+	& .open {
+		& a {
+			background-color: #fff;
+		}
+		& a:hover {
+			background-color: #fff;
+			text-decoration: none;
+		}
+		& a:focus {
+			background-color: #fff;
+			text-decoration: none;
+		}
+	}
+	& .checkbox {
+		margin-top: 2px;
+		padding-left: 20px;
+	}
+
+	& .dropdown-menu {
+		font-size: 14px;
+		font-family: 'Arimo', serif;
+		padding: 5px;
+		border-radius: 0px;
+		-webkit-box-shadow: 0px;
+		box-shadow: 0px;
+		border: none;
+		margin: 0px;
+
+		& .checkbox {
+			margin-top: 2px;
+			padding-left: 0px;
+		}
 	}
 }
 

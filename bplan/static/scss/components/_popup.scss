@@ -1,8 +1,27 @@
 .popup {
 	height: $map-height;
 	color: $gray-light;
-	font-size: 12px;
-	padding: 15px;
+	font-size: 14px;
+	font-family: 'Arimo', serif;
+	padding: 25px;
+}
+
+.popup-entry {
+	margin: 25px 0px 25px 0px;
+
+	& .btn {
+		-webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        font-family: 'Arimo', serif;
+	}
+}
+
+.close-button {
+	border:none;
+	background-color: #fff;
+	outline: 0;
+	color: #000;
 }
 
 .popup-bbg {

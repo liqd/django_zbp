@@ -34,7 +34,6 @@ angular.module('app.list.controllers',[])
 
 }])
 
-
 .filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int

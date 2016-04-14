@@ -15,4 +15,24 @@ angular.module('app.shared.controllers.viewController',[])
     	$rootScope.$broadcast('filter:updated');
     }
 
-}]);
+}])
+
+.filter('status', function() {
+    return function(status) {
+        if(status == 'aul'){
+            return "Öffentliche Auslegung";
+        }
+        else if(status == 'bbg'){
+        	return "Frühzeitige Öffentlichkeitsbeteiligung";
+        }
+        else if(status == 'imVerfahren'){
+            return "im Verfahren";
+        }
+        else if(status == 'festg'){
+            return "Festgesetzt";
+        }
+        else {
+        	return '';
+        }
+    }
+});

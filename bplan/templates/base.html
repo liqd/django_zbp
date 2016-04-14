@@ -17,6 +17,8 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/MarkerCluster.Custom.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/font-awesome/css/font-awesome.min.css' %}">
 
+        <link href='https://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
+
         {% compress css %}
             <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/all.scss' %}" />
         {% endcompress %}
@@ -33,13 +35,13 @@
                 <div class="row" ng-controller="ViewController">
                     <div class="no-padding col-md-12">
                         <ul class="nav nav-pills">
-                            <li role="presentation">
+                            <li>
                                 <a href="" data-ng-class="{active: currentView == 'map'}" data-ng-click="setView('map');"><i class="fa fa-map-o fa-lg"></i></a>
                             </li>
-                            <li role="presentation">
+                            <li>
                                 <a href="" data-ng-class="{active: currentView =='list'}"data-ng-click="setView('list');"><i class="fa fa-list fa-lg"></i></a>
                             </li>
-                            <li role="presentation" class="dropdown">
+                            <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                   In Beteiligung <span class="caret"></span>
                                 </a>
@@ -47,7 +49,8 @@
                                     <li>
                                         <div class="checkbox">
                                             <label>
-                                              <input type="checkbox" data-ng-model="places.filters.bbg" data-ng-change="updateFilter()"> Frühzeitige Öffentlichkeitsbeteiligung
+                                              <input type="checkbox" data-ng-model="places.filters.bbg" data-ng-change="updateFilter()">
+                                              Frühzeitige Öffentlichkeitsbeteiligung
                                             </label>
                                         </div>
                                     </li>
@@ -83,7 +86,7 @@
                             <div id="map"></div>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding" data-ng-if ="currentView === 'map' && popupopen">
-                            <popup closepopup="closePopup" bplan="currentItem" status="currentItem.status"></popup>
+                            <popup closepopup="closePopup" bplan="currentItem"></popup>
                         </div>
                     </div>
                     <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
@@ -108,7 +111,7 @@
                         <div class="row">
                             <div class="col-md-12" data-ng-show="currentView === 'list'">
                                 <div class="row" data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
-                                    <listitem status="bplan.status" bplan="bplan"></listitem>
+                                    <listitem bplan="bplan"></listitem>
                                 </div>
                             </div>
                         </div>
