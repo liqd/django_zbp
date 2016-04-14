@@ -1,6 +1,24 @@
 .popup {
 	height: $map-height;
-	border: solid 10px $status-festg;
+	color: $gray-light;
+	font-size: 12px;
+	padding: 15px;
+}
+
+.popup-bbg {
+	border: solid 15px $status-bbg;
+}
+
+.popup-aul {
+	border: solid 15px $status-aul;
+}
+
+.popup-imVerfahren {
+	border: solid 15px $status-imVerfahren;
+}
+
+.popup-festg {
+	border: solid 15px $status-festg;
 }
 
 .no-left-padding {

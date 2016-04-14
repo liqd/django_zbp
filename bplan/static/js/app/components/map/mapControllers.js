@@ -2,7 +2,7 @@
 
 angular.module('app.map.controllers',[])
 
-.controller('MapController',['$scope', '$window', '$timeout','PlacesService',function($scope, $window, $timeout, PlacesService) {
+.controller('MapController',['$scope', '$rootScope', '$window', '$timeout','PlacesService',function($scope, $rootScope, $window, $timeout, PlacesService) {
     $scope.places = PlacesService;
     $scope.polygons = {};
     $scope.polygons.aul = [];
@@ -10,7 +10,11 @@ angular.module('app.map.controllers',[])
     $scope.polygons.festg = [];
     $scope.polygons.imVerfahren = [];
 
-    $scope.popupOpen = false;
+    $scope.popupopen = false;
+
+    $scope.currentItem = {};
+    $scope.currentPolygon = {};
+    $scope.currentMarker = {};
 
     var DISTRICTSTYLE = {
         'color': '#808080',
@@ -76,6 +80,7 @@ angular.module('app.map.controllers',[])
             var lon = feature.geometry.coordinates[0];
             var lat = feature.geometry.coordinates[1];
             var multipolygon = feature.properties.multipolygon;
+            var properties = feature.properties;
             var color = getColorForStaus(status);
             var radius = getRadiusForStaus(status);
             if($scope.places.filters[status]) {
@@ -96,18 +101,20 @@ angular.module('app.map.controllers',[])
                 var polygon = L.geoJson(multipolygon);
                 polygon.setStyle(style);
                 marker.multipolygon = polygon;
+                marker.properties = properties;
                 marker.on('click', function (e) {
+                    map.removeLayer($scope.currentPolygon);
+                    this.multipolygon.addTo(map).bringToBack();
+                    $scope.currentItem = this.properties;
+                    $scope.currentPolygon = this.multipolygon;
+                    $scope.currentMarker = this;
                     $timeout(function() {
-                        $scope.popupOpen = true;
-                        setTimeout(function(){ map.invalidateSize()}, 100);
+                        $scope.popupopen = true;
+                        setTimeout(function(){
+                            map.invalidateSize();
+                            map.setView($scope.currentMarker._latlng);
+                        }, 100);
                     })
-                    if(map.hasLayer(this.multipolygon)){
-                        map.removeLayer(this.multipolygon);
-                    }
-                    else{
-                        this.multipolygon.addTo(map).bringToBack();
-                        $scope.polygons[status].push(this.multipolygon);
-                    }
                 });
                 markers.addLayer(marker);
             }
@@ -121,6 +128,13 @@ angular.module('app.map.controllers',[])
         $scope.markers = L.markerClusterGroup({
             chunkedLoading: true,
             disableClusteringAtZoom: 14,
+            polygonOptions: {
+                fillColor: '#1b2557',
+                color: '#1b2557',
+                weight: 0.5,
+                opacity: 1,
+                fillOpacity: 0.5
+            }
         });
         $scope.markers.addTo($scope.map);
         PlacesService.initMapBplaene({}, $scope.places.map_markers.features).then(function () {
@@ -129,21 +143,25 @@ angular.module('app.map.controllers',[])
     });
 
     $scope.$on('filter:updated', function(event,data) {
-        _.forEach($scope.polygons, function(value, key){
-            if(!$scope.places.filters[key]){
-                _.forEach(value, function(v){
-                    $scope.map.removeLayer(v);
-                })
-            }
-        })
-
         $scope.markers.clearLayers();
         addGeojson($scope.markers, $scope.map, $scope.places.map_markers);
+        $scope.popupopen = false;
+        setTimeout(function(){
+            $scope.map.invalidateSize({
+                pan:false
+            });
+            $scope.map.removeLayer($scope.currentPolygon);
+        }, 200);
    });
 
     $scope.closePopup = function() {
-        $scope.popupOpen = false;
-        setTimeout(function(){ $scope.map.invalidateSize()}, 200);
+        $scope.popupopen = false;
+        setTimeout(function(){
+            $scope.map.invalidateSize({
+                pan:false
+            });
+            $scope.map.removeLayer($scope.currentPolygon);
+        }, 200);
     }
 
 }]);

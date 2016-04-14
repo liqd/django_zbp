@@ -41,7 +41,7 @@
                             </li>
                             <li role="presentation" class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                  Dropdown <span class="caret"></span>
+                                  In Beteiligung <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
@@ -79,21 +79,15 @@
 
                     </div>
                     <div class="row" ng-controller="MapController">
-                        <div data-ng-class="{'col-md-12 col-sm-12 col-xs-12' : !popupOpen, 'col-md-6 col-sm-6 col-xs-6': popupOpen}" data-ng-show="currentView === 'map'" class="no-right-padding">
+                        <div data-ng-class="{'col-md-12 col-sm-12 col-xs-12' : !popupopen, 'col-md-6 col-sm-6 col-xs-6': popupopen}" data-ng-show="currentView === 'map'" class="no-right-padding">
                             <div id="map"></div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding" data-ng-show="currentView === 'map' && popupOpen">
-                            <div class="popup">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button class="pull-right" ng-click="closePopup()">close</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding" data-ng-if ="currentView === 'map' && popupopen">
+                            <popup closepopup="closePopup" bplan="currentItem" status="currentItem.status"></popup>
                         </div>
                     </div>
                     <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
-                        <div class="row">
+                        <div class="row" bplan="currentItem">
                             <div class="col-md-12 pull-right">
                                 <nav>
                                     <ul class="pagination">
@@ -137,6 +131,7 @@
         <script type="text/javascript" src="{% static 'js/app/components/map/mapControllers.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/components/list/listControllers.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/components/list/listDirectives.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/components/map/mapDirectives.js' %}"></script>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
