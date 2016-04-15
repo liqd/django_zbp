@@ -1,4 +1,6 @@
-import os, json
+# This Python file uses the following encoding: utf-8
+
+import os, json, math
 import dateutil.parser
 
 from tqdm import tqdm
@@ -44,6 +46,15 @@ class Command(BaseCommand):
             bereich = feature.get("bereich")
             b = feature.get("bezirk")
             bezirk = Bezirk.objects.get(name=b)
+            
+            # check whether point is within the first polygon
+            try:
+                if not point.within(multipolygon[0]):
+                    point = getPseudoCentroid(multipolygon)
+                else:
+                    pass
+            except:
+                pass
 
             # Verantwortlichkeiten
             afs_behoer = feature.get("afs_behoer")
@@ -111,7 +122,7 @@ class Command(BaseCommand):
             grund = feature.get("grund_www")
             if grund:
                 grund_www = grund.split('"')[1]
-                print(grund_www)
+                # print(grund_www)
             else:
                 grund_www = None
 
@@ -172,7 +183,8 @@ class Command(BaseCommand):
                     fsg_gvbl_d = fsg_gvbl_d,
                     normkontr = normkontr
                     )
-                print(str(bplan) + " ERSTELLT")
+                # print(str(bplan) + " ERSTELLT")
             except Exception as e:
-                print(e)
+                # print(e)
                 pass
+
