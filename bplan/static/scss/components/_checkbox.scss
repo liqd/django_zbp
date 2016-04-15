@@ -1,0 +1,335 @@
+%extend_0 {
+    margin-top: 2px;
+    padding: 0px 0px 0px 15px;
+}
+
+%extend_1 {
+    position: relative;
+    padding-left: 22px;
+    cursor: pointer;
+}
+
+%extend_2 {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -7px;
+    width: 15px;
+    height: 15px;
+    border-radius: 0px;
+}
+
+%extend_2_aul {
+    @extend %extend_2;
+    background: $status-aul;
+}
+
+%extend_2_bbg {
+    @extend %extend_2;
+    background: $status-bbg;
+}
+
+%extend_2_imVerfahren {
+    @extend %extend_2;
+    background: $status-imVerfahren;
+}
+
+%extend_2_festg {
+    @extend %extend_2;
+    background: $status-festg;
+}
+
+%extend_3 {
+    font: normal normal normal 9px/1 'Glyphicons Halflings';
+    content: '\e013';
+    position: absolute;
+    top: 50%;
+    margin-top: -5px;
+    left: 3px;
+    color: $white;
+    xtransition: all .2s;
+}
+
+%extend_4 {
+    content: '\2212';
+    left: 2px;
+    opacity: 1;
+    transform: scale(1);
+}
+
+%extend_5 {
+    box-shadow: none;
+    background-color: $gray-lighter;
+    border-color: $gray-lighter;
+    cursor: not-allowed;
+    opacity: 1;
+    color: $gray-light;
+}
+
+
+.custom-checkbox-aul {
+    > [type="checkbox"] {
+        margin-bottom: 0 !important;
+        user-select: none;
+        &:checked {
+            position: absolute;
+            left: -9999px;
+            + label {
+                @extend %extend_1;
+                &:before {
+                    @extend %extend_2_aul;
+                }
+                &:after {
+                    @extend %extend_3;
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+        &:disabled {
+            + label {
+                color: $gray-light;
+                cursor: not-allowed;
+            }
+            &:not(:checked) + label {
+                &:before {
+                    @extend %extend_5;
+                }
+            }
+            &:checked + label {
+                &:before {
+                    @extend %extend_5;
+                }
+                &:after {
+                    color: $gray-light;
+                    cursor: not-allowed;
+                }
+            }
+        }
+        &:not(:checked) {
+            position: absolute;
+            left: -9999px;
+            + label {
+                @extend %extend_1;
+                &:before {
+                    @extend %extend_2_aul;
+                }
+                &:after {
+                    @extend %extend_3;
+                    opacity: 0;
+                    transform: scale(0);
+                }
+            }
+        }
+    }
+    > label {
+        margin-bottom: 0 !important;
+        user-select: none;
+        font-weight: normal;
+    }
+    > [type="checkbox"][data-indeterminate] + label:after {
+        @extend %extend_4;
+        @extend %extend_4;
+    }
+}
+
+.custom-checkbox-bbg {
+    > [type="checkbox"] {
+        margin-bottom: 0 !important;
+        user-select: none;
+        &:checked {
+            position: absolute;
+            left: -9999px;
+            + label {
+                @extend %extend_1;
+                &:before {
+                    @extend %extend_2_bbg;
+                }
+                &:after {
+                    @extend %extend_3;
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+        &:disabled {
+            + label {
+                color: $gray-light;
+                cursor: not-allowed;
+            }
+            &:not(:checked) + label {
+                &:before {
+                    @extend %extend_5;
+                }
+            }
+            &:checked + label {
+                &:before {
+                    @extend %extend_5;
+                }
+                &:after {
+                    color: $gray-light;
+                    cursor: not-allowed;
+                }
+            }
+        }
+        &:not(:checked) {
+            position: absolute;
+            left: -9999px;
+            + label {
+                @extend %extend_1;
+                &:before {
+                    @extend %extend_2_bbg;
+                }
+                &:after {
+                    @extend %extend_3;
+                    opacity: 0;
+                    transform: scale(0);
+                }
+            }
+        }
+    }
+    > label {
+        margin-bottom: 0 !important;
+        user-select: none;
+        font-weight: normal;
+    }
+    > [type="checkbox"][data-indeterminate] + label:after {
+        @extend %extend_4;
+        @extend %extend_4;
+    }
+}
+
+.custom-checkbox-imVerfahren {
+    @extend %extend_0;
+    > [type="checkbox"] {
+        margin-bottom: 0 !important;
+        user-select: none;
+        &:checked {
+            position: absolute;
+            left: -9999px;
+            + label {
+                @extend %extend_1;
+                &:before {
+                    @extend %extend_2_imVerfahren;
+                }
+                &:after {
+                    @extend %extend_3;
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+        &:disabled {
+            + label {
+                color: $gray-light;
+                cursor: not-allowed;
+            }
+            &:not(:checked) + label {
+                &:before {
+                    @extend %extend_5;
+                }
+            }
+            &:checked + label {
+                &:before {
+                    @extend %extend_5;
+                }
+                &:after {
+                    color: $gray-light;
+                    cursor: not-allowed;
+                }
+            }
+        }
+        &:not(:checked) {
+            position: absolute;
+            left: -9999px;
+            + label {
+                @extend %extend_1;
+                &:before {
+                    @extend %extend_2_imVerfahren;
+                }
+                &:after {
+                    @extend %extend_3;
+                    opacity: 0;
+                    transform: scale(0);
+                }
+            }
+        }
+    }
+    > label {
+        margin-bottom: 0 !important;
+        user-select: none;
+        font-weight: normal;
+    }
+    > [type="checkbox"][data-indeterminate] + label:after {
+        @extend %extend_4;
+        @extend %extend_4;
+    }
+}
+
+.custom-checkbox-festg {
+    @extend %extend_0;
+    > [type="checkbox"] {
+        margin-bottom: 0 !important;
+        user-select: none;
+        &:checked {
+            position: absolute;
+            left: -9999px;
+            + label {
+                @extend %extend_1;
+                &:before {
+                    @extend %extend_2_festg;
+                }
+                &:after {
+                    @extend %extend_3;
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+        &:disabled {
+            + label {
+                color: $gray-light;
+                cursor: not-allowed;
+            }
+            &:not(:checked) + label {
+                &:before {
+                    @extend %extend_5;
+                }
+            }
+            &:checked + label {
+                &:before {
+                    @extend %extend_5;
+                }
+                &:after {
+                    color: $gray-light;
+                    cursor: not-allowed;
+                }
+            }
+        }
+        &:not(:checked) {
+            position: absolute;
+            left: -9999px;
+            + label {
+                @extend %extend_1;
+                &:before {
+                    @extend %extend_2_festg;
+                }
+                &:after {
+                    @extend %extend_3;
+                    opacity: 0;
+                    transform: scale(0);
+                }
+            }
+        }
+    }
+    > label {
+        margin-bottom: 0 !important;
+        user-select: none;
+        font-weight: normal;
+    }
+    > [type="checkbox"][data-indeterminate] + label:after {
+        @extend %extend_4;
+        @extend %extend_4;
+    }
+}

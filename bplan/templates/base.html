@@ -47,35 +47,30 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <div class="checkbox">
-                                            <label>
-                                              <input type="checkbox" data-ng-model="places.filters.bbg" data-ng-change="updateFilter()">
-                                              Frühzeitige Öffentlichkeitsbeteiligung
-                                            </label>
+                                        <div class="custom-checkbox-bbg">
+                                            <input type="checkbox" id="checkbox_bbg" data-ng-model="places.filters.bbg" data-ng-change="updateFilter()">
+                                            <label for="checkbox_bbg">{{'bbg' | status }}</label>
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="checkbox">
-                                            <label>
-                                              <input type="checkbox" data-ng-model="places.filters.aul" data-ng-change="updateFilter()"> Öffentliche Auslegung
-                                            </label>
+                                        <div class="custom-checkbox-aul">
+                                            <input type="checkbox" id="checkbox_aul" data-ng-model="places.filters.aul" data-ng-change="updateFilter()">
+                                            <label for="checkbox_aul">{{'aul' | status }}</label>
                                         </div>
                                     </li>
 
                                 </ul>
                             </li>
                             <li>
-                                <div class="checkbox">
-                                    <label>
-                                      <input type="checkbox" data-ng-model="places.filters.imVerfahren" data-ng-change="updateFilter()"> Im Verfahren
-                                    </label>
+                                <div class="custom-checkbox-imVerfahren">
+                                    <input type="checkbox" id="checkbox_imVerfahren" data-ng-model="places.filters.imVerfahren" data-ng-change="updateFilter()">
+                                    <label for="checkbox_imVerfahren">{{'imVerfahren' | status }}</label>
                                 </div>
                             </li>
                             <li>
-                                <div class="checkbox">
-                                    <label>
-                                      <input type="checkbox" data-ng-model="places.filters.festg" data-ng-change="updateFilter()"> Festgesetzt
-                                    </label>
+                                <div class="custom-checkbox-festg">
+                                    <input type="checkbox" id="checkbox_festg" data-ng-model="places.filters.festg" data-ng-change="updateFilter()">
+                                    <label for="checkbox_festg">{{'festg' | status }}</label>
                                 </div>
                             </li>
                         </ul>
