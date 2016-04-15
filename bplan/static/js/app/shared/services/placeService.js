@@ -7,24 +7,18 @@ angular.module('app.shared.services.places', [])
     var places = {};
     places.area = area;
 
-    places.status_aul = {};
-    places.status_aul.type = 'FeatureCollection';
-    places.status_aul.features = [];
+    places.map_markers = {};
+    places.map_markers.type = 'FeatureCollection';
+    places.map_markers.features = [];
 
-    places.status_bbg = {};
-    places.status_bbg.type = 'FeatureCollection';
-    places.status_bbg.features = [];
+    places.simple_list = [];
 
-    places.status_festg = {};
-    places.status_festg.type = 'FeatureCollection';
-    places.status_festg.features = [];
-
-    places.status_imVerfahren = {};
-    places.status_imVerfahren.type = 'FeatureCollection';
-    places.status_imVerfahren.features = [];
-
-    places.simple_list = {};
-    places.currentFilters = {};
+    places.filters = {
+        aul : true,
+        bbg : true,
+        festg : true,
+        imVerfahren : true
+    }
 
     // loads polygon of district
     places.initMap = function () {
@@ -43,6 +37,7 @@ angular.module('app.shared.services.places', [])
         return deferred.promise;
     };
 
+    // Helpfunction for initMapBplaene and initMapBplaene (loops through paginated data from server)
     var getNextPage = function(url, params, target, deferred) {
 
         $http({
@@ -52,21 +47,29 @@ angular.module('app.shared.services.places', [])
         }).then(function successCallback(response) {
             var count = response.data.count;
             var next = response.data.next;
-            var previous = response.data.previous;
-            var features = response.data.features;
-            if(count > 0 ){
-                for ( var i = 0; i < features.length; i++) {
-                    target.features.push(features[i]);
-                }
+            var data = response.data;
+
+            if(data.type === 'FeatureCollection'){
+                var list = data.features;
+            }
+            else{
+                var list = data.results;
+            }
+
+            if(count > 0) {
+                _.forEach(list, function(value, key){
+                    target.push(value);
+                })
             }
             if(next) {
-                getNextPage(next, params, target, deferred);
+                getNextPage(next, {}, target, deferred);
             } else {
                 deferred.resolve();
             }
         });
     }
 
+    // Gets the data for the map
     places.initMapBplaene = function (filter, target) {
         var deferred = $q.defer();
         var params = filter;
@@ -79,26 +82,19 @@ angular.module('app.shared.services.places', [])
         return deferred.promise;
     };
 
-    places.initListBplaene = function (target, url) {
+    // Get the data for the list
+    places.initListBplaene = function (filter, target) {
         var deferred = $q.defer();
-        var params = places.currentFilters
+        var params = filter;
 
         if(area){
             params.bezirk__slug = area;
             params.afs_behoer = "Bezirksamt";
         }
-        $http({
-            method: 'GET',
-            url: url,
-            params: places.currentFilters
-        }).then(function successCallback(response) {
-            target.data = response.data;
-            deferred.resolve();
-        }, function errorCallback(response) {
-            console.log(response);
-        });
-         return deferred.promise;
+        getNextPage('/api/bplaene_simple/', params, target, deferred);
+        return deferred.promise;
     };
+
     return places;
 
 }]);

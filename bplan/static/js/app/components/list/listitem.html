@@ -1,4 +1,4 @@
-<div class="col-md-12 bplan-list-item bplan-list-item-{{ status }}">
+<div class="col-md-12 bplan-list-item bplan-list-item-{{ bplan.status }}">
     <div class="row">
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div><b>Bplannummer</b></div>
@@ -10,16 +10,16 @@
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div><b>Aktueller Status</b></div>
-            <div>{{ status_text }}</div>
+            <div>{{ bplan.status | status }}</div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
-            <div data-ng-if="status == 'aul' || status == 'bbg'"><b>Enddatum</b></div>
-            <div data-ng-if="status == 'imVerfahren'"><b>Aufstellungsbeschluss</b></div>
-            <div data-ng-if="status == 'festg'"><b>Festgesetzt am</b></div>
-            <div data-ng-if="status== 'imVerfahren' && bplan.afs_beschl">{{ bplan.afs_beschl }}</div>
-            <div data-ng-if="status== 'aul' && bplan.aul_ende">{{ bplan.aul_ende }}</div>
-            <div data-ng-if="status== 'bbg' && bplan.bbg_ende">{{ bplan.bbg_ende }}</div>
-            <div data-ng-if="status== 'festg' && bplan.festsg_am">{{ bplan.festsg_am }}</div>
+            <div data-ng-if="bplan.status == 'aul' || status == 'bbg'"><b>Enddatum</b></div>
+            <div data-ng-if="bplan.status == 'imVerfahren'"><b>Aufstellungsbeschluss</b></div>
+            <div data-ng-if="bplan.status == 'festg'"><b>Festgesetzt am</b></div>
+            <div data-ng-if="bplan.status == 'imVerfahren' && bplan.afs_beschl">{{ bplan.afs_beschl | date : 'dd.MM.yyyy' }}</div>
+            <div data-ng-if="bplan.status == 'aul' && bplan.aul_ende">{{ bplan.aul_ende | date : 'dd.MM.yyyy' }}</div>
+            <div data-ng-if="bplan.status == 'bbg' && bplan.bbg_ende">{{ bplan.bbg_ende | date : 'dd.MM.yyyy' }}</div>
+            <div data-ng-if="bplan.status == 'festg' && bplan.festsg_am">{{ bplan.festsg_am | date : 'dd.MM.yyyy'}}</div>
         </div>
     </div>
     <div class="row">

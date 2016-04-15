@@ -12,10 +12,33 @@ from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos import MultiPolygon
 from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Polygon
 
 from bplan.models import Bezirk
 from bplan.models import BPlan
 
+
+def getPseudoCentroid(multipolygon):
+    k = 0
+    half = len(multipolygon[0][0])/2
+
+    while k + 1 < half:
+        try:
+            a = multipolygon[0][0][k]
+            b = multipolygon[0][0][k+1]
+            c = multipolygon[0][0][int(half)+k]
+            d = multipolygon[0][0][int(half)+k+1]
+            quadrangle = Polygon((a,b,c,d,a))
+            e = Point(quadrangle.centroid.x, quadrangle.centroid.y)
+            if e.within(multipolygon[0]):
+                return e
+            else:
+                k += 1
+        except:
+            k += 1
+
+    # print ("Never found a pseudocentroid, there were " + str(len(multipolygon[0][0])) + " corners.")
+    return Point(multipolygon[0][0][0])
 
 
 class Command(BaseCommand):
@@ -46,7 +69,7 @@ class Command(BaseCommand):
             bereich = feature.get("bereich")
             b = feature.get("bezirk")
             bezirk = Bezirk.objects.get(name=b)
-            
+
             # check whether point is within the first polygon
             try:
                 if not point.within(multipolygon[0]):
