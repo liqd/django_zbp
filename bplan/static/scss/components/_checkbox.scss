@@ -1,5 +1,5 @@
 %extend_0 {
-    margin-top: 2px;
+    margin-top: 7px;
     padding: 0px 0px 0px 15px;
 }
 
@@ -15,9 +15,9 @@
     left: 0;
     top: 50%;
     margin-top: -7px;
-    width: 15px;
-    height: 15px;
-    border-radius: 0px;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
 }
 
 %extend_2_aul {
@@ -41,12 +41,12 @@
 }
 
 %extend_3 {
-    font: normal normal normal 9px/1 'Glyphicons Halflings';
+    font: normal normal normal 8px/1 'Glyphicons Halflings';
     content: '\e013';
     position: absolute;
     top: 50%;
-    margin-top: -5px;
-    left: 3px;
+    margin-top: -6px;
+    left: 2px;
     color: $white;
     xtransition: all .2s;
 }

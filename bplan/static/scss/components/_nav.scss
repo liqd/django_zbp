@@ -27,6 +27,14 @@
 	}
 	& .dropdown {
 		border: 1px solid $gray-lighter;
+
+		& .bbg-checked {
+			color: $status-bbg;
+		}
+
+		& .aul-checked {
+			color: $status-aul;
+		}
 	}
 	& .open {
 		& a {
@@ -45,7 +53,7 @@
 	& .dropdown-menu {
 		font-size: 14px;
 		font-family: 'Arimo', serif;
-		padding: 5px;
+		padding: 7px;
 		border-radius: 0px;
 		-webkit-box-shadow: 0px;
 		box-shadow: 0px;
