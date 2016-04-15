@@ -33,24 +33,16 @@
             </div>
         </div>
     </div>
-    <!--<div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="popup-entry">
-                <div><b>Beschreibung</b></div>
-                <div>{{ bplan.bereich }}</div>
-            </div>
-        </div>
-    </div>-->
     <div class="row">
         <div class="popup-entry">
             <div data-ng-if="bplan.ausleg_www" class="col-xs-3 col-sm-3 col-md-3">
-                <div><a class="btn btn-primary" target="_blank" href="{{ bplan.ausleg_www }}">Website</a></div>
+                <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.ausleg_www }}">Website</a></div>
             </div>
             <div data-ng-if="bplan.scan_www" class="col-xs-3 col-sm-3 col-md-3">
-                <div><a class="btn btn-primary" target="_blank" href="{{ bplan.scan_www }}">BplanScan</a></div>
+                <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.scan_www }}">BplanScan</a></div>
             </div>
             <div data-ng-if="bplan.grund_www" class="col-xs-3 col-sm-3 col-md-3">
-                <div><a class="btn btn-primary" target="_blank" href="{{ bplan.grund_www }}">Begründung</a></div>
+                <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.grund_www }}">Begründung</a></div>
             </div>
         </div>
     </div>
