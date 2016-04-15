@@ -33,69 +33,45 @@
         <div>
             <div class="container-fluid" ng-app="app">
                 <div class="row" ng-controller="ViewController">
+
                     <div class="no-padding col-md-12">
-                        <ul class="nav nav-pills">
-                            <li>
-                                <a href="" data-ng-class="{active: currentView == 'map'}" data-ng-click="setView('map');"><i class="fa fa-map-o fa-lg"></i></a>
-                            </li>
-                            <li>
-                                <a href="" data-ng-class="{active: currentView =='list'}"data-ng-click="setView('list');"><i class="fa fa-list fa-lg"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                  In Beteiligung <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="custom-checkbox-bbg">
-                                            <input type="checkbox" id="checkbox_bbg" data-ng-model="places.filters.bbg" data-ng-change="updateFilter()">
-                                            <label for="checkbox_bbg">{{'bbg' | status }}</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="custom-checkbox-aul">
-                                            <input type="checkbox" id="checkbox_aul" data-ng-model="places.filters.aul" data-ng-change="updateFilter()">
-                                            <label for="checkbox_aul">{{'aul' | status }}</label>
-                                        </div>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li>
-                                <div class="custom-checkbox-imVerfahren">
-                                    <input type="checkbox" id="checkbox_imVerfahren" data-ng-model="places.filters.imVerfahren" data-ng-change="updateFilter()">
-                                    <label for="checkbox_imVerfahren">{{'imVerfahren' | status }}</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="custom-checkbox-festg">
-                                    <input type="checkbox" id="checkbox_festg" data-ng-model="places.filters.festg" data-ng-change="updateFilter()">
-                                    <label for="checkbox_festg">{{'festg' | status }}</label>
-                                </div>
-                            </li>
-                        </ul>
-
+                        <!-- nav directive from app/shared/directives/ -->
+                        <nav></nav>
                     </div>
+
                     <div class="row" ng-controller="MapController">
-                        <div data-ng-class="{'col-md-12 col-sm-12 col-xs-12' : !popupopen, 'col-md-6 col-sm-6 col-xs-6': popupopen}" data-ng-show="currentView === 'map'" class="no-right-padding">
+
+                        <div data-ng-class="{'col-md-12 col-sm-12 col-xs-12' : !popupopen, 'col-md-6 col-sm-6 col-xs-6': popupopen}"
+                             data-ng-show="currentView === 'map'" class="no-right-padding">
                             <div id="map"></div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding" data-ng-if ="currentView === 'map' && popupopen">
+
+                        <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding"
+                             data-ng-if ="currentView === 'map' && popupopen">
+                            <!-- popup directive from app/components/map/mapDirectives -->
                             <popup closepopup="closePopup" bplan="currentItem"></popup>
                         </div>
+
                     </div>
+
                     <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
                         <div class="row" bplan="currentItem">
                             <div class="col-md-12 pull-right">
                                 <nav>
                                     <ul class="pagination">
                                         <li>
-                                            <a data-ng-if="currentPage > 0" data-ng-click="previousPage()" href="" aria-label="Previous">
+                                            <a  data-ng-if="currentPage > 0"
+                                                data-ng-click="previousPage()"
+                                                href=""
+                                                aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a data-ng-if="currentPage <= places.simple_list.length/pageSize - 1" data-ng-click="nextPage()" href="" aria-label="Next">
+                                            <a  data-ng-if="currentPage <= places.simple_list.length/pageSize - 1"
+                                                data-ng-click="nextPage()"
+                                                href=""
+                                                aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
@@ -106,6 +82,7 @@
                         <div class="row">
                             <div class="col-md-12" data-ng-show="currentView === 'list'">
                                 <div class="row" data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
+                                    <!-- listitem directive from app/components/list/listDirectives -->
                                     <listitem bplan="bplan"></listitem>
                                 </div>
                             </div>
@@ -130,6 +107,7 @@
         <script type="text/javascript" src="{% static 'js/app/components/list/listControllers.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/components/list/listDirectives.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/components/map/mapDirectives.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app/shared/directives/sharedDirectives.js' %}"></script>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}

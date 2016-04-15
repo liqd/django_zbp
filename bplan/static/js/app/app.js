@@ -4,7 +4,8 @@ var app = angular.module('app',[
     'app.list.controllers',
     'app.shared.controllers.viewController',
     'app.list.directives',
-    'app.map.directives'
+    'app.map.directives',
+    'app.shared.directives'
 ]);
 
 
