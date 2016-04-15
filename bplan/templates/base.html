@@ -36,7 +36,7 @@
 
                     <div class="no-padding col-md-12">
                         <!-- nav directive from app/shared/directives/ -->
-                        <nav></nav>
+                        <data-shared-nav></data-shared-nav>
                     </div>
 
                     <div class="row" ng-controller="MapController">
@@ -49,26 +49,37 @@
                         <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding"
                              data-ng-if ="currentView === 'map' && popupopen">
                             <!-- popup directive from app/components/map/mapDirectives -->
-                            <popup closepopup="closePopup" bplan="currentItem"></popup>
+                            <data-popup closepopup="closePopup" bplan="currentItem"></data-popup>
                         </div>
 
                     </div>
 
                     <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
-                        <div class="row" bplan="currentItem">
+                        <div class="row bplan-list">
                             <div class="col-md-12 pull-right">
                                 <nav>
                                     <ul class="pagination">
-                                        <li>
-                                            <a  data-ng-if="currentPage > 0"
+                                        <li data-ng-class="{'disabled': currentPage==0}">
+                                            <a  data-ng-if= "currentPage>0"
                                                 data-ng-click="previousPage()"
                                                 href=""
                                                 aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
+                                            <a  data-ng-if= "currentPage==0"
+                                                href=""
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
                                         </li>
-                                        <li>
-                                            <a  data-ng-if="currentPage <= places.simple_list.length/pageSize - 1"
+                                        <li><a href="#">Seite {{ currentPage +1 }} von {{Math.round(list.length/pageSize)}}</a></li>
+                                        <li data-ng-class="{'disabled': currentPage >= (list.length/pageSize -1)}">
+                                            <a  data-ng-if="currentPage >= (list.length/pageSize -1)"
+                                                href=""
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                            <a  data-ng-if="currentPage < list.length/pageSize -1"
                                                 data-ng-click="nextPage()"
                                                 href=""
                                                 aria-label="Next">

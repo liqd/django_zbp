@@ -1,3 +1,33 @@
+.bplan-list {
+
+	& .pagination {
+		margin: 0;
+		padding-bottom: 9px;
+		& a {
+			border: none;
+			color: $gray-light;
+			font-size: 14px;
+			font-family: 'Arimo', serif;
+			padding: 0 12px 0 12px;
+		}
+		& a:hover {
+			background-color: white;
+			color: $gray-light;
+			font-size: 14px;
+			font-family: 'Arimo', serif;
+			padding: 0 12px 0 12px;
+		}
+		& a:focus {
+			background-color: white;
+			color: $gray-light;
+			font-size: 14px;
+			font-family: 'Arimo', serif;
+			padding: 0 12px 0 12px;
+		}
+	}
+}
+
+
 .bplan-list-item {
 	margin: 0 15px 15px 15px;
 	padding: 10px;
@@ -23,5 +53,9 @@
 }
 
 .bplan-list-item-description {
+	margin-top: 15px;
+}
+
+.button-row {
 	margin-top: 15px;
 }
