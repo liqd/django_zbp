@@ -146,12 +146,14 @@ angular.module('app.map.controllers',[])
         $scope.markers.clearLayers();
         addGeojson($scope.markers, $scope.map, $scope.places.map_markers);
         $scope.popupopen = false;
-        setTimeout(function(){
-            $scope.map.invalidateSize({
-                pan:false
-            });
+        if($scope.currentView == 'map'){
+            setTimeout(function(){
+                $scope.map.invalidateSize({
+                    pan:false
+                });
             $scope.map.removeLayer($scope.currentPolygon);
-        }, 200);
+            }, 200);
+        }
    });
 
     $scope.closePopup = function() {

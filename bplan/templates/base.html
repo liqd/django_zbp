@@ -56,7 +56,7 @@
 
                     <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
                         <div class="row bplan-list">
-                            <div class="col-md-12 pull-right">
+                            <div class="col-md-12 col-lg-12 pull-right">
                                 <nav>
                                     <ul class="pagination">
                                         <li data-ng-class="{'disabled': currentPage==0}">
@@ -72,7 +72,7 @@
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
-                                        <li><a href="#">Seite {{ currentPage +1 }} von {{Math.round(list.length/pageSize)}}</a></li>
+                                        <li><a href="#">Seite {{ currentPage +1 }} von {{Math.ceil(list.length/pageSize)}}</a></li>
                                         <li data-ng-class="{'disabled': currentPage >= (list.length/pageSize -1)}">
                                             <a  data-ng-if="currentPage >= (list.length/pageSize -1)"
                                                 href=""
