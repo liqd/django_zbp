@@ -108,13 +108,16 @@ angular.module('app.map.controllers',[])
                 }
                 var polygon = L.geoJson(multipolygon);
                 polygon.setStyle(style);
+                marker.clicked = false;
                 marker.multipolygon = polygon;
                 marker.properties = properties;
                 marker.on('click', function (e) {
                     map.removeLayer($scope.currentPolygon);
                     this.multipolygon.addTo(map).bringToBack();
+                    this.clicked = true;
                     $scope.currentItem = this.properties;
                     $scope.currentPolygon = this.multipolygon;
+                    $scope.currentMarker.clicked = false;
                     $scope.currentMarker = this;
                     $timeout(function() {
                         $scope.popupopen = true;
@@ -123,6 +126,14 @@ angular.module('app.map.controllers',[])
                             map.setView($scope.currentMarker._latlng);
                         }, 100);
                     })
+                });
+                marker.on('mouseover', function (e) {
+                    this.multipolygon.addTo(map).bringToBack();
+                });
+                marker.on('mouseout', function (e) {
+                    if(!this.clicked){
+                        map.removeLayer(this.multipolygon);
+                    }
                 });
                 markers.addLayer(marker);
             }
