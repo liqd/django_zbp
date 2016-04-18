@@ -15,6 +15,15 @@ angular.module('app.shared.controllers.viewController',[])
     	$rootScope.$broadcast('filter:updated');
     }
 
+    $scope.updateOrtsteil = function() {
+        $rootScope.$broadcast('ortsteil:updated');
+    }
+
+    $scope.resetOrtsteil = function() {
+        $scope.places.currentOrtsteilName = "Alle Ortsteile"
+        $rootScope.$broadcast('ortsteil:reset');
+    }
+
 }])
 
 .filter('status', function() {

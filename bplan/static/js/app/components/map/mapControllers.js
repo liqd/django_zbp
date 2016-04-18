@@ -12,6 +12,7 @@ angular.module('app.map.controllers',[])
 
     $scope.popupopen = false;
 
+    $scope.currentOrtsteil = {};
     $scope.currentItem = {};
     $scope.currentPolygon = {};
     $scope.currentMarker = {};
@@ -23,15 +24,22 @@ angular.module('app.map.controllers',[])
         'fillOpacity': 0
     }
 
+    var ORTSTEILSTYLE = {
+        'color': '#808080',
+        'weight': 1,
+        'opacity': 1,
+        'fillOpacity': 0.1
+    }
+
     var createMap = function(){
         var map = $window.L.map('map');
         L.tileLayer('http://tiles.codefor.de/bbs-berlin/{z}/{x}/{y}.png', {
         	attribution: 'Map data &copy;',
         	maxZoom: 18
         }).addTo(map);
-        var districtLayer = L.geoJson($scope.places.district).addTo(map);
-        districtLayer.setStyle(DISTRICTSTYLE);
-        map.fitBounds(districtLayer);
+        $scope.districtLayer = L.geoJson($scope.places.district).addTo(map);
+        $scope.districtLayer.setStyle(DISTRICTSTYLE);
+        map.fitBounds($scope.districtLayer);
         var currentZoom = map.getZoom();
         map.options.minZoom = currentZoom;
         return map;
@@ -133,7 +141,7 @@ angular.module('app.map.controllers',[])
                 color: '#1b2557',
                 weight: 0.5,
                 opacity: 1,
-                fillOpacity: 0.5
+                fillOpacity: 0.2
             }
         });
         $scope.markers.addTo($scope.map);
@@ -154,7 +162,20 @@ angular.module('app.map.controllers',[])
             $scope.map.removeLayer($scope.currentPolygon);
             }, 200);
         }
-   });
+    });
+
+    $scope.$on('ortsteil:updated', function(event,data) {
+        var ortsteil = $scope.places.ortsteile_polygons[$scope.places.currentOrtsteil];
+        $scope.map.removeLayer($scope.currentOrtsteil);
+        $scope.currentOrtsteil = L.geoJson(ortsteil).addTo($scope.map).bringToBack();
+        $scope.currentOrtsteil.setStyle(ORTSTEILSTYLE);
+        $scope.map.fitBounds($scope.currentOrtsteil);
+    });
+
+    $scope.$on('ortsteil:reset', function(event,data) {
+        $scope.map.removeLayer($scope.currentOrtsteil);
+        $scope.map.fitBounds($scope.districtLayer);
+    });
 
     $scope.closePopup = function() {
         $scope.popupopen = false;
