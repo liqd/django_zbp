@@ -22,15 +22,15 @@
             <div data-ng-if="bplan.status == 'festg' && bplan.festsg_am">{{ bplan.festsg_am | date : 'dd.MM.yyyy'}}</div>
         </div>
     </div>
-    <div class="row">
+    <div class="row button-row">
         <div data-ng-if="bplan.ausleg_www" class="col-xs-3 col-sm-3 col-md-3">
-            <div><a target="_blank" href="{{ bplan.ausleg_www }}">Website</a></div>
+            <div><a class="custom-btn btn-primary btn-xs" target="_blank" href="{{ bplan.ausleg_www }}">Website</a></div>
         </div>
         <div data-ng-if="bplan.scan_www" class="col-xs-3 col-sm-3 col-md-3">
-            <div><a target="_blank" href="{{ bplan.scan_www }}">BplanScan</a></div>
+            <div><a class="custom-btn btn-primary btn-xs" target="_blank" href="{{ bplan.scan_www }}">BplanScan</a></div>
         </div>
         <div data-ng-if="bplan.grund_www" class="col-xs-3 col-sm-3 col-md-3">
-            <div><a target="_blank" href="{{ bplan.grund_www }}">Begründung</a></div>
+            <div><a  class="custom-btn btn-primary btn-xs" target="_blank" href="{{ bplan.grund_www }}">Begründung</a></div>
         </div>
     </div>
 </div>

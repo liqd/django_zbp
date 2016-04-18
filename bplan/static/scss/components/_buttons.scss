@@ -1,0 +1,14 @@
+.close-button {
+	border:none;
+	background-color: #fff;
+	outline: 0;
+	color: #000;
+}
+
+.custom-btn {
+	@extend .btn;
+	-webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    font-family: 'Arimo', serif;
+}

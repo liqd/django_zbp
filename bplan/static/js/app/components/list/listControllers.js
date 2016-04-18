@@ -4,6 +4,7 @@ angular.module('app.list.controllers',[])
 
 
 .controller('ListController',['$scope', 'PlacesService',function($scope, PlacesService) {
+    $scope.Math = window.Math;
     $scope.places = PlacesService;
     $scope.currentPage = 0;
     $scope.pageSize = 5;
