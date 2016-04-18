@@ -185,11 +185,12 @@ angular.module('app.map.controllers',[])
 
     $scope.$on('ortsteil:reset', function(event,data) {
         $scope.map.removeLayer($scope.currentOrtsteil);
-        $scope.map.fitBounds($scope.districtLayer);
+        //$scope.map.fitBounds($scope.districtLayer);
     });
 
     $scope.closePopup = function() {
         $scope.popupopen = false;
+        $scope.currentMarker.clicked = false;
         setTimeout(function(){
             $scope.map.invalidateSize({
                 pan:false
