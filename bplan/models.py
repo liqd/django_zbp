@@ -33,6 +33,7 @@ class BPlan(models.Model):
     point = models.PointField(blank=True, null=True)
     bereich = models.TextField()
     bezirk = models.ForeignKey(Bezirk)
+    ortsteile = models.ManyToManyField(Ortsteil)
 
     # Verantwortlichkeiten
     afs_behoer = models.CharField(max_length=256)
