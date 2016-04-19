@@ -34,6 +34,13 @@ $ ./manage.py createsuperuser
 $ ./manage.py load_bezirke
 $ ./manage.py load_ortsteile
 $ ./manage.py load_bplan
+```
+here there is still an ugly error occurring twice that can be disregarded:
+
+> GEOS_ERROR: TopologyException: side location conflict at ...
+
+continue:
+```
 $ ./manage.py runserver
 ```
 

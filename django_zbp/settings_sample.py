@@ -162,5 +162,6 @@ BOWER_INSTALLED_APPS = (
     'bootstrap',
     'angular',
     'fontawesome',
-    'bootstrap-sass'
+    'bootstrap-sass',
+    'lodash'
 )
