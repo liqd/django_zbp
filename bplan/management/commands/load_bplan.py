@@ -16,6 +16,7 @@ from django.contrib.gis.geos import Polygon
 
 from bplan.models import Bezirk
 from bplan.models import BPlan
+from bplan.models import Ortsteil
 
 
 def getPseudoCentroid(multipolygon):
@@ -39,6 +40,11 @@ def getPseudoCentroid(multipolygon):
 
     # print ("Never found a pseudocentroid, there were " + str(len(multipolygon[0][0])) + " corners.")
     return Point(multipolygon[0][0][0])
+
+
+def get_ortsteile(geometry):
+    print (Ortsteil.objects.filter(bezirk="Mitte"))
+    return Ortsteil.objects.filter(poly__intersects=geometry)
 
 
 class Command(BaseCommand):
@@ -76,6 +82,12 @@ class Command(BaseCommand):
                     point = getPseudoCentroid(multipolygon)
                 else:
                     pass
+            except:
+                pass
+
+            # calculate the Ortsteile in which the bplan is located
+            try:
+                ortsteile = get_ortsteile(geometry)
             except:
                 pass
 
@@ -206,6 +218,7 @@ class Command(BaseCommand):
                     fsg_gvbl_d = fsg_gvbl_d,
                     normkontr = normkontr
                     )
+                bplan.add(ortsteile = ortsteile)
                 # print(str(bplan) + " ERSTELLT")
             except Exception as e:
                 # print(e)
