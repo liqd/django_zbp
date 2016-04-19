@@ -12,6 +12,9 @@ angular.module('app.shared.services.places', [])
     places.map_markers.features = [];
 
     places.simple_list = [];
+    places.ortsteile_polygons = {};
+    places.currentOrtsteil = "";
+    places.currentOrtsteilName = "Alle Ortsteile";
 
     places.filters = {
         aul : true,
@@ -29,6 +32,7 @@ angular.module('app.shared.services.places', [])
             params: {slug: area}
         }).then(function successCallback(response) {
             places.district = response.data;
+            places.ortsteile = places.district.features[0].properties.ortsteile;
             deferred.resolve();
         }, function errorCallback(response) {
             console.log(response);
@@ -36,6 +40,25 @@ angular.module('app.shared.services.places', [])
 
         return deferred.promise;
     };
+
+    places.getOrtsteil = function (url) {
+        var deferred = $q.defer();
+        if(angular.isUndefined(places.ortsteile_polygons[url])){
+            $http({
+                method: 'GET',
+                url: url
+                }).then(function successCallback(response) {
+                    places.ortsteile_polygons[url] = response.data;
+                    deferred.resolve();
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            }
+        else {
+            deferred.resolve();
+        }
+        return deferred.promise;
+    }
 
     // Helpfunction for initMapBplaene and initMapBplaene (loops through paginated data from server)
     var getNextPage = function(url, params, target, deferred) {
