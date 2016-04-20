@@ -43,15 +43,15 @@ class BPlanViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
     queryset = BPlan.objects.all()
     serializer_class = BPlanSerializer
     pagination_class = CustomGeoJsonPagination
-    filter_backends = (filters.DjangoFilterBackend, StatusFilter)
+    filter_backends = (filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter)
     filter_fields = (
-        'bplanID', 'planname', 'bezirk', 'ortsteile', 'festg', 'bezirk__slug', 'afs_behoer')
+        'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
 
 
 class SimpleBPlanViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
     queryset = BPlan.objects.all()
     serializer_class = SimpleBPlanSerializer
     pagination_class = CustomPagination
-    filter_backends = (filters.DjangoFilterBackend, StatusFilter)
+    filter_backends = (filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter)
     filter_fields = (
-        'bplanID', 'planname', 'bezirk', 'ortsteile', 'festg', 'bezirk__slug', 'afs_behoer')
+        'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')

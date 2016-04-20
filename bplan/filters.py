@@ -31,12 +31,10 @@ class StatusFilter(filters.BaseFilterBackend):
 class OrtsteilFilter(filters.BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
-        print("Hallo")
 
         if 'ortsteil' in request.GET:
-            ortsteilname = request.GET["ortsteil"]
-            print(ortsteilname)
-            ortsteil = Ortsteil.objects.get(name=ortsteilname)
+            ortsteilslug = request.GET["ortsteil"]
+            ortsteil = Ortsteil.objects.get(slug=ortsteilslug)
             return queryset.filter(ortsteile=ortsteil)
         else:
             return queryset
