@@ -114,10 +114,10 @@ angular.module('app.map.controllers',[])
                 marker.on('click', function (e) {
                     map.removeLayer($scope.currentPolygon);
                     this.multipolygon.addTo(map).bringToBack();
+                    $scope.currentMarker.clicked = false;
                     this.clicked = true;
                     $scope.currentItem = this.properties;
                     $scope.currentPolygon = this.multipolygon;
-                    $scope.currentMarker.clicked = false;
                     $scope.currentMarker = this;
                     $timeout(function() {
                         $scope.popupopen = true;
