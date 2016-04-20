@@ -12,6 +12,7 @@ class Bezirk(models.Model):
 
 class Ortsteil(models.Model):
     name = models.CharField(max_length=50)
+    slug = models.CharField(max_length=50, default='')
     bezirk = models.ForeignKey(Bezirk, related_name='ortsteile')
     polygon = models.PolygonField()
 
