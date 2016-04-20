@@ -31,7 +31,7 @@ class SimpleBezirkSerializer(serializers.ModelSerializer):
 
 class SimpleBPlanSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
-    bezirk = SimpleBezirkSerializer()
+
 
     class Meta:
         model = BPlan
@@ -50,11 +50,21 @@ class SimpleBPlanSerializer(serializers.ModelSerializer):
                 return 'imVerfahren'
 
 
-class BPlanSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
+class BPlanPointSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
     status = serializers.SerializerMethodField()
-    bezirk = SimpleBezirkSerializer()
 
     class Meta:
         model = BPlan
         id_field = False
         geo_field = 'point'
+        fields = ('point', 'status', 'pk')
+
+
+class BPlanMultipolygonSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
+    status = serializers.SerializerMethodField()
+
+    class Meta:
+        model = BPlan
+        id_field = False
+        geo_field = 'multipolygon'
+        fields = ('multipolygon', 'bplanID', 'status', 'pk')
