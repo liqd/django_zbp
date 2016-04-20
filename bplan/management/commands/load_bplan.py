@@ -218,8 +218,7 @@ class Command(BaseCommand):
                 bplan.save()
                 for ortsteil in ortsteile:
                     bplan.ortsteile.add(ortsteil)
-                # print(bplan.ortsteile.all())
-                print(str(bplan) + " ERSTELLT")
+                # print(str(bplan) + " ERSTELLT")
             except Exception as e:
                 # print(e)
                 pass
