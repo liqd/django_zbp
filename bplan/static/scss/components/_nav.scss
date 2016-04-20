@@ -32,9 +32,22 @@
 			color: $status-aul;
 		}
 	}
+	& .no-dropdown {
+		.custom-checkbox {
+			[type="checkbox"] + label:before {
+				margin-top: -6px;
+			}
+			[type="checkbox"] + label:after {
+				margin-top: -4px;
+			}
+		}
+	}
+
 	& .open {
 		& a {
 			background-color: #fff;
+			position: relative;
+			z-index: 2;
 		}
 		& a:hover {
 			background-color: #fff;
@@ -44,17 +57,21 @@
 			background-color: #fff;
 			text-decoration: none;
 		}
+
+		border-bottom: 0;
 	}
 
 	& .dropdown-menu {
+		border: 1px solid $gray-lighter;
 		font-size: 14px;
 		font-family: 'Arimo', serif;
 		padding: 7px;
 		border-radius: 0px;
 		-webkit-box-shadow: 0px;
 		box-shadow: 0px;
-		border: none;
-		margin: 0px;
+		margin: -3px 0 0 -1px;
+		padding-top: 3px;
+		z-index: 1;
 
 		& .checkbox {
 			margin-top: 2px;

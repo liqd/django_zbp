@@ -159,7 +159,6 @@ BOWER_INSTALLED_APPS = (
     'jquery',
     'leaflet',
     'leaflet.markercluster#v0.4.0-hotfix.1',
-    'bootstrap',
     'angular',
     'fontawesome',
     'bootstrap-sass',
