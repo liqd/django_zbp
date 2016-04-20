@@ -2,6 +2,7 @@ from rest_framework import filters
 from datetime import datetime
 from django.db.models import Q
 
+from .models import Ortsteil
 
 class StatusFilter(filters.BaseFilterBackend):
 
@@ -25,3 +26,17 @@ class StatusFilter(filters.BaseFilterBackend):
                 return queryset.exclude(pk__in=auls).exclude(pk__in=bbgs)
 
         return queryset
+
+
+class OrtsteilFilter(filters.BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+        print("Hallo")
+
+        if 'ortsteil' in request.GET:
+            ortsteilname = request.GET["ortsteil"]
+            print(ortsteilname)
+            ortsteil = Ortsteil.objects.get(name=ortsteilname)
+            return queryset.filter(ortsteile=ortsteil)
+        else:
+            return queryset

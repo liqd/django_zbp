@@ -3,7 +3,7 @@ from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_gis.pagination import GeoJsonPagination
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
-from .filters import StatusFilter
+from .filters import StatusFilter, OrtsteilFilter
 from .serializers import BezirkSerializer
 from .serializers import OrtsteilSerializer
 from .serializers import BPlanSerializer
