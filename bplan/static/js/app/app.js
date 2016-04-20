@@ -1,4 +1,6 @@
 var app = angular.module('app',[
+	'angular-loading-bar',
+	'ngAnimate',
     'app.shared.services.places',
     'app.map.controllers',
     'app.list.controllers',

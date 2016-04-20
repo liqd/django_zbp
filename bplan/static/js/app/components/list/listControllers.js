@@ -10,9 +10,14 @@ angular.module('app.list.controllers',[])
     $scope.pageSize = 5;
     $scope.list = [];
 
-    PlacesService.initListBplaene({}, $scope.places.simple_list).then(function () {
-        $scope.list = $scope.places.simple_list;
-    });
+    if($scope.places.bplan_points){
+        $scope.list = $scope.places.bplan_points.features;
+    }
+    else {
+        PlacesService.initBplaene({}, $scope.places.bplan_points.features).then(function () {
+            $scope.list = $scope.places.bplan_points.features;
+        });
+    }
 
     $scope.nextPage = function () {
     	$scope.currentPage = $scope.currentPage +1;
@@ -24,8 +29,8 @@ angular.module('app.list.controllers',[])
 
     $scope.$on('filter:updated', function(event,data) {
         $scope.list = [];
-        _.forEach($scope.places.simple_list, function(value, key){
-            if($scope.places.filters[value.status]){
+        _.forEach($scope.places.bplan_points.features, function(value, key){
+            if($scope.places.filters[value.properties.status]){
                 $scope.list.push(value);
             }
         })

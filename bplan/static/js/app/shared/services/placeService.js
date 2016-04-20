@@ -7,11 +7,10 @@ angular.module('app.shared.services.places', [])
     var places = {};
     places.area = area;
 
-    places.map_markers = {};
-    places.map_markers.type = 'FeatureCollection';
-    places.map_markers.features = [];
+    places.bplan_points = {};
+    places.bplan_points.type = 'FeatureCollection';
+    places.bplan_points.features = [];
 
-    places.simple_list = [];
     places.ortsteile_polygons = {};
     places.currentOrtsteil = "";
     places.currentOrtsteilName = "Alle Ortsteile";
@@ -58,7 +57,33 @@ angular.module('app.shared.services.places', [])
             deferred.resolve();
         }
         return deferred.promise;
-    }
+    };
+
+    places.getBplanDetail = function (pk) {
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/api/bplaene_data/' + pk
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        return deferred.promise;
+    };
+
+    places.getBplanMultipolygon = function (pk) {
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/api/bplaene_multipolygon/' + pk
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        return deferred.promise;
+    };
 
     // Helpfunction for initMapBplaene and initMapBplaene (loops through paginated data from server)
     var getNextPage = function(url, params, target, deferred) {
@@ -71,13 +96,7 @@ angular.module('app.shared.services.places', [])
             var count = response.data.count;
             var next = response.data.next;
             var data = response.data;
-
-            if(data.type === 'FeatureCollection'){
-                var list = data.features;
-            }
-            else{
-                var list = data.results;
-            }
+            var list = data.features;
 
             if(count > 0) {
                 _.forEach(list, function(value, key){
@@ -90,23 +109,10 @@ angular.module('app.shared.services.places', [])
                 deferred.resolve();
             }
         });
-    }
-
-    // Gets the data for the map
-    places.initMapBplaene = function (filter, target) {
-        var deferred = $q.defer();
-        var params = filter;
-
-        if(area){
-            params.bezirk__slug = area;
-            params.afs_behoer = "Bezirksamt";
-        }
-        getNextPage('/api/bplaene/', params, target, deferred);
-        return deferred.promise;
     };
 
-    // Get the data for the list
-    places.initListBplaene = function (filter, target) {
+    // Gets the data points for the app
+    places.initBplaene = function (filter, target, markers) {
         var deferred = $q.defer();
         var params = filter;
 
@@ -114,7 +120,7 @@ angular.module('app.shared.services.places', [])
             params.bezirk__slug = area;
             params.afs_behoer = "Bezirksamt";
         }
-        getNextPage('/api/bplaene_simple/', params, target, deferred);
+        getNextPage('/api/bplaene_point/', params, target, deferred);
         return deferred.promise;
     };
 

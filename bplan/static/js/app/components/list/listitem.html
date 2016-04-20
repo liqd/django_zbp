@@ -1,4 +1,4 @@
-<div class="col-md-12 bplan-list-item bplan-list-item-{{ bplan.status }}">
+<div class="col-md-12 bplan-list-item bplan-list-item-{{ status }}">
     <div class="row">
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div><b>Bplannummer</b></div>
@@ -6,11 +6,11 @@
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div><b>Bezirk</b></div>
-            <div>{{ bplan.bezirk.name }}</div>
+            <div>{{ bplan.bezirk_name }}</div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div><b>Aktueller Status</b></div>
-            <div>{{ bplan.status | status }}</div>
+            <div>{{ status | status }}</div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div data-ng-if="bplan.status == 'aul' || status == 'bbg'"><b>Enddatum</b></div>

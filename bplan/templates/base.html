@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/leaflet/dist/leaflet.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/MarkerCluster.Custom.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/font-awesome/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/angular-loading-bar/build/loading-bar.min.css' %}" />
 
         <link href='https://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
 
@@ -48,12 +49,12 @@
                         <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding"
                              data-ng-if ="currentView === 'map' && popupopen">
                             <!-- popup directive from app/components/map/mapDirectives -->
-                            <data-popup closepopup="closePopup" bplan="currentItem"></data-popup>
+                            <data-popup data-ng-if="currentItem" closepopup="closePopup" bplan="currentItem"></data-popup>
                         </div>
 
                     </div>
 
-                    <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
+                    <div data-ng-controller="ListController" data-ng-if="currentView === 'list'">
                         <div class="row bplan-list">
                             <div class="col-md-12 col-lg-12 pull-right">
                                 <nav>
@@ -93,7 +94,7 @@
                             <div class="col-md-12" data-ng-show="currentView === 'list'">
                                 <div class="row" data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
                                     <!-- listitem directive from app/components/list/listDirectives -->
-                                    <listitem bplan="bplan"></listitem>
+                                    <listitem data-ng-if="$index <= (currentPage*pageSize + pageSize)" status="bplan.properties.status" pk="bplan.properties.pk"></listitem>
                                 </div>
                             </div>
                         </div>
@@ -109,6 +110,8 @@
         <script type="text/javascript" src="{% static 'third-party/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/angular/angular.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet/dist/leaflet.js' %}"></script>
+        <script type="text/javascript" src="{% static 'third-party/bower_components/angular-loading-bar/build/loading-bar.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'third-party/bower_components/angular-animate/angular-animate.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet.markercluster/dist/leaflet.markercluster.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/app.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/shared/services/placeService.js' %}"></script>
