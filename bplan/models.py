@@ -4,7 +4,7 @@ from django.contrib.gis.db import models
 class Bezirk(models.Model):
     name = models.CharField(max_length=50)
     slug = models.CharField(max_length=50)
-    polygon= models.PolygonField()
+    polygon = models.PolygonField()
 
     def __str__(self):
         return self.name
@@ -13,7 +13,7 @@ class Bezirk(models.Model):
 class Ortsteil(models.Model):
     name = models.CharField(max_length=50)
     bezirk = models.ForeignKey(Bezirk, related_name='ortsteile')
-    polygon= models.PolygonField()
+    polygon = models.PolygonField()
 
     def __str__(self):
         return self.name
