@@ -1,6 +1,6 @@
 .nav {
 	padding: 10px 0 10px 0;
-	font-size: 14px;
+	font-size: $font-size;
 	color: $gray-light;
 	font-family: 'Arimo', serif;
 
@@ -63,7 +63,7 @@
 
 	& .dropdown-menu {
 		border: 1px solid $gray-lighter;
-		font-size: 14px;
+		font-size: $font-size;
 		font-family: 'Arimo', serif;
 		padding: 7px;
 		border-radius: 0px;

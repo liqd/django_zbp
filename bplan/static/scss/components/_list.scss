@@ -6,21 +6,21 @@
 		& a {
 			border: none;
 			color: $gray-light;
-			font-size: 14px;
+			font-size: $font-size;
 			font-family: 'Arimo', serif;
 			padding: 0 12px 0 12px;
 		}
 		& a:hover {
 			background-color: white;
 			color: $gray-light;
-			font-size: 14px;
+			font-size: $font-size;
 			font-family: 'Arimo', serif;
 			padding: 0 12px 0 12px;
 		}
 		& a:focus {
 			background-color: white;
 			color: $gray-light;
-			font-size: 14px;
+			font-size: $font-size;
 			font-family: 'Arimo', serif;
 			padding: 0 12px 0 12px;
 		}
@@ -32,7 +32,7 @@
 	margin: 0 15px 15px 15px;
 	padding: 10px;
 	color: $gray-light;
-	font-size: 14px;
+	font-size: $font-size;
 	font-family: 'Arimo', serif;
 }
 
