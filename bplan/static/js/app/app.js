@@ -8,7 +8,10 @@ var app = angular.module('app',[
     'app.list.directives',
     'app.map.directives',
     'app.shared.directives'
-]);
+])
+.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+	cfpLoadingBarProvider.includeSpinner = false;
+}]);
 
 
 
