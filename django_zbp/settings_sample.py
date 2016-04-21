@@ -32,6 +32,10 @@ TIME_ZONE = 'Europe/Berlin'
 
 USE_TZ = True
 
+REST_FRAMEWORK_EXTENSIONS = {
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15
+}
+
 
 # Application definition
 
@@ -48,7 +52,7 @@ INSTALLED_APPS = [
     'djangobower',
     'bplan',
     'compressor',
-    'debug_toolbar',
+    #'debug_toolbar',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -94,7 +98,7 @@ DATABASES = {
         'NAME': '',
         'USER': '',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'HOST': '',
         'PORT': '',
     }
 }
@@ -134,10 +138,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-REST_FRAMEWORK_EXTENSIONS = {
-    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15
-}
 
 
 # Static files (CSS, JavaScript, Images)
