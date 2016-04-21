@@ -4,7 +4,7 @@ myvenv
 db.sqlite3
 /static
 .DS_Store
-django_zbp/settings.py
+django_zbp/settings/local.py
 /bplan/static/third-party/bower_components/
 lib
 bin/activate*
