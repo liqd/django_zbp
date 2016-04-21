@@ -10,7 +10,7 @@ class OrtsteilSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModel
 
     class Meta:
         model = Ortsteil
-        fields = ('name', 'polygon', 'bezirk')
+        fields = ('name', 'polygon', 'slug')
         geo_field = 'polygon'
 
 
