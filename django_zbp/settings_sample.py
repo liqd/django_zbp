@@ -162,5 +162,7 @@ BOWER_INSTALLED_APPS = (
     'angular',
     'fontawesome',
     'bootstrap-sass',
-    'lodash'
+    'lodash',
+    'angular-loading-bar',
+    'angular-animate'
 )

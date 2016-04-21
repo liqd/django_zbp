@@ -6,21 +6,22 @@ from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from .filters import StatusFilter, OrtsteilFilter
 from .serializers import BezirkSerializer
 from .serializers import OrtsteilSerializer
-from .serializers import BPlanSerializer
+from .serializers import BPlanPointSerializer
 from .serializers import SimpleBPlanSerializer
+from .serializers import BPlanMultipolygonSerializer
 from .models import Bezirk
 from .models import Ortsteil
 from .models import BPlan
 
 
 class CustomGeoJsonPagination(GeoJsonPagination):
-    page_size = 100
+    page_size = 4000
     page_size_query_param = 'page_size'
     max_page_size = 10000
 
 
 class CustomPagination(PageNumberPagination):
-    page_size = 100
+    page_size = 4000
     page_size_query_param = 'page_size'
     max_page_size = 10000
 
@@ -39,19 +40,28 @@ class OrtsteilViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ('name',)
 
 
-class BPlanViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
+class BPlanDataViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
     queryset = BPlan.objects.all()
-    serializer_class = BPlanSerializer
+    serializer_class = SimpleBPlanSerializer
+    pagination_class = CustomPagination
+    filter_backends = (filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter)
+    filter_fields = (
+        'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
+
+
+class BPlanPointViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
+    queryset = BPlan.objects.all()
+    serializer_class = BPlanPointSerializer
     pagination_class = CustomGeoJsonPagination
     filter_backends = (filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter)
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
 
 
-class SimpleBPlanViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
+class BPlanMultipolygonViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
     queryset = BPlan.objects.all()
-    serializer_class = SimpleBPlanSerializer
-    pagination_class = CustomPagination
+    serializer_class = BPlanMultipolygonSerializer
+    pagination_class = CustomGeoJsonPagination
     filter_backends = (filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter)
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')

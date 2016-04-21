@@ -2,12 +2,19 @@
 
 angular.module('app.list.directives',[])
 
-.directive('listitem', function() {
+.directive('listitem', [ 'PlacesService', function(PlacesService) {
     return {
         restrict: 'E',
         scope: {
-            bplan: '=',
+            status: '=',
+            pk: '='
         },
         templateUrl: '/static/js/app/components/list/listitem.html',
+        link: function(scope) {
+        	PlacesService.getBplanDetail(scope.pk).then(function(data){
+        		scope.bplan = data;
+        	});
+
+        }
     };
-});
+}]);

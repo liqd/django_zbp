@@ -72,6 +72,7 @@ class Command(BaseCommand):
             bereich = feature.get("bereich")
             b = feature.get("bezirk")
             bezirk = Bezirk.objects.get(name=b)
+            bezirk_name = bezirk.name
 
             # check whether point is within the first polygon
             try:
@@ -196,6 +197,7 @@ class Command(BaseCommand):
                     point = point,
                     bereich = bereich,
                     bezirk = bezirk,
+                    bezirk_name = bezirk_name,
                     afs_behoer = afs_behoer,
                     afs_beschl = afs_beschl,
                     afs_l_aend = afs_l_aend,

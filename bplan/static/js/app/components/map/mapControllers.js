@@ -33,7 +33,7 @@ angular.module('app.map.controllers',[])
 
     var createMap = function(){
         var map = $window.L.map('map');
-        L.tileLayer('http://tiles.codefor.de/bbs-berlin/{z}/{x}/{y}.png', {
+        L.tileLayer('https://maps.berlinonline.de/tile/osmbright_bde/{z}/{x}/{y}.png', {
         	attribution: 'Map data &copy;',
         	maxZoom: 18
         }).addTo(map);
@@ -87,8 +87,7 @@ angular.module('app.map.controllers',[])
             var status = feature.properties.status;
             var lon = feature.geometry.coordinates[0];
             var lat = feature.geometry.coordinates[1];
-            var multipolygon = feature.properties.multipolygon;
-            var properties = feature.properties;
+            var pk = feature.properties.pk;
             var color = getColorForStaus(status);
             var radius = getRadiusForStaus(status);
             if($scope.places.filters[status]) {
@@ -106,18 +105,14 @@ angular.module('app.map.controllers',[])
                     'opacity': 1,
                     'fillOpacity': 0.3
                 }
-                var polygon = L.geoJson(multipolygon);
-                polygon.setStyle(style);
-                marker.clicked = false;
-                marker.multipolygon = polygon;
-                marker.properties = properties;
+                marker.pk = pk;
                 marker.on('click', function (e) {
                     map.removeLayer($scope.currentPolygon);
                     this.multipolygon.addTo(map).bringToBack();
-                    $scope.currentMarker.clicked = false;
-                    this.clicked = true;
-                    $scope.currentItem = this.properties;
                     $scope.currentPolygon = this.multipolygon;
+                    $scope.places.getBplanDetail(this.pk).then(function(data){
+                        $scope.currentItem = data;
+                    });
                     $scope.currentMarker = this;
                     $timeout(function() {
                         $scope.popupopen = true;
@@ -128,10 +123,24 @@ angular.module('app.map.controllers',[])
                     })
                 });
                 marker.on('mouseover', function (e) {
-                    this.multipolygon.addTo(map).bringToBack();
+                    if(!this.multipolygon){
+                        $scope.places.getBplanMultipolygon(this.pk).then(function(data){
+                            var multipolygon = L.geoJson(data);
+                            multipolygon.setStyle(style);
+                            e.target.multipolygon = multipolygon;
+                            if(!$scope.map.hasLayer(e.target.multipolygon)){
+                                e.target.multipolygon.addTo($scope.map).bringToBack();
+                            }
+                        });
+                    }
+                    else {
+                        if(!$scope.map.hasLayer(this.multipolygon)){
+                            this.multipolygon.addTo($scope.map).bringToBack();
+                        }
+                    }
                 });
                 marker.on('mouseout', function (e) {
-                    if(!this.clicked){
+                    if(this != $scope.currentMarker){
                         map.removeLayer(this.multipolygon);
                     }
                 });
@@ -156,14 +165,14 @@ angular.module('app.map.controllers',[])
             }
         });
         $scope.markers.addTo($scope.map);
-        PlacesService.initMapBplaene({}, $scope.places.map_markers.features).then(function () {
-            addGeojson($scope.markers, $scope.map, $scope.places.map_markers);
+        PlacesService.initBplaene({}, $scope.places.bplan_points.features).then(function () {
+            addGeojson($scope.markers, $scope.map, $scope.places.bplan_points);
         });
     });
 
     $scope.$on('filter:updated', function(event,data) {
         $scope.markers.clearLayers();
-        addGeojson($scope.markers, $scope.map, $scope.places.map_markers);
+        addGeojson($scope.markers, $scope.map, $scope.places.bplan_points);
         $scope.popupopen = false;
         if($scope.currentView == 'map'){
             setTimeout(function(){
@@ -185,12 +194,12 @@ angular.module('app.map.controllers',[])
 
     $scope.$on('ortsteil:reset', function(event,data) {
         $scope.map.removeLayer($scope.currentOrtsteil);
-        //$scope.map.fitBounds($scope.districtLayer);
     });
 
     $scope.closePopup = function() {
         $scope.popupopen = false;
-        $scope.currentMarker.clicked = false;
+        $scope.currentItem = {};
+        $scope.currentMarker = {};
         setTimeout(function(){
             $scope.map.invalidateSize({
                 pan:false
