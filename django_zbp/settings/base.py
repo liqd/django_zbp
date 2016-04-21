@@ -133,6 +133,8 @@ STATICFILES_FINDERS = [
     'djangobower.finders.BowerFinder',
 ]
 
+BOWER_PATH = os.path.join(BASE_DIR, 'node_modules', '.bin', 'bower')
+
 BOWER_COMPONENTS_ROOT = os.path.join(
     BASE_DIR, 'bplan', 'static', 'third-party')
 
