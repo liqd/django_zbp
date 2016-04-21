@@ -10,14 +10,19 @@ angular.module('app.list.controllers',[])
     $scope.pageSize = 3;
     $scope.list = [];
 
-    if($scope.places.bplan_points){
+    var updateList = function () {
+        $scope.list = [];
+        _.forEach($scope.places.bplan_points.features, function(value, key){
+            if($scope.places.filters[value.properties.status]){
+                $scope.list.push(value);
+            }
+        })
+        $scope.currentPage = 0;
+    }
+
+    $scope.$on('data:loaded', function(event,data){
         $scope.list = $scope.places.bplan_points.features;
-    }
-    else {
-        PlacesService.initBplaene({}, $scope.places.bplan_points.features).then(function () {
-            $scope.list = $scope.places.bplan_points.features;
-        });
-    }
+    });
 
     $scope.nextPage = function () {
     	$scope.currentPage = $scope.currentPage +1;
@@ -28,14 +33,15 @@ angular.module('app.list.controllers',[])
     };
 
     $scope.$on('filter:updated', function(event,data) {
-        $scope.list = [];
-        _.forEach($scope.places.bplan_points.features, function(value, key){
-            if($scope.places.filters[value.properties.status]){
-                $scope.list.push(value);
-            }
-        })
-        $scope.currentPage = 0;
+        updateList();
+    });
 
+    $scope.$on('ortsteil:updated', function(event,data) {
+        updateList();
+    });
+
+    $scope.$on('ortsteil:reset', function(event,data) {
+        updateList();
     });
 
 }])

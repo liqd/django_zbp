@@ -7,6 +7,10 @@ angular.module('app.shared.controllers.viewController',[])
     $scope.places = PlacesService;
     $scope.currentView = 'map';
 
+    $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function () {
+        $rootScope.$broadcast('data:loaded');
+    });
+
     $scope.setView = function(type) {
         $scope.currentView = type;
     }
@@ -16,12 +20,19 @@ angular.module('app.shared.controllers.viewController',[])
     }
 
     $scope.updateOrtsteil = function() {
-        $rootScope.$broadcast('ortsteil:updated');
+        $scope.places.reset();
+        var slug = $scope.places.ortsteile_polygons[$scope.places.currentOrtsteil].properties.slug;
+        $scope.places.initBplaene({'ortsteil': slug}, $scope.places.bplan_points.features).then(function () {
+            $rootScope.$broadcast('ortsteil:updated');
+        });
     }
 
     $scope.resetOrtsteil = function() {
+        $scope.places.reset();
         $scope.places.currentOrtsteilName = "Alle Ortsteile"
-        $rootScope.$broadcast('ortsteil:reset');
+        $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function () {
+            $rootScope.$broadcast('ortsteil:reset');
+        });
     }
 
 }])

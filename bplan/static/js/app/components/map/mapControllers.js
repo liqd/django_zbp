@@ -26,9 +26,9 @@ angular.module('app.map.controllers',[])
 
     var ORTSTEILSTYLE = {
         'color': '#808080',
-        'weight': 1,
+        'weight': 2,
         'opacity': 1,
-        'fillOpacity': 0.1
+        'fillOpacity': 0.2
     }
 
     var createMap = function(){
@@ -149,23 +149,24 @@ angular.module('app.map.controllers',[])
         })
     }
 
-    PlacesService.initMap().then( function() {
 
-        $scope.map = createMap();
+    $scope.$on('data:loaded', function(event,data){
+        $scope.places.initMap().then( function() {
 
-        $scope.markers = L.markerClusterGroup({
-            chunkedLoading: true,
-            disableClusteringAtZoom: 14,
-            polygonOptions: {
-                fillColor: '#1b2557',
-                color: '#1b2557',
-                weight: 0.5,
-                opacity: 1,
-                fillOpacity: 0.2
-            }
-        });
-        $scope.markers.addTo($scope.map);
-        PlacesService.initBplaene({}, $scope.places.bplan_points.features).then(function () {
+            $scope.map = createMap();
+
+            $scope.markers = L.markerClusterGroup({
+                chunkedLoading: true,
+                disableClusteringAtZoom: 14,
+                polygonOptions: {
+                    fillColor: '#1b2557',
+                    color: '#1b2557',
+                    weight: 0.5,
+                    opacity: 1,
+                    fillOpacity: 0.2
+                }
+            });
+            $scope.markers.addTo($scope.map);
             addGeojson($scope.markers, $scope.map, $scope.places.bplan_points);
         });
     });
@@ -185,6 +186,8 @@ angular.module('app.map.controllers',[])
     });
 
     $scope.$on('ortsteil:updated', function(event,data) {
+        $scope.markers.clearLayers();
+        addGeojson($scope.markers, $scope.map, $scope.places.bplan_points);
         var ortsteil = $scope.places.ortsteile_polygons[$scope.places.currentOrtsteil];
         $scope.map.removeLayer($scope.currentOrtsteil);
         $scope.currentOrtsteil = L.geoJson(ortsteil).addTo($scope.map).bringToBack();
@@ -194,6 +197,8 @@ angular.module('app.map.controllers',[])
 
     $scope.$on('ortsteil:reset', function(event,data) {
         $scope.map.removeLayer($scope.currentOrtsteil);
+        $scope.markers.clearLayers();
+        addGeojson($scope.markers, $scope.map, $scope.places.bplan_points);
     });
 
     $scope.closePopup = function() {
