@@ -15,12 +15,18 @@ angular.module('app.shared.services.places', [])
     places.currentOrtsteil = "";
     places.currentOrtsteilName = "Alle Ortsteile";
 
+    places.reset = function () {
+        places.bplan_points = {};
+        places.bplan_points.type = 'FeatureCollection';
+        places.bplan_points.features = [];
+    };
+
     places.filters = {
         aul : true,
         bbg : true,
         festg : true,
         imVerfahren : true
-    }
+    };
 
     // loads polygon of district
     places.initMap = function () {
