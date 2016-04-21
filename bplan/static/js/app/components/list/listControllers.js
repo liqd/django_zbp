@@ -7,7 +7,7 @@ angular.module('app.list.controllers',[])
     $scope.Math = window.Math;
     $scope.places = PlacesService;
     $scope.currentPage = 0;
-    $scope.pageSize = 5;
+    $scope.pageSize = 3;
     $scope.list = [];
 
     if($scope.places.bplan_points){
