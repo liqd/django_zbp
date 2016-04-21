@@ -33,13 +33,9 @@ angular.module('app.map.controllers',[])
 
     var createMap = function(){
         var map = $window.L.map('map');
-        /*L.tileLayer('http://tiles.codefor.de/bbs-berlin/{z}/{x}/{y}.png', {
+        L.tileLayer('https://maps.berlinonline.de/tile/osmbright_bde/{z}/{x}/{y}.png', {
         	attribution: 'Map data &copy;',
         	maxZoom: 18
-        }).addTo(map);*/
-        L.tileLayer('http://localhost:8080/berlinOnline/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy;',
-            maxZoom: 18
         }).addTo(map);
         $scope.districtLayer = L.geoJson($scope.places.district).addTo(map);
         $scope.districtLayer.setStyle(DISTRICTSTYLE);
