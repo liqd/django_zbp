@@ -7,7 +7,7 @@ angular.module('app.list.controllers',[])
     $scope.Math = window.Math;
     $scope.places = PlacesService;
     $scope.currentPage = 0;
-    $scope.pageSize = 3;
+    $scope.pageSize = 4;
     $scope.list = [];
 
     var updateList = function () {
