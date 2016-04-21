@@ -9,10 +9,11 @@ Zentrale Bplan Plattform for Berlin based on Django 1.9.4 and PostgreSQL/PostGIS
 $ git clone git@github.com:liqd/django_zbp.git
 $ cd django_zbp
 $ pip install -r requirements.txt
-$ cp django_zbp/settings_sample.py django_zbp/settings.py
+$ cp django_zbp/settings/local.sample.py django_zbp/settings/local.py
+$ edit django_zbp/settings/local.py
 ```
 
-edit *django_zbp/settings.py* for your database connection
+edit *django_zbp/settings/local.py* for your database connection
 
 ``` python
 DATABASES = {
@@ -45,4 +46,3 @@ $ ./manage.py runserver
 ```
 
 go to http://localhost:8000/admin/
-
