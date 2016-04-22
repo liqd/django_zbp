@@ -60,8 +60,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-X_FRAME_OPTIONS = 'ALLOW-FROM SAMEDOMAIN'
-
 ROOT_URLCONF = 'django_zbp.urls'
 
 TEMPLATES = [
