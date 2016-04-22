@@ -26,11 +26,6 @@ TIME_ZONE = 'Europe/Berlin'
 
 USE_TZ = True
 
-REST_FRAMEWORK_EXTENSIONS = {
-    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15
-}
-
-
 # Application definition
 
 INSTALLED_APPS = [
