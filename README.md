@@ -11,7 +11,7 @@ $ cd django_zbp
 $ npm install bower
 $ pip install -r requirements.txt
 $ cp django_zbp/settings/local.sample.py django_zbp/settings/local.py
-$ edit django_zbp/settings/local.py
+$ edit django_zbp/settings/local.py -> set GDAL_LEGACY
 ```
 
 edit *django_zbp/settings/local.py* for your database connection
@@ -35,7 +35,8 @@ $ ./manage.py bower install
 $ ./manage.py createsuperuser
 $ ./manage.py load_bezirke
 $ ./manage.py load_ortsteile
-$ ./manage.py load_bplan
+$ ./manage.py load_bplan --fromFixtures (to load data from fixtures, no GDAL required)
+$ ../manage.py load_bplan (to load data from WFS, GDAL required)
 ```
 here there is still an ugly error occurring twice that can be disregarded:
 
