@@ -91,6 +91,28 @@ angular.module('app.shared.services.places', [])
         return deferred.promise;
     };
 
+    places.getBplanMultipolygonList = function (params) {
+        if(area){
+            params.bezirk__slug = area;
+            params.afs_behoer = "Bezirksamt";
+        }
+        if(places.currentOrtsteilName!='Alle Ortsteile'){
+            var ortsteil_slug = places.ortsteile_polygons[places.currentOrtsteil].properties.slug;
+            params.ortsteil = ortsteil_slug;
+        }
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/api/bplaene_multipolygon/',
+            'params' : params
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        return deferred.promise;
+    };
+
     // Helpfunction for initMapBplaene and initMapBplaene (loops through paginated data from server)
     var getNextPage = function(url, params, target, deferred) {
 

@@ -1,0 +1,149 @@
+//colors
+$primary-rgb-60: rgba(37, 50, 118, 0.6);
+$white-rgb-0: rgba(255,255,255,0);
+
+//fonts
+$font_0: Arima;
+$font_1: Arial;
+$font_2: Helvetica;
+$font_3: sans-serif;
+
+.marker-cluster-small {
+	background-color: $primary-rgb-60;
+	div {
+		background-color: $brand-primary;
+		span {
+			color: $white;
+		}
+	}
+}
+.marker-cluster-medium {
+	background-color: $primary-rgb-60;
+	div {
+		background-color: $brand-primary;
+		span {
+			color: $white;
+		}
+	}
+}
+.marker-cluster-large {
+	background-color: $primary-rgb-60;
+	div {
+		background-color: $brand-primary;
+		span {
+			color: $white;
+		}
+	}
+}
+.leaflet-oldie {
+	.marker-cluster-small {
+		background-color: $primary-rgb-60;
+		div {
+			background-color: $brand-primary;
+		}
+	}
+	.marker-cluster-medium {
+		background-color: $primary-rgb-60;
+		div {
+			background-color: $brand-primary;
+		}
+	}
+	.marker-cluster-large {
+		background-color: $primary-rgb-60;
+		div {
+			background-color: $brand-primary;
+		}
+	}
+}
+.marker-cluster {
+	background-clip: padding-box;
+	border-radius: 20px;
+	div {
+		width: 30px;
+		height: 30px;
+		margin-left: 5px;
+		margin-top: 5px;
+		text-align: center;
+		border-radius: 15px;
+		font: 12px $font_0, $font_1, $font_2, $font_3;
+	}
+	span {
+		line-height: 30px;
+	}
+}
+
+.custom-marker-aul {
+	background-clip: padding-box;
+	div {
+		width: 25px;
+		height: 25px;
+		padding-top: 5px;
+		border-radius: 50%;
+		background-color: $white-rgb-0;
+		div {
+			width: 15px;
+			height: 15px;
+			margin-left: 5px;
+			padding-top: 5px;
+			border-radius: 50%;
+			background-color: $status-aul;
+		}
+	}
+}
+
+.custom-marker-bbg {
+	background-clip: padding-box;
+	div {
+		width: 25px;
+		height: 25px;
+		padding-top: 5px;
+		border-radius: 50%;
+		background-color: $white-rgb-0;
+		div {
+			width: 15px;
+			height: 15px;
+			margin-left: 5px;
+			padding-top: 5px;
+			border-radius: 50%;
+			background-color: $status-bbg;
+		}
+	}
+}
+
+.custom-marker-festg {
+	background-clip: padding-box;
+	div {
+		width: 20px;
+		height: 20px;
+		padding-top: 5px;
+		border-radius: 50%;
+		background-color: $white-rgb-0;
+		div {
+			width: 10px;
+			height: 10px;
+			margin-left: 5px;
+			padding-top: 5px;
+			border-radius: 50%;
+			background-color: $status-festg;
+		}
+	}
+}
+
+.custom-marker-imVerfahren {
+	background-clip: padding-box;
+	div {
+		width: 20px;
+		height: 20px;
+		padding-top: 5px;
+		border-radius: 50%;
+		background-color: $white-rgb-0;
+		div {
+			width: 10px;
+			height: 10px;
+			margin-left: 5px;
+			padding-top: 5px;
+			border-radius: 50%;
+			background-color: $status-imVerfahren;
+		}
+	}
+}

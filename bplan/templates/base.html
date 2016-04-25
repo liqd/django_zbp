@@ -13,7 +13,6 @@
 
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/leaflet/dist/leaflet.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/MarkerCluster.Custom.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/font-awesome/css/font-awesome.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/angular-loading-bar/build/loading-bar.min.css' %}" />
 
@@ -35,7 +34,6 @@
                 <div class="row" ng-controller="ViewController">
 
                     <div class="no-padding col-md-12">
-                        <!-- nav directive from app/shared/directives/ -->
                         <data-shared-nav></data-shared-nav>
                     </div>
 
@@ -48,14 +46,22 @@
 
                         <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding"
                              data-ng-if ="currentView === 'map' && popupopen">
-                            <!-- popup directive from app/components/map/mapDirectives -->
                             <data-popup data-ng-if="currentItem" closepopup="closePopup" bplan="currentItem"></data-popup>
                         </div>
 
                     </div>
 
                     <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
-                        <div class="row bplan-list">
+                        <div
+                            class="row"
+                            data-ng-if="list.length === 0">
+                            <div class="col-md-12">
+                                Keine Ergebnisse
+                            </div>
+                        </div>
+                        <div
+                            class="row bplan-list"
+                            data-ng-if="list.length > 0">
                             <div class="col-md-12 col-lg-12 pull-right">
                                 <nav>
                                     <ul class="pagination">
@@ -92,8 +98,10 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12" data-ng-show="currentView === 'list'">
-                                <div class="row" data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
-                                    <!-- listitem directive from app/components/list/listDirectives -->
+                                <div
+                                    class="row"
+                                    data-ng-if="list.length > 0"
+                                    data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
                                     <listitem data-ng-if="$index <= (currentPage*pageSize + pageSize)" status="bplan.properties.status" pk="bplan.properties.pk"></listitem>
                                 </div>
                             </div>
