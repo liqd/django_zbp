@@ -57,18 +57,18 @@ angular.module('app.map.controllers',[])
         }
     }
 
-    var getRadiusForStaus = function(status) {
+    var getSizeForStaus = function(status) {
         if(status == 'aul') {
-            return 8;
+            return 25;
         }
         else if(status == 'bbg') {
-            return 8;
+            return 25;
         }
         else if(status == 'festg') {
-            return 4;
+            return 20;
         }
         else if(status == 'imVerfahren') {
-            return 4;
+            return 20;
         }
         else {
             console.log('Not a known status');
@@ -127,7 +127,7 @@ angular.module('app.map.controllers',[])
         var currentZoom = map.getZoom();
         map.options.minZoom = currentZoom;
         map.on('zoomend', function (e){
-            if(map.getZoom() >= 14){
+            if(map.getZoom() >= 15){
                 getMultipolygons();
             }
             else{
@@ -139,7 +139,7 @@ angular.module('app.map.controllers',[])
             }
         });
         map.on('dragend', function (e){
-            if(map.getZoom() >= 14){
+            if(map.getZoom() >= 15){
                 getMultipolygons();
             }
         });
@@ -154,22 +154,22 @@ angular.module('app.map.controllers',[])
             var lat = feature.geometry.coordinates[1];
             var pk = feature.properties.pk;
             var color = getColorForStaus(status);
-            var radius = getRadiusForStaus(status);
+            var size = getSizeForStaus(status);
             if($scope.places.filters[status]) {
-                var marker = L.circleMarker(L.latLng(lat, lon), {
-                    radius: radius,
-                    fillColor: color,
-                    weight: 0,
-                    opacity: 0,
-                    fillOpacity: 1
-                    }
-                );
+                var cssIcon = L.divIcon({
+                    className: 'custom-marker-' + status,
+                    html:'<div><div></div></div>',
+                    iconSize: [size,size]
+                });
+                var marker = L.marker(L.latLng(lat, lon), {icon: cssIcon});
+
                 var style = {
                     'color': color,
                     'weight': 0.5,
                     'opacity': 1,
                     'fillOpacity': 0.5
                 }
+
                 marker.pk = pk;
                 marker.on('click', function (e) {
                     map.removeLayer($scope.currentPolygon);
@@ -209,7 +209,8 @@ angular.module('app.map.controllers',[])
 
             $scope.markers = L.markerClusterGroup({
                 chunkedLoading: true,
-                disableClusteringAtZoom: 13,
+                removeOutsideVisibleBounds: true,
+                disableClusteringAtZoom: 14,
                 polygonOptions: {
                     fillColor: '#1b2557',
                     color: '#1b2557',
@@ -226,7 +227,7 @@ angular.module('app.map.controllers',[])
     $scope.$on('filter:updated', function(event,data) {
         $scope.markers.clearLayers();
         addGeojson($scope.markers, $scope.map, $scope.places.bplan_points);
-        if($scope.map.getZoom() >= 14){
+        if($scope.map.getZoom() >= 15){
             _.forEach($scope.polygons, function(value, key){
                 if(!$scope.places.filters[key]){
                     _.forEach(value, function(value, key) {
