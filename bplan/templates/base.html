@@ -52,7 +52,16 @@
                     </div>
 
                     <div data-ng-controller="ListController" data-ng-show="currentView === 'list'">
-                        <div class="row bplan-list">
+                        <div
+                            class="row"
+                            data-ng-if="list.length === 0">
+                            <div class="col-md-12">
+                                Keine Ergebnisse
+                            </div>
+                        </div>
+                        <div
+                            class="row bplan-list"
+                            data-ng-if="list.length > 0">
                             <div class="col-md-12 col-lg-12 pull-right">
                                 <nav>
                                     <ul class="pagination">
@@ -89,7 +98,10 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12" data-ng-show="currentView === 'list'">
-                                <div class="row" data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
+                                <div
+                                    class="row"
+                                    data-ng-if="list.length > 0"
+                                    data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
                                     <listitem data-ng-if="$index <= (currentPage*pageSize + pageSize)" status="bplan.properties.status" pk="bplan.properties.pk"></listitem>
                                 </div>
                             </div>
