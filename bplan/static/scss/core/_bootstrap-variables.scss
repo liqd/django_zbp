@@ -52,7 +52,7 @@ $footer-height:         98px;
 //** Background color for `<body>`.
 $body-bg:               #fff !default;
 //** Global text color on `<body>`.
-$text-color:            $gray-dark !default;
+$text-color:            $gray-light !default;
 
 //** Global textual link color.
 $link-color:            $brand-primary !default;
@@ -66,13 +66,13 @@ $link-hover-decoration: underline !default;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  Arial, sans-serif !default;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+$font-family-sans-serif:  Arimo, sans-serif !default;
+$font-family-serif:       Arimo, serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
-$font-size-base:          16px !default;
+$font-size-base:          13px !default;
 $font-size-large:         20px !default; // ~18px
 $font-size-xlarge:        30px !default; // ~18px
 $font-size-small:         12px !default; // ~12px
