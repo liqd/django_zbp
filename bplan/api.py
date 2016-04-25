@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_gis.pagination import GeoJsonPagination
-from rest_framework_extensions.cache.mixins import CacheResponseMixin
+from .filters import StatusFilter, OrtsteilFilter
 from rest_framework_gis.filters import InBBoxFilter
 from .filters import StatusFilter
 from .filters import OrtsteilFilter
@@ -42,7 +42,7 @@ class OrtsteilViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ('name',)
 
 
-class BPlanDataViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
+class BPlanDataViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BPlan.objects.all()
     serializer_class = SimpleBPlanSerializer
     pagination_class = CustomPagination
@@ -52,7 +52,7 @@ class BPlanDataViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
 
 
-class BPlanPointViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
+class BPlanPointViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BPlan.objects.all()
     serializer_class = BPlanPointSerializer
     pagination_class = CustomGeoJsonPagination
@@ -64,7 +64,7 @@ class BPlanPointViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
 
 
-class BPlanMultipolygonViewSet(viewsets.ReadOnlyModelViewSet, CacheResponseMixin):
+class BPlanMultipolygonViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BPlan.objects.all()
     serializer_class = BPlanMultipolygonSerializer
     pagination_class = CustomGeoJsonPagination
