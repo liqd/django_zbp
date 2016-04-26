@@ -8,3 +8,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+# Set GDAL_LEGACY flag if GDAL <= 1.10 else false
+GDAL_LEGACY = False
