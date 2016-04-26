@@ -10,4 +10,4 @@ DATABASES = {
 }
 
 # Set GDAL_LEGACY flag if GDAL <= 1.10 else false
-GDAL_LEGACY = True
+GDAL_LEGACY = False
