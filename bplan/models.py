@@ -7,7 +7,7 @@ class Download(models.Model):
     errors = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.created
+        return str(self.created)
 
 
 class Bezirk(models.Model):
