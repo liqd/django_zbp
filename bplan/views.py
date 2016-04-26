@@ -1,6 +1,8 @@
 from django.views.generic.detail import DetailView
 from .models import Bezirk
+from .models import Download
 from .forms import LoginForm
+from django.core.management import call_command
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -52,4 +54,12 @@ def logout_user(request):
 
 @login_required
 def downloads(request):
-    return render_to_response('downloads.html', context_instance=RequestContext(request))
+
+    if 'getNew' in request.GET:
+        result = call_command('load_bplan')
+        downloads = Download.objects.all().order_by('-created')[:20]
+    else:
+        downloads = Download.objects.all().order_by('-created')[:20]
+
+    return render(request, 'downloads.html', {'downloads': downloads})
+

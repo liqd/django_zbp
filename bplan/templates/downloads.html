@@ -1,10 +1,54 @@
 {% extends 'admin_base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
-	<div class="col-md-12 col-md-offset-5" style="margin-top: 30px;">
-		<a class="btn btn-primary btn-lg" href="">Download Bpläne</a>
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+	<h2>Latest Downloads</h2>
+
+	{% for download in downloads %}
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="heading{{ forloop.counter }}">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+				  {{ download.created }}
+				</a>
+			</h4>
+		</div>
+		<div id="collapse{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ forloop.counter }}">
+			<div class="panel-body">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Neue Bpläne</h3>
+					</div>
+					<div class="panel-body">
+					<b>Anzahl: </b>{{ download.bplan_set.all.count}}<br>
+					{% for bplan in download.bplan_set.all %}
+					<a href="/admin/bplan/bplan/{{ bplan.pk }}/change/">{{ bplan.planname }}</a>
+					{% endfor %}
+					</div>
+				</div>
+
+				{% if download.errors %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Errors</h3>
+					</div>
+					<div class="panel-body">
+					{{ download.errors}}
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
 	</div>
+	{% endfor %}
+
+	</div>
+<div class="col-md-12 col-md-offset-5" style="margin-top: 30px;">
+<a class="btn btn-primary btn-lg" href="?getNew=True">Download Bpläne</a>
+</div>
 </div>
 
 
