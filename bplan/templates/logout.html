@@ -1,8 +1,11 @@
 {% extends 'admin_base.html' %}
 
 {% block content %}
-<h2><small>Abmeldung</small></h2>
-<div id="logout">
-    Sie sind nun abgemeldet!
+<div class="container">
+	<h2><small>Abmeldung</small></h2>
+	<div id="logout">
+	    <p>Sie haben sich erfolgreich abgemeldet!</p>
+	    <a href="/accounts/login/">Wieder anmelden</a>
+	</div>
 </div>
 {% endblock %}

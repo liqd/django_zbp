@@ -39,7 +39,6 @@ def login_user(request):
             if user:
                 login(request, user)
                 if request.GET.get('next'):
-                    # Redirect to a success page.
                     return HttpResponseRedirect(request.GET.get('next'))
                 else:
                     return HttpResponseRedirect('/downloads/')
