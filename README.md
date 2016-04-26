@@ -11,7 +11,7 @@ $ cd django_zbp
 $ npm install bower
 $ pip install -r requirements.txt
 $ cp django_zbp/settings/local.sample.py django_zbp/settings/local.py
-$ edit django_zbp/settings/local.py -> set GDAL_LEGACY
+$ edit django_zbp/settings/local.py -> set GDAL_LEGACY to True in your local settings if GDAL <= 1.10
 ```
 
 edit *django_zbp/settings/local.py* for your database connection
