@@ -18,6 +18,7 @@ from django.contrib.gis.db import models
 from bplan.models import Bezirk
 from bplan.models import BPlan
 from bplan.models import Ortsteil
+from bplan.models import Download
 
 from django.conf import settings
 
@@ -56,7 +57,6 @@ class Command(BaseCommand):
         except:
             pass
 
-        print('trying to download file from %s' % (url))
         result = os.system(call)
         if result != 0:
             sys.exit(1)
@@ -72,8 +72,6 @@ class Command(BaseCommand):
         spatial_type = feature.get("spatial_type")
         geometry = GEOSGeometry(str(feature.geom))
         bereich = feature.get("bereich")
-        if not (geometry.geom_type == "Polygon" or geometry.geom_type == "MultiPolygon"):
-            print(geometry.geom_type)
         if geometry.geom_type == "Polygon":
             multipolygon = MultiPolygon(geometry)
         else:
@@ -215,9 +213,9 @@ class Command(BaseCommand):
             self._download_geodata('/tmp/re_bplan.json', url, 'fis:re_bplan')
             data_source = DataSource('/tmp/re_bplan.json')
 
-        invalid_items = []
-        crated_items = 0
-        print('number of items: ' + str(len(data_source[0])))
+        download = Download.objects.create()
+
+        errors = []
 
         for feature in tqdm(data_source[0]):
 
@@ -226,10 +224,6 @@ class Command(BaseCommand):
             bplanID = planname.replace(" ", "")
             spatial_type, multipolygon, geometry, bereich = self._get_spatial_data(
                 feature)
-
-            if not geometry.valid:
-                invalid_items.append(planname)
-
             point = self._calculate_point(multipolygon)
             bezirk, bezirk_name = self._get_district(feature)
             ortsteile = self._get_ortsteile(geometry)
@@ -281,9 +275,12 @@ class Command(BaseCommand):
                 for ortsteil in ortsteile:
                     bplan.ortsteile.add(ortsteil)
                 if created:
-                    crated_items = crated_items + 1
+                    bplan.download = download
+                    bplan.save()
             except Exception as e:
+                newError = "Bplan " + planname + ": " + str(e)
+                errors.append(newError)
                 pass
 
-        print('invalid items: ' + str(invalid_items))
-        print('crated items: ' + str(crated_items))
+        download.errors = errors
+        download.save()
