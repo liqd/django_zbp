@@ -56,11 +56,11 @@ class Command(BaseCommand):
         except:
             pass
 
-        try:
-            print('trying to download file from %s' % (url))
-            os.system(call)
-        except Exception:
-            sys.exit()
+        print('trying to download file from %s' % (url))
+        result = os.system(call)
+        if result != 0:
+            sys.exit(1)
+
 
     def _get_identifiers(self, feature):
         planname = feature.get("planname")
