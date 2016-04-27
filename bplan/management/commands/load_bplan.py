@@ -59,7 +59,7 @@ class Command(BaseCommand):
 
         result = os.system(call)
         if result != 0:
-            sys.exit(1)
+            raise Exception("Could not download data")
 
 
     def _get_identifiers(self, feature):
