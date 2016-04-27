@@ -54,6 +54,10 @@ def logout_user(request):
 
 @login_required
 def downloads(request):
+    errors = []
+        except Exception as e:
+            errors.append(str(e))
+            pass
 
     if 'getNew' in request.GET:
         result = call_command('load_bplan')
@@ -62,4 +66,5 @@ def downloads(request):
         downloads = Download.objects.all().order_by('-created')[:20]
 
     return render(request, 'downloads.html', {'downloads': downloads})
+    return render(request, 'downloads.html', {'downloads': downloads, 'errors': errors})
 
