@@ -12,6 +12,7 @@
 		<div class="alert alert-danger" role="alert">{{ error }}</div>
 		{% endfor %}
 	{% endif %}
+
 	{% for download in downloads %}
 	<div class="panel panel-default">
 		<div class="panel-heading" role="tab" id="heading{{ forloop.counter }}">
@@ -49,12 +50,23 @@
 		</div>
 	</div>
 	{% endfor %}
+	{% if request.user.is_superuser %}
+	<a href="{% url 'admin:bplan_download_changelist' %}">more...</a>
+	{% endif %}
 
 	</div>
-<div class="col-md-12 col-md-offset-5" style="margin-top: 30px;">
-<a class="btn btn-primary btn-lg" href="?getNew=True">Download Bpläne</a>
+	<div class="col-md-12 col-md-offset-5" style="margin-top: 30px;">
+		<form action="{% url 'downloads' %}" method="post">{% csrf_token %}
+			<button type="submit" id="btn" class="btn btn-default btn-lg has-spinner">
+				<span class="icon-spinner"><i class="fa fa-spinner load-animate"></i></span>
+    			Download Bpläne
+			</button></br>
+			<small>This might take a while (1 to 2 Minutes)</small>
+		</form>
+	</div>
 </div>
-</div>
+{% endblock %}
 
-
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
 {% endblock %}
