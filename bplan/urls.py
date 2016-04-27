@@ -1,3 +1,4 @@
+from django.views.generic.base import RedirectView
 from django.conf.urls import url, include
 from rest_framework import routers
 from .api import BezirkViewSet
@@ -24,8 +25,8 @@ urlpatterns = [
         StadtView.as_view(template_name="bplan/berlin.html"), name='berlin'),
     url(r'^berlin/(?P<slug>[a-z\-]+)/',
         BezirkDetailView.as_view(), name='bezirk'),
-    # user login
     url(r'^login/', 'bplan.views.login_user', name='login'),
     url(r'^logout/', 'bplan.views.logout_user', name='logout'),
     url(r'^downloads/', 'bplan.views.downloads', name='downloads')
+    url(r'^.*$', RedirectView.as_view(pattern_name='berlin'), name='index')
 ]
