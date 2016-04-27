@@ -25,7 +25,7 @@
 					<div class="panel-body">
 					<b>Anzahl: </b>{{ download.bplan_set.all.count}}<br>
 					{% for bplan in download.bplan_set.all %}
-					<a href="/admin/bplan/bplan/{{ bplan.pk }}/change/">{{ bplan.planname }}</a>
+					<a href="{% url 'admin:bplan_bplan_change' bplan.pk %}">{{ bplan.planname }}</a>
 					{% endfor %}
 					</div>
 				</div>
