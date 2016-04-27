@@ -16,6 +16,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.views.decorators.clickjacking import xframe_options_exempt
+from django.core.urlresolvers import reverse
 
 
 class BezirkDetailView(DetailView):
@@ -43,7 +44,7 @@ def login_user(request):
                 if request.GET.get('next'):
                     return HttpResponseRedirect(request.GET.get('next'))
                 else:
-                    return HttpResponseRedirect('/downloads/')
+                    return HttpResponseRedirect(reverse('downloads'))
     return render(request, 'login.html', {'form': form})
 
 
@@ -55,16 +56,14 @@ def logout_user(request):
 @login_required
 def downloads(request):
     errors = []
+    if request.method == 'POST':
+        try:
+            result = call_command('load_bplan')
         except Exception as e:
             errors.append(str(e))
             pass
 
-    if 'getNew' in request.GET:
-        result = call_command('load_bplan')
-        downloads = Download.objects.all().order_by('-created')[:20]
-    else:
-        downloads = Download.objects.all().order_by('-created')[:20]
+    downloads = Download.objects.all().order_by('-created')[:20]
 
-    return render(request, 'downloads.html', {'downloads': downloads})
     return render(request, 'downloads.html', {'downloads': downloads, 'errors': errors})
 
