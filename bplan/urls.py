@@ -27,6 +27,6 @@ urlpatterns = [
         BezirkDetailView.as_view(), name='bezirk'),
     url(r'^login/', 'bplan.views.login_user', name='login'),
     url(r'^logout/', 'bplan.views.logout_user', name='logout'),
-    url(r'^downloads/', 'bplan.views.downloads', name='downloads')
+    url(r'^downloads/', 'bplan.views.downloads', name='downloads'),
     url(r'^.*$', RedirectView.as_view(pattern_name='berlin'), name='index')
 ]
