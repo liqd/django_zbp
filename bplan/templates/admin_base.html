@@ -33,16 +33,16 @@
                     <ul class="dropdown-menu">
                         {% if request.user.is_superuser %}
                         <li>
-                            <a href="/admin/">Admin</a>
+                            <a href="{% url 'admin:index' %}">Admin</a>
                         </li>
                         {% endif %}
                         {% if request.user.is_authenticated %}
                         <li>
-                            <a href="/logout/">Logout</a>
+                            <a href="{% url 'logout' %}">Logout</a>
                         </li>
                         {% else %}
                         <li>
-                            <a href="/accounts/login/">Login</a>
+                            <a href="{% url 'login' %}">Login</a>
                         </li>
                         {% endif %}
                     </ul>

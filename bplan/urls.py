@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^berlin/(?P<slug>[a-z\-]+)/',
         BezirkDetailView.as_view(), name='bezirk'),
     # user login
-    url(r'^accounts/login/', 'bplan.views.login_user'),
-    url(r'^logout/', 'bplan.views.logout_user'),
-    url(r'^downloads/', 'bplan.views.downloads')
+    url(r'^login/', 'bplan.views.login_user', name='login'),
+    url(r'^logout/', 'bplan.views.logout_user', name='logout'),
+    url(r'^downloads/', 'bplan.views.downloads', name='downloads')
 ]
