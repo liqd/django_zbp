@@ -23,5 +23,5 @@ urlpatterns = [
         StadtView.as_view(template_name="bplan/berlin.html"), name='berlin'),
     url(r'^berlin/(?P<slug>[a-z\-]+)/',
         BezirkDetailView.as_view(), name='bezirk'),
-    url(r'^.*$', RedirectView.as_view(pattern_name='berlin'), name='index')
+    url(r'^$', RedirectView.as_view(pattern_name='berlin'), name='index')
 ]
