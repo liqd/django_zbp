@@ -1,7 +1,6 @@
 import os
 import sys
 import json
-import math
 import dateutil.parser
 
 from tqdm import tqdm
@@ -21,6 +20,16 @@ from bplan.models import Ortsteil
 
 from django.conf import settings
 
+
+def matchesAnotherPoint(point, points):
+    ret = False
+    for other_point in points:
+        if other_point.equals(point):
+            ret = True
+            break
+        else:
+            pass
+    return ret
 
 class Command(BaseCommand):
 
@@ -42,7 +51,6 @@ class Command(BaseCommand):
                     k += 1
             except:
                 k += 1
-
         return Point(multipolygon[0][0][0])
 
     def _download_geodata(self, filename, url, layer):
@@ -80,13 +88,20 @@ class Command(BaseCommand):
             multipolygon = geometry
         return(spatial_type, multipolygon, geometry, bereich)
 
-    def _calculate_point(self, multipolygon):
+    def _calculate_point(self, multipolygon, points):
+        m = 0
         point = Point(
             multipolygon[0].centroid.x, multipolygon[0].centroid.y)
         try:
             point_polygon = point.within(multipolygon[0])
             if not point_polygon:
                 point = self._getPseudoCentroid(multipolygon)
+            point_matches = matchesAnotherPoint(point, points)
+            if matchesAnotherPoint(point, points):
+                point = self._getPseudoCentroid(multipolygon)
+                while matchesAnotherPoint(point, points):
+                    point = multipolygon[0][m]
+                    m += 1
         except:
             point = multipolygon[0][0]
         return point
@@ -206,6 +221,7 @@ class Command(BaseCommand):
 
         url = 'http://fbinter.stadt-berlin.de/fb/'\
             'wfs/geometry/senstadt/re_bplan'
+        points = []
 
         if options['fromFixtures']:
             fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan', 'fixtures')
@@ -230,7 +246,8 @@ class Command(BaseCommand):
             if not geometry.valid:
                 invalid_items.append(planname)
 
-            point = self._calculate_point(multipolygon)
+            point = self._calculate_point(multipolygon, points)
+            points.append(point)
             bezirk, bezirk_name = self._get_district(feature)
             ortsteile = self._get_ortsteile(geometry)
             afs_behoer = feature.get("afs_behoer")
