@@ -1,0 +1,72 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+	<h2>Latest Downloads</h2>
+
+	{% if errors %}
+		{% for error in errors %}
+		<div class="alert alert-danger" role="alert">{{ error }}</div>
+		{% endfor %}
+	{% endif %}
+
+	{% for download in downloads %}
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="heading{{ forloop.counter }}">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+				  {{ download.created }}
+				</a>
+			</h4>
+		</div>
+		<div id="collapse{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ forloop.counter }}">
+			<div class="panel-body">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Neue Bpläne</h3>
+					</div>
+					<div class="panel-body">
+					<b>Anzahl: </b>{{ download.bplan_set.all.count}}<br>
+					{% for bplan in download.bplan_set.all %}
+					<a href="{% url 'admin:bplan_bplan_change' bplan.pk %}">{{ bplan.planname }}</a>
+					{% endfor %}
+					</div>
+				</div>
+
+				{% if download.errors %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Errors</h3>
+					</div>
+					<div class="panel-body">
+					{{ download.errors}}
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+	{% if request.user.is_superuser %}
+	<a href="{% url 'admin:bplan_download_changelist' %}">more...</a>
+	{% endif %}
+
+	</div>
+	<div class="col-md-12 col-md-offset-5" style="margin-top: 30px;">
+		<form action="{% url 'downloads' %}" method="post">{% csrf_token %}
+			<button type="submit" id="btn" class="btn btn-default btn-lg has-spinner">
+				<span class="icon-spinner"><i class="fa fa-spinner load-animate"></i></span>
+    			Download Bpläne
+			</button></br>
+			<small>This might take a while (1 to 2 Minutes)</small>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
