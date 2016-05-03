@@ -29,6 +29,14 @@ class Ortsteil(models.Model):
         return self.name
 
 
+'''class Address(models.Model):
+    point = models.PointField()
+    strname = models.models.CharField(max_length=256)
+    hsnr = models.models.CharField(max_length=50)
+    plz = models.models.CharField(max_length=50)'''
+
+
+
 class BPlan(models.Model):
 
     bplanID = models.CharField(max_length=50)
