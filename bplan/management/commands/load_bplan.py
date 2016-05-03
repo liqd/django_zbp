@@ -50,7 +50,7 @@ class Command(BaseCommand):
         call = 'ogr2ogr -s_srs EPSG:25833'\
             ' -t_srs WGS84 -f'\
             ' geoJSON %s WFS:"%s%s" %s' % (
-               filename, url, '?TYPENAMES=GML2' if settings.GDAL_LEGACY else '',
+               filename, url, '?version=1.1.0' if settings.GDAL_LEGACY else '',
                layer)
         try:
             os.remove(filename)
