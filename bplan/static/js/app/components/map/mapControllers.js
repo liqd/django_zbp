@@ -280,6 +280,12 @@ angular.module('app.map.controllers',[])
         $scope.map.fitBounds($scope.districtLayer);
     });
 
+    $scope.$on('address:updated', function(event,data) {
+        var coordinates = $scope.places.currentAddress.geometry.coordinates;
+        var marker = L.marker(L.latLng(coordinates[1], coordinates[0]))
+        marker.addTo($scope.map);
+    });
+
     $scope.closePopup = function() {
         $scope.popupopen = false;
         $scope.currentItem = {};

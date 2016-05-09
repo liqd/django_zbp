@@ -6,6 +6,7 @@ angular.module('app.shared.controllers.viewController',[])
     $scope.area = area;
     $scope.places = PlacesService;
     $scope.currentView = 'map';
+    $scope.address = '';
 
     $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function () {
         $rootScope.$broadcast('data:loaded');
@@ -33,6 +34,21 @@ angular.module('app.shared.controllers.viewController',[])
         $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function () {
             $rootScope.$broadcast('ortsteil:reset');
         });
+    }
+
+    $scope.getAdress = function() {
+        $scope.places.getCoordintesForAdress($scope.address).then(function(result) {
+            if(result.features.length === 0){
+                console.log('Adress not found');
+            }
+            else if(result.features.length === 1){
+                $scope.places.currentAddress = result.features[0];
+                $rootScope.$broadcast('address:updated');
+            }
+            else{
+                console.log('More then one entry found');
+            }
+        })
     }
 
 }])
