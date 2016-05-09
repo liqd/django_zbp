@@ -29,11 +29,18 @@ class Ortsteil(models.Model):
         return self.name
 
 
-'''class Address(models.Model):
+class Address(models.Model):
     point = models.PointField()
-    strname = models.models.CharField(max_length=256)
-    hsnr = models.models.CharField(max_length=50)
-    plz = models.models.CharField(max_length=50)'''
+    strname = models.CharField(max_length=256)
+    hsnr = models.CharField(max_length=50)
+    search_name = models.CharField(max_length=256)
+    plz = models.CharField(max_length=50)
+    gml_id = models.CharField(max_length=50)
+    spatial_name = models.CharField(max_length=50)
+    bezirk = models.ForeignKey(Bezirk)
+
+    def __str__(self):
+        return self.strname + ' ' + self.hsnr
 
 
 
