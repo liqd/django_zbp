@@ -15,6 +15,8 @@ angular.module('app.shared.services.places', [])
     places.currentOrtsteil = "";
     places.currentOrtsteilName = "Alle Ortsteile";
 
+    places.currentAddress = {};
+
     places.reset = function () {
         places.bplan_points = {};
         places.bplan_points.type = 'FeatureCollection';
@@ -110,6 +112,24 @@ angular.module('app.shared.services.places', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
+        return deferred.promise;
+    };
+
+    places.getCoordintesForAdress = function (address){
+
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: '/api/addresses/',
+            params: {'address': address}
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response){
+                deferred.resolve(response.data);
+
+            });
+
         return deferred.promise;
     };
 
