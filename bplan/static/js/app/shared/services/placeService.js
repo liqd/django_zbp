@@ -2,7 +2,7 @@
 
 angular.module('app.shared.services.places', [])
 
-.factory('PlacesService',['$http', '$q', '$window', function($http, $q, $window) {
+.factory('PlacesService',['$http', '$q', '$window', 'API_END_POINTS', function($http, $q, $window, API_END_POINTS) {
 
     var places = {};
     places.area = area;
@@ -33,7 +33,7 @@ angular.module('app.shared.services.places', [])
         var deferred = $q.defer();
         $http({
             method: 'GET',
-            url: '/api/bezirke/',
+            url: API_END_POINTS.bezirke,
             params: {slug: area}
         }).then(function successCallback(response) {
             places.district = response.data;
@@ -69,7 +69,7 @@ angular.module('app.shared.services.places', [])
         var deferred = $q.defer();
         $http({
             method: 'GET',
-            url: '/api/bplaene_data/' + pk
+            url: API_END_POINTS.bplan_data + pk
             }).then(function successCallback(response) {
                 deferred.resolve(response.data);
             }, function errorCallback(response) {
@@ -82,7 +82,7 @@ angular.module('app.shared.services.places', [])
         var deferred = $q.defer();
         $http({
             method: 'GET',
-            url: '/api/bplaene_multipolygon/' + pk
+            url: API_END_POINTS.bplan_multipolygon + pk
             }).then(function successCallback(response) {
                 deferred.resolve(response.data);
             }, function errorCallback(response) {
@@ -103,7 +103,7 @@ angular.module('app.shared.services.places', [])
         var deferred = $q.defer();
         $http({
             method: 'GET',
-            url: '/api/bplaene_multipolygon/',
+            url: API_END_POINTS.bplan_multipolygon,
             'params' : params
             }).then(function successCallback(response) {
                 deferred.resolve(response.data);
@@ -148,7 +148,7 @@ angular.module('app.shared.services.places', [])
             params.bezirk__slug = area;
             params.afs_behoer = "Bezirksamt";
         }
-        getNextPage('/api/bplaene_point/', params, target, deferred);
+        getNextPage(API_END_POINTS.bplan_point, params, target, deferred);
         return deferred.promise;
     };
 
