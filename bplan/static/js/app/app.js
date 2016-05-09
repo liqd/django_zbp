@@ -9,6 +9,12 @@ var app = angular.module('app',[
     'app.map.directives',
     'app.shared.directives'
 ])
+.constant('API_END_POINTS', {
+    'bezirke' : '/api/bezirke/',
+    'bplan_data' : '/api/bplan/data/',
+    'bplan_multipolygon' : '/api/bplan/multipolygons/',
+    'bplan_point' : '/api/bplan/points/'
+})
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
 	cfpLoadingBarProvider.includeSpinner = false;
 }]);
