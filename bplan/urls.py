@@ -6,6 +6,7 @@ from .api import OrtsteilViewSet
 from .api import BPlanPointViewSet
 from .api import BPlanMultipolygonViewSet
 from .api import BPlanDataViewSet
+from .api import AddressViewSet
 from . import views
 
 
@@ -16,6 +17,7 @@ router.register(r'bplaene_point', BPlanPointViewSet, base_name='bplan')
 router.register(r'bplaene_multipolygon',
                 BPlanMultipolygonViewSet, base_name='bplan_multipoligon')
 router.register(r'bplaene_data', BPlanDataViewSet, base_name='bplan_data')
+router.register(r'addresses', AddressViewSet, base_name='addresse')
 
 
 urlpatterns = [
