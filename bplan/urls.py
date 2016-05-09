@@ -11,13 +11,14 @@ from . import views
 
 
 router = routers.DefaultRouter()
+router.register(r'addresses', AddressViewSet, base_name='addresse')
 router.register(r'bezirke', BezirkViewSet, base_name='bezirk')
 router.register(r'ortsteile', OrtsteilViewSet, base_name='ortsteil')
-router.register(r'bplaene_point', BPlanPointViewSet, base_name='bplan')
-router.register(r'bplaene_multipolygon',
+router.register(r'bplan/points', BPlanPointViewSet, base_name='bplan')
+router.register(r'bplan/multipolygons',
                 BPlanMultipolygonViewSet, base_name='bplan_multipoligon')
-router.register(r'bplaene_data', BPlanDataViewSet, base_name='bplan_data')
-router.register(r'addresses', AddressViewSet, base_name='addresse')
+router.register(r'bplan/data', BPlanDataViewSet, base_name='bplan_data')
+
 
 
 urlpatterns = [

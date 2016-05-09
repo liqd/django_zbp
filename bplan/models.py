@@ -1,10 +1,16 @@
 from django.contrib.gis.db import models
+from django.utils import timezone
 
 
 class Download(models.Model):
 
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(editable=False)
     errors = models.TextField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Download, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.created)
