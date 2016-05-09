@@ -13,6 +13,14 @@
             <i class="fa fa-list fa-lg"></i>
         </a>
     </li>
+    <li>
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" data-ng-model="address" placeholder="Adresse oder Bebauungsplan">
+            </div>
+            <button class="search-button" data-ng-click="getAdress()" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </form>
+    </li>
     <li data-ng-if="area" class="dropdown">
         <a class="dropdown-toggle"
             data-toggle="dropdown"

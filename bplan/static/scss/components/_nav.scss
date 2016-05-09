@@ -20,7 +20,29 @@
 		& .active {
 			color: $gray-dark;
 		}
+
+		& .navbar-form {
+			padding: 0px;
+			margin: 0px;
+			padding-right: 15px;
+			& .form-group {
+				& .form-control {
+					border: 1px solid $gray-lighter;
+					font-size: $font-size;
+					font-family: 'Arimo', serif;
+					border-radius: 0px;
+					-webkit-box-shadow: none;
+					-moz-box-shadow: none;
+					box-shadow: none;
+					margin: -2px 0 0 -1px;
+					padding: 3px 7px 1px 7px;
+					height: auto;
+					outline: none;
+				}
+			}
+		}
 	}
+
 	& .dropdown {
 		border: 1px solid $gray-lighter;
 
