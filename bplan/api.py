@@ -6,14 +6,18 @@ from .filters import StatusFilter, OrtsteilFilter
 from rest_framework_gis.filters import InBBoxFilter
 from .filters import StatusFilter
 from .filters import OrtsteilFilter
+from .filters import AddressFilter
+from .filters import BezirkFilter
 from .serializers import BezirkSerializer
 from .serializers import OrtsteilSerializer
 from .serializers import BPlanPointSerializer
 from .serializers import SimpleBPlanSerializer
 from .serializers import BPlanMultipolygonSerializer
+from .serializers import AddressSerializer
 from .models import Bezirk
 from .models import Ortsteil
 from .models import BPlan
+from .models import Address
 
 
 class CustomGeoJsonPagination(GeoJsonPagination):
@@ -22,10 +26,23 @@ class CustomGeoJsonPagination(GeoJsonPagination):
     max_page_size = 10000
 
 
+class CustomAddressGeoJsonPagination(GeoJsonPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
+
 class CustomPagination(PageNumberPagination):
     page_size = 4000
     page_size_query_param = 'page_size'
     max_page_size = 10000
+
+
+class AddressViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Address.objects.all()
+    pagination_class = CustomAddressGeoJsonPagination
+    serializer_class = AddressSerializer
+    filter_backends = (filters.DjangoFilterBackend, AddressFilter, BezirkFilter)
 
 
 class BezirkViewSet(viewsets.ReadOnlyModelViewSet):

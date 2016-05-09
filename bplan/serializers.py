@@ -3,8 +3,16 @@ from rest_framework import serializers
 from .models import Bezirk
 from .models import Ortsteil
 from .models import BPlan
+from .models import Address
 from datetime import datetime
 
+
+class AddressSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Address
+        fields = ('strname', 'hsnr', 'point', 'plz')
+        geo_field = 'point'
 
 class OrtsteilSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
 

@@ -3,6 +3,7 @@ from datetime import datetime
 from django.db.models import Q
 
 from .models import Ortsteil
+from .models import Bezirk
 
 class StatusFilter(filters.BaseFilterBackend):
 
@@ -36,5 +37,31 @@ class OrtsteilFilter(filters.BaseFilterBackend):
             ortsteilslug = request.GET["ortsteil"]
             ortsteil = Ortsteil.objects.get(slug=ortsteilslug)
             return queryset.filter(ortsteile=ortsteil)
+        else:
+            return queryset
+
+
+class BezirkFilter(filters.BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+
+        if 'bezirk' in request.GET:
+            bezirksslug = request.GET["bezirk"]
+            bezirk = Bezirk.objects.get(slug=bezirksslug)
+            return queryset.filter(bezirk=bezirk)
+        else:
+            return queryset
+
+
+class AddressFilter(filters.BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+
+
+        if 'address' in request.GET:
+            address = request.GET["address"]
+            address = (address.replace(' ','').replace('-', '').replace('ß','ss')).lower()
+            addresses = queryset.filter(search_name=address)
+            return addresses
         else:
             return queryset
