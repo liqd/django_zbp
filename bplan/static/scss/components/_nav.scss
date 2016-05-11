@@ -105,3 +105,14 @@
 .no-padding {
 	padding: 0 !important;
 }
+
+.textinput {
+	@extend .dropdown;
+	border: none !important;
+}
+
+.address-search-result-item {
+	border-bottom: 1px solid $gray-lighter;
+	margin-top: 5px;
+	padding-bottom: 5px;
+}

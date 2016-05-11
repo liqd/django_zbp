@@ -7,6 +7,8 @@ angular.module('app.shared.controllers.viewController',[])
     $scope.places = PlacesService;
     $scope.currentView = 'map';
     $scope.address = '';
+    $scope.addressSearchResult = undefined;
+
 
     $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function () {
         $rootScope.$broadcast('data:loaded');
@@ -18,7 +20,7 @@ angular.module('app.shared.controllers.viewController',[])
 
     $scope.updateFilter = function() {
     	$rootScope.$broadcast('filter:updated');
-    }
+    };
 
     $scope.updateOrtsteil = function() {
         $scope.places.reset();
@@ -26,7 +28,7 @@ angular.module('app.shared.controllers.viewController',[])
         $scope.places.initBplaene({'ortsteil': slug}, $scope.places.bplan_points.features).then(function () {
             $rootScope.$broadcast('ortsteil:updated');
         });
-    }
+    };
 
     $scope.resetOrtsteil = function() {
         $scope.places.reset();
@@ -34,22 +36,36 @@ angular.module('app.shared.controllers.viewController',[])
         $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function () {
             $rootScope.$broadcast('ortsteil:reset');
         });
-    }
+    };
 
-    $scope.getAdress = function() {
+    $scope.getAddress = function() {
         $scope.places.getCoordintesForAdress($scope.address).then(function(result) {
-            if(result.features.length === 0){
-                console.log('Adress not found');
-            }
-            else if(result.features.length === 1){
-                $scope.places.currentAddress = result.features[0];
-                $rootScope.$broadcast('address:updated');
-            }
-            else{
-                console.log('More then one entry found');
+            $scope.addressSearchResult = result.features;
+            if($scope.addressSearchResult.length === 1){
+                $scope.chooseAddress($scope.addressSearchResult[0]);
             }
         })
-    }
+    };
+
+    $scope.resetAddress = function() {
+        $scope.addressSearchResult = undefined;
+        $scope.address = '';
+        $scope.places.currentAddress = "";
+        $rootScope.$broadcast('address:reseted');
+    };
+
+    $scope.chooseAddress = function(address){
+        $scope.addressSearchResult = undefined;
+        $scope.places.currentAddress = address;
+        $rootScope.$broadcast('address:updated');
+    };
+
+    $scope.removeTagOnBackspace = function() {
+        if($scope.address == ''){
+            $scope.addressSearchResult = undefined;
+            $rootScope.$broadcast('address:reseted');
+        }
+    };
 
 }])
 

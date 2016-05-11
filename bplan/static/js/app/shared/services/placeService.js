@@ -117,12 +117,17 @@ angular.module('app.shared.services.places', [])
 
     places.getCoordintesForAdress = function (address){
 
+        var params = {};
+        params.address = address;
+        if(area){
+            params.bezirk = area;
+        }
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
             url: '/api/addresses/',
-            params: {'address': address}
+            params: params
             }).then(function successCallback(response) {
                 deferred.resolve(response.data);
             }, function errorCallback(response){
