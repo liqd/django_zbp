@@ -7,12 +7,7 @@ from .models import Address
 from datetime import datetime
 
 
-class AddressSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
 
-    class Meta:
-        model = Address
-        fields = ('strname', 'hsnr', 'point', 'plz')
-        geo_field = 'point'
 
 class OrtsteilSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
 
@@ -28,6 +23,17 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
         model = Bezirk
         fields = ('name', 'slug', 'polygon', 'ortsteile', 'pk')
         geo_field = 'polygon'
+
+class AddressSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
+    bezirk_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Address
+        fields = ('strname', 'hsnr', 'point', 'plz', 'bezirk_name')
+        geo_field = 'point'
+
+    def get_bezirk_name(self, obj):
+        return obj.bezirk.name
 
 
 class SimpleBezirkSerializer(serializers.ModelSerializer):
