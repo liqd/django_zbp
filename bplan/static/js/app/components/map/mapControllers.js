@@ -281,9 +281,19 @@ angular.module('app.map.controllers',[])
     });
 
     $scope.$on('address:updated', function(event,data) {
+        if(!angular.isUndefined($scope.address_marker)){
+            $scope.map.removeLayer($scope.address_marker);
+        }
         var coordinates = $scope.places.currentAddress.geometry.coordinates;
-        var marker = L.marker(L.latLng(coordinates[1], coordinates[0]))
-        marker.addTo($scope.map);
+        $scope.address_marker = L.marker(L.latLng(coordinates[1], coordinates[0]))
+        $scope.address_marker.addTo($scope.map);
+    });
+
+    $scope.$on('address:reseted', function(event,data) {
+        if(!angular.isUndefined($scope.address_marker)){
+            $scope.map.removeLayer($scope.address_marker);
+        }
+        $scope.address_marker = undefined;
     });
 
     $scope.closePopup = function() {
