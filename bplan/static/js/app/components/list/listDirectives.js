@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('app.list.directives',[])
+angular.module('app.list.directives', [])
 
-.directive('listitem', [ 'PlacesService', function(PlacesService) {
+.directive('listitem', ['PlacesService', function(PlacesService) {
     return {
         restrict: 'E',
         scope: {
@@ -11,9 +11,9 @@ angular.module('app.list.directives',[])
         },
         templateUrl: '/static/js/app/components/list/listitem.html',
         link: function(scope) {
-        	PlacesService.getBplanDetail(scope.pk).then(function(data){
-        		scope.bplan = data;
-        	});
+            PlacesService.getBplanDetail(scope.pk).then(function(data) {
+                scope.bplan = data;
+            });
 
         }
     };
