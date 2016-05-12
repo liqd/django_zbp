@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.map.directives',[])
+angular.module('app.map.directives', [])
 
 .directive('popup', function() {
     return {
@@ -14,7 +14,7 @@ angular.module('app.map.directives',[])
 
             scope.closePopup = function() {
                 scope.closepopup();
-            }
+            };
         }
     };
 });
