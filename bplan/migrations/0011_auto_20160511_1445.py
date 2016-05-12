@@ -15,18 +15,9 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunSQL("select UpdateGeometrySRID('public', 'bplan_bplan', 'point', 25833) ;"),
         migrations.RunSQL("select UpdateGeometrySRID('public', 'bplan_bplan', 'multipolygon', 25833) ;"),
-
-        migrations.RunSQL("UPDATE bplan_bplan SET point = ST_Transform(point,25833);"),
-        migrations.RunSQL("UPDATE bplan_bplan SET multipolygon = ST_Transform(multipolygon,25833);"),
-
         migrations.RunSQL("select UpdateGeometrySRID('public', 'bplan_address', 'point', 25833) ;"),
-        migrations.RunSQL("UPDATE bplan_address SET point = ST_Transform(point,25833);"),
-
         migrations.RunSQL("select UpdateGeometrySRID('public', 'bplan_bezirk', 'polygon', 25833) ;"),
-        migrations.RunSQL("UPDATE bplan_bezirk SET polygon = ST_Transform(polygon,25833);"),
-
         migrations.RunSQL("select UpdateGeometrySRID('public', 'bplan_ortsteil', 'polygon', 25833) ;"),
-        migrations.RunSQL("UPDATE bplan_ortsteil SET polygon = ST_Transform(polygon,25833);"),
 
         migrations.AlterField(
             model_name='address',
