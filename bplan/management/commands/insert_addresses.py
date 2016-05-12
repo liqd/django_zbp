@@ -57,7 +57,7 @@ class Command(BaseCommand):
                     try:
                         point = GEOSGeometry(str(feature.geom))
                         strname = feature.get("strname")
-                        hsnr = feature.get("hsnr")
+                        hsnr = (feature.get("hsnr")).lstrip('0')
                         search_name = self._get_search_name(strname, hsnr)
                         plz = feature.get("plz")
                         gml_id = feature.get("gml_id")
