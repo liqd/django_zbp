@@ -19,7 +19,7 @@ class Download(models.Model):
 class Bezirk(models.Model):
     name = models.CharField(max_length=50)
     slug = models.CharField(max_length=50)
-    polygon = models.PolygonField()
+    polygon = models.PolygonField(srid=25833)
 
     def __str__(self):
         return self.name
@@ -29,14 +29,14 @@ class Ortsteil(models.Model):
     name = models.CharField(max_length=50)
     slug = models.CharField(max_length=50, default='')
     bezirk = models.ForeignKey(Bezirk, related_name='ortsteile')
-    polygon = models.PolygonField()
+    polygon = models.PolygonField(srid=25833)
 
     def __str__(self):
         return self.name
 
 
 class Address(models.Model):
-    point = models.PointField()
+    point = models.PointField(srid=25833)
     strname = models.CharField(max_length=256)
     hsnr = models.CharField(max_length=50)
     search_name = models.CharField(max_length=256)
@@ -57,8 +57,8 @@ class BPlan(models.Model):
     spatial_alias = models.CharField(max_length=50)
     spatial_name = models.CharField(max_length=50)
     spatial_type = models.CharField(max_length=50)
-    multipolygon = models.MultiPolygonField()
-    point = models.PointField(blank=True, null=True)
+    multipolygon = models.MultiPolygonField(srid=25833)
+    point = models.PointField(srid=25833,blank=True, null=True)
     bereich = models.TextField()
     bezirk = models.ForeignKey(Bezirk)
     bezirk_name = models.CharField(max_length=50)
