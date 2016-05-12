@@ -106,9 +106,7 @@ angular.module('app.map.controllers', [])
             }
         });
         map.on('dragend', function() {
-            if (map.getZoom() >= 16) {
-                getMultipolygons();
-            }
+            getMultipolygons();
         });
         return map;
     };
