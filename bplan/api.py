@@ -9,6 +9,7 @@ from .filters import StatusFilter
 from .filters import OrtsteilFilter
 from .filters import AddressFilter
 from .filters import BezirkFilter
+from .filters import BPlanAddressFilter
 from .serializers import BezirkSerializer
 from .serializers import OrtsteilSerializer
 from .serializers import BPlanPointSerializer
@@ -75,7 +76,7 @@ class BPlanPointViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BPlanPointSerializer
     pagination_class = CustomGeoJsonPagination
     filter_backends = (
-        filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter, DistanceToPointFilter)
+        filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter, BPlanAddressFilter)
     bbox_filter_field = 'point'
     distance_filter_field = 'point'
     bbox_filter_include_overlapping = True
@@ -89,7 +90,7 @@ class BPlanMultipolygonViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BPlanMultipolygonSerializer
     pagination_class = CustomGeoJsonPagination
     filter_backends = (
-        filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter, DistanceToPointFilter)
+        filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter, BPlanAddressFilter)
     bbox_filter_include_overlapping = True
     distance_filter_convert_meters = True
     bbox_filter_field = 'multipolygon'

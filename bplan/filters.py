@@ -1,15 +1,19 @@
 from rest_framework import filters
-from datetime import datetime
+from django.utils import timezone
 from django.db.models import Q
+from django.contrib.gis.measure import D
+from django.contrib.gis.geos import Point
+from rest_framework_gis import filters as gis_filters
 
 from .models import Ortsteil
 from .models import Bezirk
+
 
 class StatusFilter(filters.BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
 
-        date = datetime.now()
+        date = timezone.now()
 
         if 'status' in request.GET:
             queryset = queryset.filter(festg=False)
@@ -57,11 +61,24 @@ class AddressFilter(filters.BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
 
-
         if 'address' in request.GET:
             address = request.GET["address"]
-            address = (address.replace(' ','').replace('-', '').replace('ß','ss')).lower()
+            address = (address.replace(' ', '').replace(
+                '-', '').replace('ß', 'ss')).lower()
             addresses = queryset.filter(search_name=address)
             return addresses
         else:
             return queryset
+
+
+class BPlanAddressFilter(gis_filters.DistanceToPointFilter):
+
+    def filter_queryset(self, request, queryset, view):
+        distance_queryset = super(BPlanAddressFilter, self).filter_queryset(request, queryset, view)
+        p = self.get_filter_point(request)
+        if not p:
+            return queryset
+        includes_queryset = queryset.filter(multipolygon__contains=p)
+        queryset = (distance_queryset | includes_queryset).distinct()
+
+        return queryset
