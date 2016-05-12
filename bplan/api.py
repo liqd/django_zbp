@@ -4,6 +4,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework_gis.pagination import GeoJsonPagination
 from .filters import StatusFilter, OrtsteilFilter
 from rest_framework_gis.filters import InBBoxFilter
+from rest_framework_gis.filters import DistanceToPointFilter
 from .filters import StatusFilter
 from .filters import OrtsteilFilter
 from .filters import AddressFilter
@@ -74,9 +75,11 @@ class BPlanPointViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BPlanPointSerializer
     pagination_class = CustomGeoJsonPagination
     filter_backends = (
-        filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter)
+        filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter, DistanceToPointFilter)
     bbox_filter_field = 'point'
+    distance_filter_field = 'point'
     bbox_filter_include_overlapping = True
+    distance_filter_convert_meters = True
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
 
@@ -86,8 +89,10 @@ class BPlanMultipolygonViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BPlanMultipolygonSerializer
     pagination_class = CustomGeoJsonPagination
     filter_backends = (
-        filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter)
+        filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter, DistanceToPointFilter)
     bbox_filter_include_overlapping = True
+    distance_filter_convert_meters = True
     bbox_filter_field = 'multipolygon'
+    distance_filter_field = 'point'
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')

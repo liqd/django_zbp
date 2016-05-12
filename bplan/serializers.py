@@ -4,12 +4,10 @@ from .models import Bezirk
 from .models import Ortsteil
 from .models import BPlan
 from .models import Address
-from datetime import datetime
+from django.utils import timezone
 
 
-
-
-class OrtsteilSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
+class OrtsteilSerializer(GeoFeatureModelSerializer):
 
     class Meta:
         model = Ortsteil
@@ -23,6 +21,7 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
         model = Bezirk
         fields = ('name', 'slug', 'polygon', 'ortsteile', 'pk')
         geo_field = 'polygon'
+
 
 class AddressSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
     bezirk_name = serializers.SerializerMethodField()
@@ -46,7 +45,6 @@ class SimpleBezirkSerializer(serializers.ModelSerializer):
 class SimpleBPlanSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
 
-
     class Meta:
         model = BPlan
         exclude = ('multipolygon', 'point')
@@ -55,7 +53,7 @@ class SimpleBPlanSerializer(serializers.ModelSerializer):
         if object.festg:
             return 'festg'
         else:
-            date = datetime.now().date()
+            date = timezone.now().date()
             if (object.bbg_anfang and object.bbg_anfang <= date) and (object.bbg_ende and date <= object.bbg_ende):
                 return 'bbg'
             elif (object.aul_anfang and object.aul_anfang <= date) and (object.aul_ende and date <= object.aul_ende):
