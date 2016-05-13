@@ -21,7 +21,7 @@ class Command(BaseCommand):
         data_source = DataSource(fixture_file)
 
         for feature in tqdm(data_source[0]):
-            polygon = GEOSGeometry(str(feature.geom))
+            polygon = GEOSGeometry(str(feature.geom), srid=4326)
             name = feature.get("spatial_alias")
             slug = slugify(name.replace('ö', 'oe').replace('ä', 'ae').replace('ü','ue'))
             bezirk = feature.get("BEZIRK")
