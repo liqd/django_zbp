@@ -182,7 +182,6 @@ angular.module('app.shared.services.places', [])
 
         if (places.currentAddress) {
             var point = places.currentAddress.geometry.coordinates;
-            params.dist = 500;
             params.point = point[0] + ',' + point[1];
         }
 
