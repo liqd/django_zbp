@@ -1,3 +1,4 @@
+import copy
 import os
 import sys
 import json
@@ -36,7 +37,7 @@ class Command(BaseCommand):
                 c = multipolygon[0][0][int(half)+k]
                 d = multipolygon[0][0][int(half)+k+1]
                 quadrangle = Polygon((a, b, c, d, a))
-                e = Point(quadrangle.centroid.x, quadrangle.centroid.y)
+                e = Point(quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
                 if e.within(multipolygon[0]):
                     return e
                 else:
@@ -44,7 +45,7 @@ class Command(BaseCommand):
             except:
                 k += 1
 
-        return Point(multipolygon[0][0][0])
+        return Point(multipolygon[0][0][0], srid=4326)
 
     def _download_geodata(self, filename, url, layer):
         call = 'ogr2ogr -s_srs EPSG:25833'\
@@ -70,17 +71,20 @@ class Command(BaseCommand):
 
     def _get_spatial_data(self, feature):
         spatial_type = feature.get("spatial_type")
-        geometry = GEOSGeometry(str(feature.geom))
+        geometry = GEOSGeometry(str(feature.geom), srid=4326)
         bereich = feature.get("bereich")
         if geometry.geom_type == "Polygon":
-            multipolygon = MultiPolygon(geometry)
+            multipolygon = MultiPolygon(geometry, srid=4326)
         else:
             multipolygon = geometry
-        return(spatial_type, multipolygon, geometry, bereich)
+
+        multipolygon_25833 = copy.deepcopy(multipolygon)
+        multipolygon_25833.transform(25833)
+        return(spatial_type, multipolygon, multipolygon_25833, geometry, bereich)
 
     def _calculate_point(self, multipolygon):
         point = Point(
-            multipolygon[0].centroid.x, multipolygon[0].centroid.y)
+            multipolygon[0].centroid.x, multipolygon[0].centroid.y, srid=4326)
         try:
             point_polygon = point.within(multipolygon[0])
             if not point_polygon:
@@ -222,7 +226,7 @@ class Command(BaseCommand):
             planname, spatial_alias, spatial_name = self._get_identifiers(
                 feature)
             bplanID = planname.replace(" ", "")
-            spatial_type, multipolygon, geometry, bereich = self._get_spatial_data(
+            spatial_type, multipolygon, multipolygon_25833, geometry, bereich = self._get_spatial_data(
                 feature)
             point = self._calculate_point(multipolygon)
             bezirk, bezirk_name = self._get_district(feature)
@@ -247,6 +251,7 @@ class Command(BaseCommand):
                         'spatial_name': spatial_name,
                         'spatial_type': spatial_type,
                         'multipolygon': multipolygon,
+                        'multipolygon_25833' : multipolygon_25833,
                         'point': point,
                         'bereich': bereich,
                         'bezirk': bezirk,
