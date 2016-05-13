@@ -78,9 +78,7 @@ class BPlanPointViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (
         filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter, BPlanAddressFilter)
     bbox_filter_field = 'point'
-    distance_filter_field = 'point'
     bbox_filter_include_overlapping = True
-    distance_filter_convert_meters = True
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')
 
@@ -92,8 +90,6 @@ class BPlanMultipolygonViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (
         filters.DjangoFilterBackend, StatusFilter, OrtsteilFilter, InBBoxFilter, BPlanAddressFilter)
     bbox_filter_include_overlapping = True
-    distance_filter_convert_meters = True
     bbox_filter_field = 'multipolygon'
-    distance_filter_field = 'point'
     filter_fields = (
         'bplanID', 'planname', 'bezirk', 'festg', 'bezirk__slug', 'afs_behoer')

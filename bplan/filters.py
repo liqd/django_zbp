@@ -71,14 +71,28 @@ class AddressFilter(filters.BaseFilterBackend):
             return queryset
 
 
-class BPlanAddressFilter(gis_filters.DistanceToPointFilter):
+class BPlanAddressFilter(filters.BaseFilterBackend):
+
+    def get_filter_point(self, request):
+        point_string = request.query_params.get('point', None)
+        if not point_string:
+            return None
+        try:
+            (x, y) = (float(n) for n in point_string.split(','))
+        except ValueError:
+            raise ParseError('Invalid geometry string supplied for parameter {0}'.format(self.point_param))
+        p = Point(x, y, srid=4326)
+        p.transform(25833)
+
+        return p
 
     def filter_queryset(self, request, queryset, view):
-        distance_queryset = super(BPlanAddressFilter, self).filter_queryset(request, queryset, view)
-        p = self.get_filter_point(request)
-        if not p:
-            return queryset
-        includes_queryset = queryset.filter(multipolygon__contains=p)
-        queryset = (distance_queryset | includes_queryset).distinct()
 
-        return queryset
+        if 'point' in request.GET:
+            p = self.get_filter_point(request)
+            queryset = queryset.filter(multipolygon_25833__dwithin=(p, D(m=500)))
+            return queryset
+        else:
+            return queryset
+
+
