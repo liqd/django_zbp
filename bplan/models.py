@@ -36,7 +36,7 @@ class Ortsteil(models.Model):
 
 
 class Address(models.Model):
-    point = models.PointField(srid=25833)
+    point = models.PointField(srid=4326)
     strname = models.CharField(max_length=256)
     hsnr = models.CharField(max_length=50)
     search_name = models.CharField(max_length=256)

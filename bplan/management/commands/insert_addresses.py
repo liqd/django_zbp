@@ -55,7 +55,7 @@ class Command(BaseCommand):
 
                 for feature in tqdm(data_source[0]):
                     try:
-                        point = GEOSGeometry(str(feature.geom))
+                        point = GEOSGeometry(str(feature.geom), srid=4326)
                         strname = feature.get("strname")
                         hsnr = (feature.get("hsnr")).lstrip('0')
                         search_name = self._get_search_name(strname, hsnr)
