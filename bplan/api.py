@@ -41,7 +41,7 @@ class CustomPagination(PageNumberPagination):
 
 
 class AddressViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Address.objects.all()
+    queryset = Address.objects.all().order_by('plz')
     pagination_class = CustomAddressGeoJsonPagination
     serializer_class = AddressSerializer
     filter_backends = (filters.DjangoFilterBackend, AddressFilter, BezirkFilter)
