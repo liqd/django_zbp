@@ -118,7 +118,7 @@ angular.module('app.map.controllers',[])
     var createMap = function(){
         var map = $window.L.map('map');
         L.tileLayer('https://maps.berlinonline.de/tile/osmbright_bde/{z}/{x}/{y}.png', {
-        	attribution: 'Map data &copy;',
+        	attribution: 'Geoportal Berlin/Bebauungspläne, Geltungsbereiche',
         	maxZoom: 18
         }).addTo(map);
         $scope.districtLayer = L.geoJson($scope.places.district).addTo(map);
