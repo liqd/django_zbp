@@ -14,14 +14,26 @@
         </a>
     </li>
     <li class="textinput" data-ng-class="{open: addressSearchResult.length > 1 && address}">
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <input type="text" class="form-control" data-ng-model="address" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bebauungsplan">
+        <form class="navbar-form navbar-left navbar-input-group" role="search">
+            <div class="input-group">
+                <div class="form-group">
+                    <input type="text" data-ng-model="address" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bplannummer">
+                </div>
+                <span>
+                    <button
+                        class="search-button"
+                        data-ng-click="getAddress()"
+                        data-ng-class="{middle: address}"
+                        type="submit">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                    <button data-ng-if="address"
+                        class="search-button"
+                        data-ng-click="resetAddress()">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </span>
             </div>
-            <span class="input-group-btn">
-                <button class="search-button" data-ng-click="getAddress()" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                <button data-ng-if="address" class="search-button" data-ng-click="resetAddress()" type="submit"><i class="fa fa-times" aria-hidden="true"></i></i></button>
-            </span>
         </form>
         <span data-ng-if="addressSearchResult.length == 0" class="help-block">Es wurde kein Eintrag gefunden</span>
         <ul class="dropdown-menu">

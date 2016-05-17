@@ -46,6 +46,13 @@ angular.module('app.map.controllers', [])
         'fillOpacity': 0
     };
 
+    var RedIcon = L.Icon.Default.extend({
+        options: {
+                iconUrl: '/static/img/marker-icon-2.png'
+        }
+    });
+    var icon = new RedIcon();
+
     var resetPolygons = function() {
         $scope.polygons = {};
         $scope.polygons.aul = {};
@@ -291,11 +298,13 @@ angular.module('app.map.controllers', [])
             $scope.map.removeLayer($scope.address_marker);
         }
         var coordinates = $scope.places.currentAddress.geometry.coordinates;
-        $scope.address_marker = L.marker(L.latLng(coordinates[1], coordinates[0]));
+        $scope.address_marker = L.marker(L.latLng(coordinates[1], coordinates[0]), {icon: icon});
         $scope.address_marker.addTo($scope.map);
+        if ($scope.markers.getLayers().length > 0) {
+            $scope.map.fitBounds($scope.markers.getBounds());
+        }
         $scope.map.setView($scope.address_marker.getLatLng());
         getMultipolygons();
-
     });
 
     $scope.$on('address:reseted', function() {

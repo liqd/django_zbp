@@ -15,10 +15,17 @@
 
 .search-button {
 	height: auto;
-	border: 1px solid $gray-lighter;
+	border-right: 1px solid $gray-lighter;
+	border-left: none;
+	border-top: 1px solid $gray-lighter;
+	border-bottom: 1px solid $gray-lighter;
 	background-color: $white;
 	font-size: $font-size;
 	font-family: 'Arimo', serif;
 	padding: 2px 7px 2px 7px;
 	outline: 0;
+}
+
+.middle {
+	border-right: none;
 }

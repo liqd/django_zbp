@@ -26,18 +26,28 @@
 			margin: 0px;
 			padding-right: 15px;
 			& .form-group {
-				& .form-control {
-					border: 1px solid $gray-lighter;
+				vertical-align: top;
+				& input {
+					border-left: 1px solid $gray-lighter;
+					border-top: 1px solid $gray-lighter;
+					border-bottom: 1px solid $gray-lighter;
+					border-right: none;
+					border-radius: 0px;
 					font-size: $font-size;
 					font-family: 'Arimo', serif;
-					border-radius: 0px;
 					-webkit-box-shadow: none;
 					-moz-box-shadow: none;
 					box-shadow: none;
-					margin: -2px 0 0 -1px;
 					padding: 3px 7px 1px 7px;
 					height: auto;
 					outline: none;
+					min-width: 180px;
+					&:focus {
+						outline:0px;
+                        -webkit-appearance:none;
+                        box-shadow: none;
+                        border-color: $gray-lighter;
+					}
 				}
 			}
 		}
@@ -79,6 +89,9 @@
 			background-color: #fff;
 			text-decoration: none;
 		}
+		& form {
+			z-index: 2;
+		}
 
 		border-bottom: 0;
 	}
@@ -109,10 +122,40 @@
 .textinput {
 	@extend .dropdown;
 	border: none !important;
+
+	& .help-block {
+		margin-bottom: 0px;
+		font-size: $font-size-small;
+		padding-left: 7px;
+	}
 }
 
 .address-search-result-item {
 	border-bottom: 1px solid $gray-lighter;
 	margin-top: 5px;
 	padding-bottom: 5px;
+}
+
+.navbar-input-group {
+  @media (min-width: $screen-sm) {
+    font-size: 0px; /*removes whitespace between button and input*/
+
+    input {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    .btn {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-left: 0px;
+    }
+  }
+  @media (max-width: $screen-xs-max) {
+    margin-top:0px;
+    margin-bottom:0px;
+
+    .btn {
+      width:100%;
+    }
+  }
 }
