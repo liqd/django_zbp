@@ -6,8 +6,9 @@ angular.module('app.shared.controllers.viewController', [])
     $scope.area = area;
     $scope.places = PlacesService;
     $scope.currentView = 'map';
-    $scope.address = '';
+    $scope.searchstring = '';
     $scope.addressSearchResult = undefined;
+    $scope.bplanSearchResult = undefined;
 
 
     $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function() {
@@ -40,27 +41,41 @@ angular.module('app.shared.controllers.viewController', [])
         });
     };
 
-    $scope.getAddress = function() {
-        $scope.places.getCoordintesForAdress($scope.address).then(function(result) {
+    $scope.getDataForSearch = function() {
+        $scope.places.getCoordintesForAdress($scope.searchstring).then(function(result) {
             $scope.addressSearchResult = result.features;
-            if ($scope.addressSearchResult.length === 1) {
-                $scope.chooseAddress($scope.addressSearchResult[0]);
-            }
+
+            $scope.places.getBplaeneForSearch($scope.searchstring).then(function(result) {
+                $scope.bplanSearchResult = result.features;
+
+                $scope.searchResultCount = $scope.addressSearchResult.length + $scope.bplanSearchResult.length;
+
+                if ($scope.addressSearchResult.length === 1 && $scope.bplanSearchResult.length == 0) {
+                    $scope.chooseAddress($scope.addressSearchResult[0]);
+                }
+
+                if ($scope.addressSearchResult.length === 0 && $scope.bplanSearchResult.length == 1) {
+                    $scope.chooseBplan($scope.bplanSearchResult[0]);
+                }
+            });
         });
     };
 
-    $scope.resetAddress = function() {
+    $scope.resetSearch = function() {
+        $rootScope.$broadcast('search:reseted');
         $scope.addressSearchResult = undefined;
-        $scope.address = '';
+        $scope.bplanSearchResult = undefined;
+        $scope.searchResultCount = undefined;
+        $scope.searchstring = '';
         $scope.places.currentAddress = undefined;
         $scope.places.reset();
-        $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function() {
-            $rootScope.$broadcast('address:reseted');
-        });
+        $scope.places.initBplaene({}, $scope.places.bplan_points.features);
     };
 
     $scope.chooseAddress = function(address) {
         $scope.addressSearchResult = undefined;
+        $scope.bplanSearchResult = undefined;
+        $scope.searchResultCount = undefined;
         $scope.places.currentAddress = address;
         $scope.places.reset();
         $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function() {
@@ -68,9 +83,17 @@ angular.module('app.shared.controllers.viewController', [])
         });
     };
 
+    $scope.chooseBplan = function(bplan) {
+        $scope.addressSearchResult = undefined;
+        $scope.bplanSearchResult = undefined;
+        $scope.searchResultCount = undefined;
+        $scope.places.currentBplan = bplan;
+        $rootScope.$broadcast('bplan:updated');
+    };
+
     $scope.removeTagOnBackspace = function() {
-        if ($scope.address === '') {
-            $scope.resetAddress();
+        if ($scope.searchstring === '') {
+            $scope.resetSearch();
         }
     };
 

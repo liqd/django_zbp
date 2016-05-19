@@ -16,6 +16,7 @@ angular.module('app.shared.services.places', [])
     places.currentOrtsteilName = "Alle Ortsteile";
 
     places.currentAddress = undefined;
+    places.currentBplan = undefined;
 
     places.reset = function() {
         places.bplan_points = {};
@@ -121,10 +122,10 @@ angular.module('app.shared.services.places', [])
         return deferred.promise;
     };
 
-    places.getCoordintesForAdress = function(address) {
+    places.getCoordintesForAdress = function(searchstring) {
 
         var params = {};
-        params.address = address;
+        params.address = searchstring;
         if (area) {
             params.bezirk = area;
         }
@@ -132,7 +133,7 @@ angular.module('app.shared.services.places', [])
 
         $http({
             method: 'GET',
-            url: '/api/addresses/',
+            url: API_END_POINTS.addresses,
             params: params
         }).then(function successCallback(response) {
             deferred.resolve(response.data);
@@ -143,6 +144,28 @@ angular.module('app.shared.services.places', [])
 
         return deferred.promise;
     };
+
+    places.getBplaeneForSearch = function(searchstring) {
+        var params = {};
+        params.bplan = searchstring;
+        if (area) {
+            params.bezirk__slug = area;
+        }
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: API_END_POINTS.bplan_point,
+            params: params
+        }).then(function successCallback(response) {
+            deferred.resolve(response.data);
+        }, function errorCallback(response) {
+            deferred.resolve(response.data);
+
+        });
+
+        return deferred.promise;
+    }
 
     // Helpfunction for initMapBplaene and initMapBplaene (loops through paginated data from server)
     var getNextPage = function(url, params, target, deferred) {

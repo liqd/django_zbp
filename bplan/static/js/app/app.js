@@ -13,7 +13,9 @@ var app = angular.module('app',[
     'bezirke' : '/api/bezirke/',
     'bplan_data' : '/api/bplan/data/',
     'bplan_multipolygon' : '/api/bplan/multipolygons/',
-    'bplan_point' : '/api/bplan/points/'
+    'bplan_point' : '/api/bplan/points/',
+    'bplan' : '/api/bplan/',
+    'addresses' : '/api/addresses/',
 })
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
 	cfpLoadingBarProvider.includeSpinner = false;

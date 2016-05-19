@@ -80,3 +80,13 @@ class BPlanMultipolygonSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializ
         id_field = False
         geo_field = 'multipolygon'
         fields = ('multipolygon', 'bplanID', 'status', 'pk')
+
+
+class BPlanSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
+    status = serializers.SerializerMethodField()
+
+    class Meta:
+        model = BPlan
+        id_field = False
+        geo_field = 'multipolygon'
+

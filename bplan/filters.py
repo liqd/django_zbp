@@ -71,6 +71,19 @@ class AddressFilter(filters.BaseFilterBackend):
             return queryset
 
 
+class BplanFilter(filters.BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+
+        if 'bplan' in request.GET:
+            bplan = request.GET["bplan"]
+            bplan = bplan.replace(' ', '').lower()
+            bplans = queryset.filter(bplanID=bplan)
+            return bplans
+        else:
+            return queryset
+
+
 class BPlanAddressFilter(filters.BaseFilterBackend):
 
     def get_filter_point(self, request):

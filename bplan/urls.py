@@ -3,6 +3,7 @@ from django.conf.urls import url, include
 from rest_framework import routers
 from .api import BezirkViewSet
 from .api import OrtsteilViewSet
+from .api import BPlanViewSet
 from .api import BPlanPointViewSet
 from .api import BPlanMultipolygonViewSet
 from .api import BPlanDataViewSet
@@ -14,10 +15,11 @@ router = routers.DefaultRouter()
 router.register(r'addresses', AddressViewSet, base_name='addresse')
 router.register(r'bezirke', BezirkViewSet, base_name='bezirk')
 router.register(r'ortsteile', OrtsteilViewSet, base_name='ortsteil')
-router.register(r'bplan/points', BPlanPointViewSet, base_name='bplan')
+router.register(r'bplan/points', BPlanPointViewSet, base_name='bplan_points')
 router.register(r'bplan/multipolygons',
                 BPlanMultipolygonViewSet, base_name='bplan_multipoligon')
 router.register(r'bplan/data', BPlanDataViewSet, base_name='bplan_data')
+router.register(r'bplan', BPlanViewSet, base_name='bplan_all')
 
 
 
