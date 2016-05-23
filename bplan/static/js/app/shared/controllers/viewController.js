@@ -2,7 +2,7 @@
 
 angular.module('app.shared.controllers.viewController', [])
 
-.controller('ViewController', ['$scope', '$rootScope', 'PlacesService', function($scope, $rootScope, PlacesService) {
+.controller('ViewController', ['$scope', '$timeout', '$rootScope', 'PlacesService', function($scope, $timeout, $rootScope, PlacesService) {
     $scope.area = area;
     $scope.places = PlacesService;
     $scope.currentView = 'map';
@@ -17,6 +17,7 @@ angular.module('app.shared.controllers.viewController', [])
 
     $scope.setView = function(type) {
         $scope.currentView = type;
+        $rootScope.$broadcast('type:switched');
     };
 
     $scope.updateFilter = function() {
@@ -25,6 +26,8 @@ angular.module('app.shared.controllers.viewController', [])
 
     $scope.updateOrtsteil = function() {
         $scope.places.reset();
+        resetSearchResults();
+        $scope.searchstring = '';
         var slug = $scope.places.ortsteile_polygons[$scope.places.currentOrtsteil].properties.slug;
         $scope.places.initBplaene({
             'ortsteil': slug
@@ -35,6 +38,8 @@ angular.module('app.shared.controllers.viewController', [])
 
     $scope.resetOrtsteil = function() {
         $scope.places.reset();
+        resetSearchResults();
+        $scope.searchstring = '';
         $scope.places.currentOrtsteilName = "Alle Ortsteile";
         $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function() {
             $rootScope.$broadcast('ortsteil:reset');
@@ -49,33 +54,39 @@ angular.module('app.shared.controllers.viewController', [])
                 $scope.bplanSearchResult = result.features;
 
                 $scope.searchResultCount = $scope.addressSearchResult.length + $scope.bplanSearchResult.length;
+                var addresses = $scope.addressSearchResult.length;
+                var bplaene = $scope.bplanSearchResult.length;
 
-                if ($scope.addressSearchResult.length === 1 && $scope.bplanSearchResult.length == 0) {
+                if (addresses === 1 && bplaene === 0) {
                     $scope.chooseAddress($scope.addressSearchResult[0]);
                 }
 
-                if ($scope.addressSearchResult.length === 0 && $scope.bplanSearchResult.length == 1) {
+                if (addresses === 0 && bplaene === 1) {
                     $scope.chooseBplan($scope.bplanSearchResult[0]);
                 }
             });
         });
     };
 
-    $scope.resetSearch = function() {
-        $rootScope.$broadcast('search:reseted');
+    var resetSearchResults = function() {
         $scope.addressSearchResult = undefined;
         $scope.bplanSearchResult = undefined;
         $scope.searchResultCount = undefined;
+    }
+
+    $scope.resetSearch = function() {
+        resetSearchResults();
         $scope.searchstring = '';
         $scope.places.currentAddress = undefined;
+        $scope.places.currentBplan = undefined;
         $scope.places.reset();
-        $scope.places.initBplaene({}, $scope.places.bplan_points.features);
+        $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function(){
+            $rootScope.$broadcast('search:reseted');
+        });
     };
 
     $scope.chooseAddress = function(address) {
-        $scope.addressSearchResult = undefined;
-        $scope.bplanSearchResult = undefined;
-        $scope.searchResultCount = undefined;
+        resetSearchResults();
         $scope.places.currentAddress = address;
         $scope.places.reset();
         $scope.places.initBplaene({}, $scope.places.bplan_points.features).then(function() {
@@ -92,9 +103,11 @@ angular.module('app.shared.controllers.viewController', [])
     };
 
     $scope.removeTagOnBackspace = function() {
-        if ($scope.searchstring === '') {
-            $scope.resetSearch();
-        }
+        $timeout(function() {
+            if ($scope.searchstring === '') {
+                $scope.resetSearch();
+            }
+        }, 10);
     };
 
 }])

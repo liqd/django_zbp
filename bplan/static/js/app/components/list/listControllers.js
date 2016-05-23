@@ -44,7 +44,7 @@ angular.module('app.list.controllers', [])
         updateList();
     });
 
-    $scope.$on('address:reseted', function() {
+    $scope.$on('search:reseted', function() {
         updateList();
     });
 

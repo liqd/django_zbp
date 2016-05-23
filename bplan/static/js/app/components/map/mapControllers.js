@@ -126,13 +126,12 @@ angular.module('app.map.controllers', [])
             $scope.currentItem = data;
         });
         $scope.currentMarker = marker;
-        $timeout(function() {
-            $scope.popupopen = true;
-            setTimeout(function() {
-                $scope.map.invalidateSize();
-                $scope.map.setView($scope.currentMarker._latlng);
-            }, 100);
-        });
+        $scope.popupopen = true;
+        setTimeout(function() {
+            $scope.map.invalidateSize();
+            $scope.map.setView($scope.currentMarker._latlng);
+        }, 100);
+
     };
 
     var createMarker = function(feature) {
@@ -142,45 +141,45 @@ angular.module('app.map.controllers', [])
         var pk = feature.properties.pk;
         var color = getColorForStatus(status);
         var size = getSizeForStatus(status);
-        if ($scope.places.filters[status]) {
-            var cssIcon = L.divIcon({
-                className: 'custom-marker-' + status,
-                html: '<div><div></div></div>',
-                iconSize: [size, size]
-            });
-            var marker = L.marker(L.latLng(lat, lon), {
-                icon: cssIcon
-            });
+        var cssIcon = L.divIcon({
+            className: 'custom-marker-' + status,
+            html: '<div><div></div></div>',
+            iconSize: [size, size]
+        });
+        var marker = L.marker(L.latLng(lat, lon), {
+            icon: cssIcon
+        });
+        var style = {
+            'color': color,
+            'weight': 0.5,
+            'opacity': 1,
+            'fillOpacity': 0.5
+        };
+        marker.pk = pk;
+        marker.on('click', function(e) {
+            updatePolygonAfterBplanChange(this, this.multipolygon);
+        });
+        marker.on('mouseover', function(e) {
+            if (!this.multipolygon) {
+                $scope.places.getBplanMultipolygon(this.pk).then(function(data) {
+                    var multipolygon = L.geoJson(data);
+                    multipolygon.setStyle(style);
+                    e.target.multipolygon = multipolygon;
+                });
+            }
+        });
+        $scope.markers.addLayer(marker);
+        return marker;
 
-            var style = {
-                'color': color,
-                'weight': 0.5,
-                'opacity': 1,
-                'fillOpacity': 0.5
-            };
-
-            marker.pk = pk;
-            marker.on('click', function(e) {
-                updatePolygonAfterBplanChange(this, this.multipolygon);
-            });
-            marker.on('mouseover', function(e) {
-                if (!this.multipolygon) {
-                    $scope.places.getBplanMultipolygon(this.pk).then(function(data) {
-                        var multipolygon = L.geoJson(data);
-                        multipolygon.setStyle(style);
-                        e.target.multipolygon = multipolygon;
-                    });
-                }
-            });
-            $scope.markers.addLayer(marker);
-            return marker;
-        }
     };
 
     // This function is called each time the data is updated (creates the markers)
     var addGeojson = function(cluster) {
         _.forEach(cluster.features, function(feature) {
-            createMarker(feature);
+            var status = feature.properties.status;
+            if ($scope.places.filters[status]) {
+                createMarker(feature);
+            };
         });
     };
 
@@ -287,6 +286,11 @@ angular.module('app.map.controllers', [])
     });
 
     $scope.$on('ortsteil:updated', function() {
+        $scope.closePopup();
+        if (!angular.isUndefined($scope.address_marker)) {
+            $scope.map.removeLayer($scope.address_marker);
+        }
+        $scope.address_marker = undefined;
         resetAfterDataUpdate();
         $scope.map.removeLayer($scope.currentOrtsteil);
         var ortsteil = $scope.places.ortsteile_polygons[$scope.places.currentOrtsteil];
@@ -296,6 +300,11 @@ angular.module('app.map.controllers', [])
     });
 
     $scope.$on('ortsteil:reset', function() {
+        $scope.closePopup();
+        if (!angular.isUndefined($scope.address_marker)) {
+            $scope.map.removeLayer($scope.address_marker);
+        }
+        $scope.address_marker = undefined;
         resetAfterDataUpdate();
         $scope.map.removeLayer($scope.currentOrtsteil);
         $scope.map.fitBounds($scope.districtLayer);
@@ -317,7 +326,7 @@ angular.module('app.map.controllers', [])
     });
 
     $scope.$on('bplan:updated', function() {
-        var pk = $scope.places.currentBplan.properties.id;
+        var pk = $scope.places.currentBplan.properties.pk;
         var status = $scope.places.currentBplan.properties.status;
         var layers = $scope.markers.getLayers();
         var marker = undefined;
@@ -336,23 +345,17 @@ angular.module('app.map.controllers', [])
                 return false;
             }
         });
-        if(!angular.isUndefined(marker)){
-            $scope.places.getBplanMultipolygon(pk).then(function(data) {
-                var multipolygon = L.geoJson(data);
-                multipolygon.setStyle(style);
-                marker.multipolygon = multipolygon;
-                $scope.map.fitBounds(multipolygon);
-                updatePolygonAfterBplanChange(marker, multipolygon);
-            });
-        }
-        else {
-            console.log('hier');
-            console.log($scope.places.currentBplan);
+
+        if(angular.isUndefined(marker)){
             marker = createMarker($scope.places.currentBplan);
-            console.log(marker);
-            $scope.map.fitBounds(marker.multipolygon);
-            updatePolygonAfterBplanChange(marker, marker.multipolygon);
         }
+        $scope.places.getBplanMultipolygon(pk).then(function(data) {
+            var multipolygon = L.geoJson(data);
+            multipolygon.setStyle(style);
+            marker.multipolygon = multipolygon;
+            $scope.map.fitBounds(multipolygon);
+            updatePolygonAfterBplanChange(marker, multipolygon);
+        });
     });
 
     $scope.$on('search:reseted', function() {
@@ -363,5 +366,4 @@ angular.module('app.map.controllers', [])
         $scope.address_marker = undefined;
         resetAfterDataUpdate();
     });
-
 }]);

@@ -7,13 +7,15 @@ angular.module('app.map.directives', [])
         restrict: 'E',
         scope: {
             bplan: '=',
-            closepopup: '='
+            closepopup: '=',
+            resetsearch: '='
         },
         templateUrl: '/static/js/app/components/map/popup.html',
         link: function(scope) {
 
             scope.closePopup = function() {
                 scope.closepopup();
+                scope.resetsearch();
             };
         }
     };
