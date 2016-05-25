@@ -225,7 +225,7 @@ class Command(BaseCommand):
 
             planname, spatial_alias, spatial_name = self._get_identifiers(
                 feature)
-            bplanID = planname.replace(" ", "")
+            bplanID = planname.replace(" ", "").lower()
             spatial_type, multipolygon, multipolygon_25833, geometry, bereich = self._get_spatial_data(
                 feature)
             point = self._calculate_point(multipolygon)

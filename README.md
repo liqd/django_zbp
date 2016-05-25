@@ -33,10 +33,14 @@ DATABASES = {
 $ ./manage.py migrate
 $ ./manage.py bower install
 $ ./manage.py createsuperuser
+
 $ ./manage.py load_bezirke
 $ ./manage.py load_ortsteile
 $ ./manage.py load_bplan --fromFixtures (to load data from fixtures, no GDAL required)
 $ ../manage.py load_bplan (to load data from WFS, GDAL required)
+
+$ ./manage.py load_all (installs all, GDAL required)
+
 ```
 here there is still an ugly error occurring twice that can be disregarded:
 

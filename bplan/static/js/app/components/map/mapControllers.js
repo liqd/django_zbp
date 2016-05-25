@@ -61,8 +61,30 @@ angular.module('app.map.controllers', [])
         $scope.polygons.imVerfahren = {};
     };
 
+    var getZoomLevelForMarkers = function() {
+        if(area) {
+            return 14;
+        }
+        else {
+            return 16;
+        }
+    };
+
+    var getZoomLevelForPolygons = function() {
+        return getZoomLevelForMarkers() + 1
+    };
+
+    var getMaxRadius = function() {
+        if(area) {
+            return 100;
+        }
+        else {
+            return 150;
+        }
+    }
+
     var getColorForStatus = function(status) {
-        if (status == 'aul') {
+        if(status == 'aul') {
             return '#28d582';
         } else if (status == 'bbg') {
             return '#ff8a2c';
@@ -93,26 +115,18 @@ angular.module('app.map.controllers', [])
     var createMap = function() {
         var map = $window.L.map('map');
         L.tileLayer('https://maps.berlinonline.de/tile/osmbright_bde/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy;',
-            maxZoom: 18
+        	attribution: 'Geoportal Berlin/Bebauungspläne, Geltungsbereiche',
+        	maxZoom: 19
         }).addTo(map);
         $scope.districtLayer = L.geoJson($scope.places.district).addTo(map);
         $scope.districtLayer.setStyle(DISTRICTSTYLE);
         map.fitBounds($scope.districtLayer);
         var currentZoom = map.getZoom();
         map.options.minZoom = currentZoom;
-        map.on('zoomend', function() {
-            if (map.getZoom() < 16) {
-                _.forEach($scope.polygons, function(value1) {
-                    _.forEach(value1, function(value2) {
-                        $scope.map.removeLayer(value2);
-                    });
-                });
-            } else {
-                getMultipolygons();
-            }
+        map.on('zoomend', function (e){
+            getMultipolygons();
         });
-        map.on('dragend', function() {
+        map.on('dragend', function (e){
             getMultipolygons();
         });
         return map;
@@ -175,7 +189,7 @@ angular.module('app.map.controllers', [])
 
     // This function is called each time the data is updated (creates the markers)
     var addGeojson = function(cluster) {
-        _.forEach(cluster.features, function(feature) {
+        _.forEach(cluster, function(feature) {
             var status = feature.properties.status;
             if ($scope.places.filters[status]) {
                 createMarker(feature);
@@ -185,7 +199,7 @@ angular.module('app.map.controllers', [])
 
     // this function is called each time the data is updated (shows polygons on zoomlevel)
     var getMultipolygons = function() {
-        if ($scope.map.getZoom() >= 16) {
+        if ($scope.map.getZoom() >= getZoomLevelForPolygons()) {
             var boundingbox = $scope.map.getBounds();
             var lat1 = boundingbox._northEast.lat;
             var lng1 = boundingbox._northEast.lng;
@@ -232,7 +246,7 @@ angular.module('app.map.controllers', [])
             });
         });
         resetPolygons();
-        addGeojson($scope.places.bplan_points);
+        addGeojson($scope.places.bplan_points.features);
     };
 
     $scope.closePopup = function() {
@@ -251,18 +265,35 @@ angular.module('app.map.controllers', [])
     $scope.$on('data:loaded', function() {
         $scope.places.initMap().then(function() {
             $scope.map = createMap();
+
+            $scope.markers = L.markerClusterGroup({
+                chunkedLoading: true,
+                removeOutsideVisibleBounds: true,
+                disableClusteringAtZoom: getZoomLevelForMarkers(),
+                spiderfyOnMaxZoom: false,
+                maxClusterRadius: getMaxRadius(),
+                polygonOptions: {
+                    fillColor: '#1b2557',
+                    color: '#1b2557',
+                    weight: 0.5,
+                    opacity: 1,
+                    fillOpacity: 0.2
+                }
+            });
+            addGeojson($scope.places.bplan_points.features);
             $scope.markers.addTo($scope.map);
-            addGeojson($scope.places.bplan_points);
         });
     });
 
     $scope.$on('filter:updated', function() {
         $scope.markers.clearLayers();
-        addGeojson($scope.places.bplan_points);
-        if ($scope.map.getZoom() >= 16) {
-            _.forEach($scope.polygons, function(value1, key) {
-                if (!$scope.places.filters[key]) {
-                    _.forEach(value1, function(value) {
+
+        addGeojson($scope.places.bplan_points.features);
+        if($scope.map.getZoom() >= getZoomLevelForPolygons()){
+            _.forEach($scope.polygons, function(value, key){
+                if(!$scope.places.filters[key]){
+                    _.forEach(value, function(value, key) {
+
                         $scope.map.removeLayer(value);
                     });
                 } else {
@@ -297,6 +328,7 @@ angular.module('app.map.controllers', [])
         $scope.currentOrtsteil = L.geoJson(ortsteil).addTo($scope.map).bringToBack();
         $scope.currentOrtsteil.setStyle(ORTSTEILSTYLE);
         $scope.map.fitBounds($scope.currentOrtsteil);
+        getMultipolygons();
     });
 
     $scope.$on('ortsteil:reset', function() {
@@ -370,9 +402,9 @@ angular.module('app.map.controllers', [])
     $scope.$on('type:switchedtoMap', function(){
         setTimeout(function() {
             $scope.map.invalidateSize({
-                pan: false
+                pan: true
             });
             getMultipolygons();
-        }, 200);
+        }, 100);
     });
 }]);
