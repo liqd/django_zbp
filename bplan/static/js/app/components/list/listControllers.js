@@ -12,6 +12,9 @@ angular.module('app.list.controllers', [])
 
     var updateList = function() {
         $scope.list = [];
+        if (!angular.isUndefined($scope.places.currentBplan)) {
+            $scope.list.push($scope.places.currentBplan);
+        }
         _.forEach($scope.places.bplan_points.features, function(value) {
             if ($scope.places.filters[value.properties.status]) {
                 $scope.list.push(value);
@@ -45,6 +48,10 @@ angular.module('app.list.controllers', [])
     });
 
     $scope.$on('search:reseted', function() {
+        updateList();
+    });
+
+    $scope.$on('bplan:updated', function() {
         updateList();
     });
 

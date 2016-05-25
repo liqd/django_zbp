@@ -37,20 +37,33 @@
 	min-height: 95px;
 }
 
+
 .bplan-list-item-bbg {
-	border: solid 1px $status-bbg;
+	border-style: solid;
+	border-width: 1px;
+	border-color: $status-bbg;
 }
 
 .bplan-list-item-aul {
-	border: solid 1px $status-aul;
+	border-style: solid;
+	border-width: 1px;
+	border-color: $status-aul;
 }
 
 .bplan-list-item-imVerfahren {
-	border: solid 1px $status-imVerfahren;
+	border-style: solid;
+	border-width: 1px;
+	border-color: $status-imVerfahren;
 }
 
 .bplan-list-item-festg {
-	border: solid 1px $status-festg;
+	border-style: solid;
+	border-width: 1px;
+	border-color: $status-festg;
+}
+
+.highlighted {
+	border-width: 5px;
 }
 
 .bplan-list-item-description {
