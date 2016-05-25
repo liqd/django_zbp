@@ -366,4 +366,13 @@ angular.module('app.map.controllers', [])
         $scope.address_marker = undefined;
         resetAfterDataUpdate();
     });
+
+    $scope.$on('type:switchedtoMap', function(){
+        setTimeout(function() {
+            $scope.map.invalidateSize({
+                pan: false
+            });
+            getMultipolygons();
+        }, 200);
+    });
 }]);

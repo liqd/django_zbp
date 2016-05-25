@@ -17,7 +17,12 @@ angular.module('app.shared.controllers.viewController', [])
 
     $scope.setView = function(type) {
         $scope.currentView = type;
-        $rootScope.$broadcast('type:switched');
+        if(type === 'map'){
+            $rootScope.$broadcast('type:switchedtoMap');
+        }
+        else {
+            $rootScope.$broadcast('type:switchedtoList');
+        }
     };
 
     $scope.updateFilter = function() {
