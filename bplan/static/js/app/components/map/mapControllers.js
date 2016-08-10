@@ -44,7 +44,7 @@ angular.module('app.map.controllers',[])
             return 14;
         }
         else {
-            return 16;
+            return 14;
         }
     };
 
@@ -181,6 +181,7 @@ angular.module('app.map.controllers',[])
         if(!area) {
             $scope.districtMarkers.addTo(map);
         }
+
         map.fitBounds($scope.districtLayer);
         var currentZoom = map.getZoom();
         map.options.minZoom = currentZoom;
@@ -344,6 +345,7 @@ angular.module('app.map.controllers',[])
                 createDistrictMarker(point, count, districtName);
             }
         })
+
     });
 
     $scope.$on('ortsteil:updated', function(event,data) {
