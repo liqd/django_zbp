@@ -239,13 +239,7 @@ angular.module('app.map.controllers',[])
                 disableClusteringAtZoom: getZoomLevelForMarkers(),
                 spiderfyOnMaxZoom: false,
                 maxClusterRadius: getMaxRadius(),
-                polygonOptions: {
-                    fillColor: '#1b2557',
-                    color: '#1b2557',
-                    weight: 0.5,
-                    opacity: 1,
-                    fillOpacity: 0.2
-                }
+                showCoverageOnHover: false
             });
             addGeojson($scope.places.bplan_points.features, 0);
             $scope.markers.addTo($scope.map);
