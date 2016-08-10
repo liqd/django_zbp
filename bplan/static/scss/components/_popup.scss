@@ -1,31 +1,60 @@
 .popup {
-	height: $map-height;
-	color: $gray-light;
-	font-size: $font-size;
-	font-family: 'Arimo', serif;
-	padding: 25px;
+    height: $map-height;
+    color: $gray-light;
+    font-size: $font-size;
+    font-family: 'Arimo', serif;
+    padding: 25px;
 }
 
 .popup-entry {
-	margin: 25px 0px 25px 0px;
+    margin: 25px 0px 25px 0px;
 }
 
 .popup-bbg {
-	border: solid 15px $status-bbg;
+    border: solid 15px $status-bbg;
 }
 
 .popup-aul {
-	border: solid 15px $status-aul;
+    border: solid 15px $status-aul;
 }
 
 .popup-imVerfahren {
-	border: solid 15px $status-imVerfahren;
+    border: solid 15px $status-imVerfahren;
 }
 
 .popup-festg {
-	border: solid 15px $status-festg;
+    border: solid 15px $status-festg;
 }
 
 .no-left-padding {
-	padding-left: 0;
+    padding-left: 0;
+}
+
+.bplan-map {
+
+    & .leaflet-popup-content-wrapper {
+        border-radius: 0px;
+        border: 5px solid $brand-primary;
+
+    }
+
+    & .leaflet-popup-content-wrapper a {
+
+    }
+
+    & .leaflet-popup-tip-container {
+
+    }
+
+    & .leaflet-popup {
+        & .leaflet-popup-close-button {
+            padding: 6px -6px 6px 0px;
+        }
+    }
+
+    & .leaflet-popup-tip {
+        border-right:15px solid $brand-primary;
+        border-top:15px solid $brand-primary;
+    }
+
 }

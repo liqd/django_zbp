@@ -33,15 +33,15 @@ angular.module('app.map.controllers', [])
     });
 
     var DISTRICTSTYLE = {
-        'color': '#808080',
-        'weight': 2,
+        'color': '#a8a8a8',
+        'weight': 1,
         'opacity': 1,
         'fillOpacity': 0
     };
 
     var ORTSTEILSTYLE = {
-        'color': '#808080',
-        'weight': 6,
+        'color': '#a8a8a8',
+        'weight': 3,
         'opacity': 1,
         'fillOpacity': 0
     };
@@ -66,7 +66,7 @@ angular.module('app.map.controllers', [])
             return 14;
         }
         else {
-            return 16;
+            return 14;
         }
     };
 
@@ -88,11 +88,14 @@ angular.module('app.map.controllers', [])
             return '#28d582';
         } else if (status == 'bbg') {
             return '#ff8a2c';
-        } else if (status == 'festg') {
-            return '#47c6dd';
-        } else if (status == 'imVerfahren') {
+        }
+        else if(status == 'festg') {
             return '#e72323';
-        } else {
+        }
+        else if(status == 'imVerfahren') {
+            return '#47c6dd';
+        }
+        else {
             console.log('Not a known status');
         }
     };
@@ -111,20 +114,77 @@ angular.module('app.map.controllers', [])
         }
     };
 
+    var createDistrictMarker = function(point, count, name) {
+        var lon = point[0];
+        var lat = point[1];
+        var icon = L.divIcon({
+            html:'<div><span>'+ count +'</span></div>',
+            className: 'leaflet-marker-icon marker-cluster marker-cluster-medium',
+            iconSize:[40, 40]
+        });
+        var marker = L.marker([lat,lon],{icon:icon});
+        marker.bindPopup(count + ' Bebauungspläne in' + '<br><b>'+ name +'</b>', {closeButton: false, offset: L.point(0, -20)});
+        marker.on('mouseover', function (e) {
+            this.openPopup();
+        });
+        marker.on('mouseout', function (e) {
+            this.closePopup();
+        });
+        marker.on('click', function(e) {
+            $scope.map.zoomIn();
+        });
+        $scope.districtMarkers.addLayer(marker);
+    }
+
     // This function is called once after the data is loaded initially (creates the map)
-    var createMap = function() {
+    var createMap = function(){
         var map = $window.L.map('map');
         L.tileLayer('https://maps.berlinonline.de/tile/osmbright_bde/{z}/{x}/{y}.png', {
         	attribution: 'Geoportal Berlin/Bebauungspläne, Geltungsbereiche',
         	maxZoom: 19
         }).addTo(map);
-        $scope.districtLayer = L.geoJson($scope.places.district).addTo(map);
+
+        $scope.districtMarkers = L.layerGroup()
+
+        $scope.districtLayer = L.geoJson($scope.places.district, {
+            onEachFeature : function(feature, layer) {
+                var count = feature.properties.bplan_count;
+                var districtName = feature.properties.name;
+                var point = feature.properties.point;
+                createDistrictMarker(point, count, districtName);
+            }
+        }).addTo(map);
         $scope.districtLayer.setStyle(DISTRICTSTYLE);
+
+        if(!area) {
+            $scope.districtMarkers.addTo(map);
+        }
+
         map.fitBounds($scope.districtLayer);
         var currentZoom = map.getZoom();
         map.options.minZoom = currentZoom;
         map.on('zoomend', function (e){
-            getMultipolygons();
+            var currentZoom = map.getZoom();
+            if(currentZoom > map.getMinZoom()) {
+                if(!area){
+                    map.removeLayer($scope.districtMarkers);
+                    $scope.markers.addTo($scope.map);
+                }
+                if(currentZoom >= getZoomLevelForPolygons()) {
+                    getMultipolygons();
+                }
+                else{
+                    _.forEach($scope.polygons, function(value, key){
+                        _.forEach(value, function(value, key) {
+                            $scope.map.removeLayer(value);
+                        })
+                    })
+                }
+            }
+            if(currentZoom == map.getMinZoom() && !area) {
+                map.removeLayer($scope.markers);
+                $scope.districtMarkers.addTo(map);
+            }
         });
         map.on('dragend', function (e){
             getMultipolygons();
@@ -272,16 +332,14 @@ angular.module('app.map.controllers', [])
                 disableClusteringAtZoom: getZoomLevelForMarkers(),
                 spiderfyOnMaxZoom: false,
                 maxClusterRadius: getMaxRadius(),
-                polygonOptions: {
-                    fillColor: '#1b2557',
-                    color: '#1b2557',
-                    weight: 0.5,
-                    opacity: 1,
-                    fillOpacity: 0.2
-                }
+                showCoverageOnHover: false
             });
-            addGeojson($scope.places.bplan_points.features);
-            $scope.markers.addTo($scope.map);
+
+            addGeojson($scope.places.bplan_points.features, 0);
+            if(area){
+                $scope.markers.addTo($scope.map);
+            }
+
         });
     });
 
@@ -314,6 +372,28 @@ angular.module('app.map.controllers', [])
                 $scope.map.removeLayer($scope.currentPolygon);
             }, 200);
         }
+        $scope.districtMarkers.clearLayers();
+        L.geoJson($scope.places.district, {
+            onEachFeature : function(feature, layer) {
+                var count = 0
+                if($scope.places.filters['aul']){
+                    count = count + feature.properties.bplan_aul_count
+                }
+                if($scope.places.filters['bbg']){
+                    count = count + feature.properties.bplan_bbg_count
+                }
+                if($scope.places.filters['festg']){
+                    count = count + feature.properties.bplan_festgesetzt_count
+                }
+                if($scope.places.filters['imVerfahren']){
+                    count = count + feature.properties.bplan_imVerfahren_count
+                }
+                var districtName = feature.properties.name;
+                var point = feature.properties.point;
+                createDistrictMarker(point, count, districtName);
+            }
+        })
+
     });
 
     $scope.$on('ortsteil:updated', function() {

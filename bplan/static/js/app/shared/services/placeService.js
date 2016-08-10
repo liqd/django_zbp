@@ -98,7 +98,6 @@ angular.module('app.shared.services.places', [])
     places.getBplanMultipolygonList = function(params) {
         if (area) {
             params.bezirk__slug = area;
-            params.afs_behoer = "Bezirksamt";
         }
         if (places.currentOrtsteilName != 'Alle Ortsteile') {
             var ortsteil_slug = places.ortsteile_polygons[places.currentOrtsteil].properties.slug;
@@ -200,7 +199,6 @@ angular.module('app.shared.services.places', [])
 
         if (area) {
             params.bezirk__slug = area;
-            params.afs_behoer = "Bezirksamt";
         }
 
         if (places.currentAddress) {
