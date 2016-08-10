@@ -44,7 +44,7 @@ angular.module('app.map.controllers',[])
             return 14;
         }
         else {
-            return 14;
+            return 15;
         }
     };
 
