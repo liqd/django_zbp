@@ -18,15 +18,15 @@ angular.module('app.map.controllers',[])
     $scope.currentMarker = {};
 
     var DISTRICTSTYLE = {
-        'color': '#808080',
-        'weight': 2,
+        'color': '#a8a8a8',
+        'weight': 1,
         'opacity': 1,
         'fillOpacity': 0
     };
 
     var ORTSTEILSTYLE = {
-        'color': '#808080',
-        'weight': 6,
+        'color': '#a8a8a8',
+        'weight': 3,
         'opacity': 1,
         'fillOpacity': 0
     };
