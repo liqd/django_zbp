@@ -69,10 +69,10 @@ angular.module('app.map.controllers',[])
             return '#ff8a2c';
         }
         else if(status == 'festg') {
-            return '#47c6dd';
+            return '#e72323';
         }
         else if(status == 'imVerfahren') {
-            return '#e72323';
+            return '#47c6dd';
         }
         else {
             console.log('Not a known status');
