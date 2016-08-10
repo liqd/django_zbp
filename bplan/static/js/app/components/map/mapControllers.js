@@ -146,7 +146,7 @@ angular.module('app.map.controllers',[])
             iconSize:[40, 40]
         });
         var marker = L.marker([lat,lon],{icon:icon});
-        marker.bindPopup(count + ' Bebauungspläne in' + '<br><b>'+ name +'</b>', {closeButton: false, offset: L.point(0, -20)});
+        marker.bindPopup(count + ' Bebauungspläne in' + '<br>'+ name, {closeButton: false, offset: L.point(0, -20)});
         marker.on('mouseover', function (e) {
             this.openPopup();
         });
