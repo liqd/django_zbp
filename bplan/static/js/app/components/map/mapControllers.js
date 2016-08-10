@@ -137,27 +137,74 @@ angular.module('app.map.controllers',[])
         })
     }
 
+    var createDistrictMarker = function(point, count, name) {
+        var lon = point[0];
+        var lat = point[1];
+        var icon = L.divIcon({
+            html:'<div><span>'+ count +'</span></div>',
+            className: 'leaflet-marker-icon marker-cluster marker-cluster-medium',
+            iconSize:[40, 40]
+        });
+        var marker = L.marker([lat,lon],{icon:icon});
+        marker.bindPopup(count + ' Bebauungspläne in' + '<br><b>'+ name +'</b>', {closeButton: false, offset: L.point(0, -20)});
+        marker.on('mouseover', function (e) {
+            this.openPopup();
+        });
+        marker.on('mouseout', function (e) {
+            this.closePopup();
+        });
+        marker.on('click', function(e) {
+            $scope.map.zoomIn();
+        });
+        $scope.districtMarkers.addLayer(marker);
+    }
+
     var createMap = function(){
         var map = $window.L.map('map');
         L.tileLayer('https://maps.berlinonline.de/tile/osmbright_bde/{z}/{x}/{y}.png', {
         	attribution: 'Geoportal Berlin/Bebauungspläne, Geltungsbereiche',
         	maxZoom: 19
         }).addTo(map);
-        $scope.districtLayer = L.geoJson($scope.places.district).addTo(map);
+
+        $scope.districtMarkers = L.layerGroup()
+
+        $scope.districtLayer = L.geoJson($scope.places.district, {
+            onEachFeature : function(feature, layer) {
+                var count = feature.properties.bplan_count;
+                var districtName = feature.properties.name;
+                var point = feature.properties.point;
+                createDistrictMarker(point, count, districtName);
+            }
+        }).addTo(map);
         $scope.districtLayer.setStyle(DISTRICTSTYLE);
+
+        if(!area) {
+            $scope.districtMarkers.addTo(map);
+        }
         map.fitBounds($scope.districtLayer);
         var currentZoom = map.getZoom();
         map.options.minZoom = currentZoom;
         map.on('zoomend', function (e){
-            if(map.getZoom() >= getZoomLevelForPolygons()){
-                getMultipolygons();
-            }
-            else{
-                _.forEach($scope.polygons, function(value, key){
-                    _.forEach(value, function(value, key) {
-                        $scope.map.removeLayer(value);
+            var currentZoom = map.getZoom();
+            if(currentZoom > map.getMinZoom()) {
+                if(!area){
+                    map.removeLayer($scope.districtMarkers);
+                    $scope.markers.addTo($scope.map);
+                }
+                if(currentZoom >= getZoomLevelForPolygons()) {
+                    getMultipolygons();
+                }
+                else{
+                    _.forEach($scope.polygons, function(value, key){
+                        _.forEach(value, function(value, key) {
+                            $scope.map.removeLayer(value);
+                        })
                     })
-                })
+                }
+            }
+            if(currentZoom == map.getMinZoom() && !area) {
+                map.removeLayer($scope.markers);
+                $scope.districtMarkers.addTo(map);
             }
         });
         map.on('dragend', function (e){
@@ -242,7 +289,9 @@ angular.module('app.map.controllers',[])
                 showCoverageOnHover: false
             });
             addGeojson($scope.places.bplan_points.features, 0);
-            $scope.markers.addTo($scope.map);
+            if(area){
+                $scope.markers.addTo($scope.map);
+            }
         });
     });
 
@@ -274,6 +323,27 @@ angular.module('app.map.controllers',[])
             $scope.map.removeLayer($scope.currentPolygon);
             }, 200);
         }
+        $scope.districtMarkers.clearLayers();
+        L.geoJson($scope.places.district, {
+            onEachFeature : function(feature, layer) {
+                var count = 0
+                if($scope.places.filters['aul']){
+                    count = count + feature.properties.bplan_aul_count
+                }
+                if($scope.places.filters['bbg']){
+                    count = count + feature.properties.bplan_bbg_count
+                }
+                if($scope.places.filters['festg']){
+                    count = count + feature.properties.bplan_festgesetzt_count
+                }
+                if($scope.places.filters['imVerfahren']){
+                    count = count + feature.properties.bplan_imVerfahren_count
+                }
+                var districtName = feature.properties.name;
+                var point = feature.properties.point;
+                createDistrictMarker(point, count, districtName);
+            }
+        })
     });
 
     $scope.$on('ortsteil:updated', function(event,data) {
