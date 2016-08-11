@@ -146,7 +146,9 @@ angular.module('app.map.controllers',[])
             iconSize:[40, 40]
         });
         var marker = L.marker([lat,lon],{icon:icon});
-        marker.bindPopup(count + ' Bebauungspläne in' + '<br>'+ name, {closeButton: false, offset: L.point(0, -20)});
+
+        var string = count == 1 ? 'Bebauungsplan' : 'Bebauungspläne';
+        marker.bindPopup(count + ' ' + string + ' in' + '<br>'+ name, {closeButton: false, offset: L.point(0, -20)});
         marker.on('mouseover', function (e) {
             this.openPopup();
         });
@@ -173,6 +175,9 @@ angular.module('app.map.controllers',[])
                 var count = feature.properties.bplan_count;
                 var districtName = feature.properties.name;
                 var point = feature.properties.point;
+                layer.on('click', function(e){
+                    $scope.map.zoomIn();
+                })
                 createDistrictMarker(point, count, districtName);
             }
         }).addTo(map);
@@ -190,7 +195,9 @@ angular.module('app.map.controllers',[])
             if(currentZoom > map.getMinZoom()) {
                 if(!area){
                     map.removeLayer($scope.districtMarkers);
-                    $scope.markers.addTo($scope.map);
+                    _.forEach($scope.bplansPerDistrict, function(clustergroup) {
+                        clustergroup.addTo($scope.map);
+                    })
                 }
                 if(currentZoom >= getZoomLevelForPolygons()) {
                     getMultipolygons();
@@ -204,7 +211,9 @@ angular.module('app.map.controllers',[])
                 }
             }
             if(currentZoom == map.getMinZoom() && !area) {
-                map.removeLayer($scope.markers);
+                 _.forEach($scope.bplansPerDistrict, function(clustergroup) {
+                        map.removeLayer(clustergroup);
+                    })
                 $scope.districtMarkers.addTo(map);
             }
         });
@@ -264,40 +273,60 @@ angular.module('app.map.controllers',[])
                     });
                 }
             });
-            $scope.markers.addLayer(marker);
+            return marker;
         }
     };
 
     var addGeojson = function(features, index) {
-
         _.forEach(features, function(feature, index) {
-            createMarker(feature);
+            var marker = createMarker(feature);
+            var district = feature.properties.bezirk;
+            if(!$scope.bplansPerDistrict[district]){
+                $scope.bplansPerDistrict[district] = L.markerClusterGroup({
+                    chunkedLoading: true,
+                    removeOutsideVisibleBounds: true,
+                    disableClusteringAtZoom: getZoomLevelForMarkers(),
+                    spiderfyOnMaxZoom: false,
+                    maxClusterRadius: getMaxRadius(),
+                    showCoverageOnHover: false
+                });
+            }
+            if(marker) {
+                $scope.bplansPerDistrict[district].addLayer(marker);
+            }
         });
     };
 
+    $scope.closePopup = function() {
+        $scope.popupopen = false;
+        $scope.currentItem = {};
+        $scope.currentMarker = {};
+        setTimeout(function(){
+            $scope.map.invalidateSize({
+                pan:false
+            });
+            $scope.map.removeLayer($scope.currentPolygon);
+        }, 200);
+    }
 
     $scope.$on('data:loaded', function(event,data){
+
         $scope.places.initMap().then( function() {
-
             $scope.map = createMap();
-
-            $scope.markers = L.markerClusterGroup({
-                chunkedLoading: true,
-                removeOutsideVisibleBounds: true,
-                disableClusteringAtZoom: getZoomLevelForMarkers(),
-                spiderfyOnMaxZoom: false,
-                maxClusterRadius: getMaxRadius(),
-                showCoverageOnHover: false
-            });
+            $scope.bplansPerDistrict = {}
             addGeojson($scope.places.bplan_points.features, 0);
             if(area){
-                $scope.markers.addTo($scope.map);
+                _.forEach($scope.bplansPerDistrict, function(clustergroup) {
+                    clustergroup.addTo($scope.map);
+                })
             }
         });
     });
 
     $scope.$on('filter:updated', function(event,data) {
-        $scope.markers.clearLayers();
+        _.forEach($scope.bplansPerDistrict, function(clustergroup) {
+            clustergroup.clearLayers();
+        })
         addGeojson($scope.places.bplan_points.features, 0);
         if($scope.map.getZoom() >= getZoomLevelForPolygons()){
             _.forEach($scope.polygons, function(value, key){
@@ -349,7 +378,9 @@ angular.module('app.map.controllers',[])
     });
 
     $scope.$on('ortsteil:updated', function(event,data) {
-        $scope.markers.clearLayers();
+        _.forEach($scope.bplansPerDistrict, function(clustergroup) {
+            clustergroup.clearLayers();
+        })
         _.forEach($scope.polygons, function(value, key){
             _.forEach(value, function(value, key) {
                 $scope.map.removeLayer(value);
@@ -369,22 +400,12 @@ angular.module('app.map.controllers',[])
 
     $scope.$on('ortsteil:reset', function(event,data) {
         $scope.map.removeLayer($scope.currentOrtsteil);
-        $scope.markers.clearLayers();
+        _.forEach($scope.bplansPerDistrict, function(clustergroup) {
+            clustergroup.clearLayers();
+        })
         addGeojson($scope.places.bplan_points.features, 0);
         $scope.map.fitBounds($scope.districtLayer);
     });
-
-    $scope.closePopup = function() {
-        $scope.popupopen = false;
-        $scope.currentItem = {};
-        $scope.currentMarker = {};
-        setTimeout(function(){
-            $scope.map.invalidateSize({
-                pan:false
-            });
-            $scope.map.removeLayer($scope.currentPolygon);
-        }, 200);
-    }
 
 }]);
 
