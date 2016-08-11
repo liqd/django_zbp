@@ -114,7 +114,7 @@ class BPlanPointSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
         model = BPlan
         id_field = False
         geo_field = 'point'
-        fields = ('point', 'status', 'pk')
+        fields = ('point', 'status', 'pk', 'bezirk')
 
 
 class BPlanMultipolygonSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
