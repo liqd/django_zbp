@@ -229,7 +229,6 @@ class Command(BaseCommand):
             spatial_type, multipolygon, multipolygon_25833, geometry, bereich = self._get_spatial_data(
                 feature)
             point = self._calculate_point(multipolygon)
-            bezirk, bezirk_name = self._get_district(feature)
             ortsteile = self._get_ortsteile(geometry)
             afs_behoer = feature.get("afs_behoer")
             afs_beschl, afs_l_aend = self._get_imVerfahren_data(feature)
@@ -241,6 +240,7 @@ class Command(BaseCommand):
                 feature)
 
             try:
+                bezirk, bezirk_name = self._get_district(feature)
                 bplan, created = BPlan.objects.update_or_create(
                     bplanID=bplanID,
                     spatial_name=spatial_name,
