@@ -261,6 +261,9 @@ angular.module('app.map.controllers',[])
                     setTimeout(function(){
                         $scope.map.invalidateSize();
                         $scope.map.setView($scope.currentMarker._latlng);
+                        setTimeout(function(){
+                            $scope.map.fitBounds($scope.currentPolygon);
+                        }, 200);
                     }, 100);
                 })
             });
