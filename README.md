@@ -45,11 +45,11 @@ $ ../manage.py load_bplan (to load data from WFS, GDAL required)
 $ ./manage.py load_all (load districts, ortsteile,bplans , GDAL required)
 
 LOAD ADDRESSES
-$ ./manage.py load_addresses (downloads adresses from WFS as geojson and saves them in finxtures/addresses, GDAL required)
+$ ./manage.py load_addresses (downloads adresses from WFS as geojson and saves them in finxtures/addresses, GDAL required, might take some minutes)
 
 INSERT ADDRESSES
 $ ./manage.py insert_addresses --fromFixtures (inserts data from fixtures, for local development)
-$ ./manage.py insert_addresses (inserts all data from fixtures/addresses to database)
+$ ./manage.py insert_addresses (inserts all data from fixtures/addresses to database, might take a while, e.g. 30 minutes or more)
 
 ```
 here there is still an ugly error occurring twice that can be disregarded:
