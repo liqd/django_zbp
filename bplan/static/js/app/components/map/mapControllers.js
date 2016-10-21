@@ -195,11 +195,16 @@ angular.module('app.map.controllers', [])
             $scope.currentItem = data;
         });
         $scope.currentMarker = marker;
-        $scope.popupopen = true;
-        setTimeout(function() {
-            $scope.map.invalidateSize();
-            $scope.map.setView($scope.currentMarker._latlng);
-        }, 100);
+        $timeout(function() {
+            $scope.popupopen = true;
+            setTimeout(function(){
+                $scope.map.invalidateSize();
+                $scope.map.setView($scope.currentMarker._latlng);
+                setTimeout(function(){
+                    $scope.map.fitBounds($scope.currentPolygon);
+                }, 200);
+            }, 100);
+        })
 
     };
 
@@ -227,6 +232,7 @@ angular.module('app.map.controllers', [])
 
             marker.pk = pk;
             marker.on('click', function (e) {
+
                 updatePolygonAfterBplanChange(this, this.multipolygon);
             });
             marker.on('mouseover', function (e) {
