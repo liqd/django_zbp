@@ -34,12 +34,22 @@ $ ./manage.py migrate
 $ ./manage.py bower install
 $ ./manage.py createsuperuser
 
+LOAD DISTRICTS AND ORTSTEILE
 $ ./manage.py load_bezirke
 $ ./manage.py load_ortsteile
+
+LOAD BPLAN
 $ ./manage.py load_bplan --fromFixtures (to load data from fixtures, no GDAL required)
 $ ../manage.py load_bplan (to load data from WFS, GDAL required)
 
-$ ./manage.py load_all (installs all, GDAL required)
+$ ./manage.py load_all (load districts, ortsteile,bplans , GDAL required)
+
+LOAD ADDRESSES
+$ ./manage.py load_addresses (downloads adresses from WFS as geojson and saves them in finxtures/addresses, GDAL required)
+
+INSERT ADDRESSES
+$ ./manage.py insert_addresses --fromFixtures (inserts data from fixtures, for local development)
+$ ./manage.py insert_addresses (inserts all data from fixtures/addresses to database)
 
 ```
 here there is still an ugly error occurring twice that can be disregarded:
