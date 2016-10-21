@@ -46,7 +46,7 @@
 
                         <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding"
                              data-ng-if ="currentView === 'map' && popupopen">
-                            <data-popup data-ng-if="currentItem" closepopup="closePopup" bplan="currentItem"></data-popup>
+                            <data-popup data-ng-if="currentItem" closepopup="closePopup" resetsearch="resetSearch" bplan="currentItem"></data-popup>
                         </div>
 
                     </div>
@@ -102,7 +102,13 @@
                                     class="row"
                                     data-ng-if="list.length > 0"
                                     data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
-                                    <listitem data-ng-if="$index <= (currentPage*pageSize + pageSize)" status="bplan.properties.status" pk="bplan.properties.pk"></listitem>
+                                    <listitem
+                                        data-ng-if="$index <= (currentPage*pageSize + pageSize)"
+                                        data-index="$index"
+                                        data-currentbplan="places.currentBplan"
+                                        data-status="bplan.properties.status"
+                                        data-pk="bplan.properties.pk">
+                                    </listitem>
                                 </div>
                             </div>
                         </div>

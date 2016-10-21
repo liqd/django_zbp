@@ -11,3 +11,4 @@ bin/activate*
 bin/easy_install*
 bin/pip*
 bin/python*
+/bplan/fixtures/addresses/

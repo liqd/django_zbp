@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.shared.directives',[])
+angular.module('app.shared.directives', [])
 
 .directive('sharedNav', function() {
     return {
@@ -9,25 +9,25 @@ angular.module('app.shared.directives',[])
     };
 })
 
-.directive('ortsteilDirective', [ 'PlacesService', function(PlacesService) {
+.directive('ortsteilDirective', ['PlacesService', function(PlacesService) {
     return {
         restrict: 'A',
         repace: true,
         scope: {
-        	ortsteil: '=',
-        	updateOrtsteil: '&'
+            ortsteil: '=',
+            updateOrtsteil: '&'
         },
         template: '<a data-ng-click="showOrtsteil();" href="">{{ name }}</a>',
-        link: function (scope) {
-        	PlacesService.getOrtsteil(scope.ortsteil).then(function () {
-        		scope.name = PlacesService.ortsteile_polygons[scope.ortsteil].properties.name;
-        	});
+        link: function(scope) {
+            PlacesService.getOrtsteil(scope.ortsteil).then(function() {
+                scope.name = PlacesService.ortsteile_polygons[scope.ortsteil].properties.name;
+            });
 
-        	scope.showOrtsteil = function () {
-        		PlacesService.currentOrtsteil = scope.ortsteil;
-        		PlacesService.currentOrtsteilName = scope.name;
-        		scope.updateOrtsteil();
-        	}
+            scope.showOrtsteil = function() {
+                PlacesService.currentOrtsteil = scope.ortsteil;
+                PlacesService.currentOrtsteilName = scope.name;
+                scope.updateOrtsteil();
+            };
         }
     };
 }]);
