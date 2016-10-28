@@ -139,7 +139,7 @@ BOWER_COMPONENTS_ROOT = os.path.join(
 
 BOWER_INSTALLED_APPS = (
     'jquery',
-    'leaflet',
+    'leaflet#0.7.7',
     'leaflet.markercluster#v0.4.0-hotfix.1',
     'angular',
     'fontawesome',
