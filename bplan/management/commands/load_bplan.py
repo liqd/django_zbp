@@ -2,7 +2,6 @@ import copy
 import os
 import sys
 import json
-import math
 import dateutil.parser
 
 from tqdm import tqdm
@@ -28,14 +27,14 @@ class Command(BaseCommand):
 
     def _getPseudoCentroid(self, multipolygon):
         k = 0
-        half = len(multipolygon[0][0])/2
+        half = int(len(multipolygon[0][0])/2)
 
         while k + 1 < half:
             try:
                 a = multipolygon[0][0][k]
                 b = multipolygon[0][0][k+1]
-                c = multipolygon[0][0][int(half)+k]
-                d = multipolygon[0][0][int(half)+k+1]
+                c = multipolygon[0][0][half+k]
+                d = multipolygon[0][0][half+k+1]
                 quadrangle = Polygon((a, b, c, d, a))
                 e = Point(quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
                 if e.within(multipolygon[0]):
@@ -44,7 +43,6 @@ class Command(BaseCommand):
                     k += 1
             except:
                 k += 1
-
         return Point(multipolygon[0][0][0], srid=4326)
 
     def _download_geodata(self, filename, url, layer):
@@ -86,8 +84,8 @@ class Command(BaseCommand):
         point = Point(
             multipolygon[0].centroid.x, multipolygon[0].centroid.y, srid=4326)
         try:
-            point_polygon = point.within(multipolygon[0])
-            if not point_polygon:
+            point_in_polygon = point.within(multipolygon[0])
+            if not point_in_polygon:
                 point = self._getPseudoCentroid(multipolygon)
         except:
             point = multipolygon[0][0]
