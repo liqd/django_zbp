@@ -40,6 +40,16 @@ class Command(BaseCommand):
                 return true
         return false
 
+    def _get_next_candidate(self, k, half, multipolygon):
+        a = multipolygon[0][0][k]
+        b = multipolygon[0][0][k+1]
+        c = multipolygon[0][0][half+k]
+        d = multipolygon[0][0][half+k+1]
+        quadrangle = Polygon((a, b, c, d, a))
+        return Point(
+            quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
+
+
     def _get_free_pseudocentroid(self, multipolygon, points):
         try:
             point_is_happy = _check_inclusion_and_freedom(
@@ -52,17 +62,11 @@ class Command(BaseCommand):
 
                 while k + 1 < half:
                     try:
-                        a = multipolygon[0][0][k]
-                        b = multipolygon[0][0][k+1]
-                        c = multipolygon[0][0][half+k]
-                        d = multipolygon[0][0][half+k+1]
-                        quadrangle = Polygon((a, b, c, d, a))
-                        e = Point(
-                            quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
-                        e_is_happy = _check_inclusion_and_freedom(
-                            multipolygon, e, points)
-                        if e_is_happy:
-                            return e
+                        new_point = _get_next_candidate(k, half, multipolygon)
+                        new_point_is_happy = _check_inclusion_and_freedom(
+                            multipolygon, new_point, points)
+                        if new_point_is_happy:
+                            return new_point
                         else:
                             k += 1
                     except:
