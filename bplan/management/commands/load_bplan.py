@@ -25,24 +25,50 @@ from django.conf import settings
 
 class Command(BaseCommand):
 
-    def _getPseudoCentroid(self, multipolygon):
-        k = 0
-        half = int(len(multipolygon[0][0])/2)
+    def _check_freedom(self, point, points):
+        for other_point in points:
+            if point.distance(other_point) < 5:
+                return false
+        return true
 
-        while k + 1 < half:
-            try:
-                a = multipolygon[0][0][k]
-                b = multipolygon[0][0][k+1]
-                c = multipolygon[0][0][half+k]
-                d = multipolygon[0][0][half+k+1]
-                quadrangle = Polygon((a, b, c, d, a))
-                e = Point(quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
-                if e.within(multipolygon[0]):
-                    return e
-                else:
-                    k += 1
-            except:
-                k += 1
+    def _check_inclusion_and_freedom(self, multipolygon, point, points):
+        # we currently assume all multipolygons to actually be plain polygons
+        point_in_polygon = point.within(multipolygon[0])
+        if point_in_polygon:
+            point_is_free = _check_freedom(point, points)
+            if point_is_free:
+                return true
+        return false
+
+    def _get_free_pseudocentroid(self, multipolygon, points):
+        try:
+            point_is_happy = _check_inclusion_and_freedom(
+                multipolygon, point, points)
+            if point_is_happy:
+                return point
+            else:
+                k = 0
+                half = int(len(multipolygon[0][0])/2)
+
+                while k + 1 < half:
+                    try:
+                        a = multipolygon[0][0][k]
+                        b = multipolygon[0][0][k+1]
+                        c = multipolygon[0][0][half+k]
+                        d = multipolygon[0][0][half+k+1]
+                        quadrangle = Polygon((a, b, c, d, a))
+                        e = Point(
+                            quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
+                        e_is_happy = _check_inclusion_and_freedom(
+                            multipolygon, e, points)
+                        if e_is_happy:
+                            return e
+                        else:
+                            k += 1
+                    except:
+                        k += 1
+        except:
+            point = multipolygon[0][0]
         return Point(multipolygon[0][0][0], srid=4326)
 
     def _download_geodata(self, filename, url, layer):
@@ -80,13 +106,13 @@ class Command(BaseCommand):
         multipolygon_25833.transform(25833)
         return(spatial_type, multipolygon, multipolygon_25833, geometry, bereich)
 
-    def _calculate_point(self, multipolygon):
+    def _calculate_point(self, multipolygon, points):
         point = Point(
             multipolygon[0].centroid.x, multipolygon[0].centroid.y, srid=4326)
         try:
             point_in_polygon = point.within(multipolygon[0])
             if not point_in_polygon:
-                point = self._getPseudoCentroid(multipolygon)
+                point = self._get_free_pseudocentroid(multipolygon, points)
         except:
             point = multipolygon[0][0]
         return point
@@ -206,6 +232,7 @@ class Command(BaseCommand):
 
         url = 'http://fbinter.stadt-berlin.de/fb/'\
             'wfs/geometry/senstadt/re_bplan'
+        points = []
 
         if options['fromFixtures']:
             fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan', 'fixtures')
@@ -226,7 +253,8 @@ class Command(BaseCommand):
             bplanID = planname.replace(" ", "").lower()
             spatial_type, multipolygon, multipolygon_25833, geometry, bereich = self._get_spatial_data(
                 feature)
-            point = self._calculate_point(multipolygon)
+            point = self._calculate_point(multipolygon, points)
+            points.append(point)
             ortsteile = self._get_ortsteile(geometry)
             afs_behoer = feature.get("afs_behoer")
             afs_beschl, afs_l_aend = self._get_imVerfahren_data(feature)
