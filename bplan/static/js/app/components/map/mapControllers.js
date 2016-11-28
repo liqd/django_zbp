@@ -132,7 +132,7 @@ angular.module('app.map.controllers', [])
         	maxZoom: 19
         }).addTo(map);
 
-        $scope.districtMarkers = L.layerGroup()
+        $scope.districtMarkers = L.layerGroup();
 
         $scope.districtLayer = L.geoJson($scope.places.district, {
             onEachFeature : function(feature, layer) {
