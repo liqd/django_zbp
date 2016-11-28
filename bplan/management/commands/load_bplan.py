@@ -75,7 +75,6 @@ class Command(BaseCommand):
                         k += 1
                 return Point(multipolygon[0][0][0], srid=4326)
         except:
-            print("Calculating the best point produced an error.")
             return Point(multipolygon[0][0][0], srid=4326)
 
     def _download_geodata(self, filename, url, layer):
