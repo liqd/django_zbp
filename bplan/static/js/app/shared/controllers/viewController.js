@@ -53,6 +53,7 @@ angular.module('app.shared.controllers.viewController', [])
 
     $scope.getDataForSearch = function() {
         $scope.places.getCoordintesForAdress($scope.searchstring).then(function(result) {
+            $scope.noHouseNumber = !$scope.searchstring.match(/\w+\ \d+\D?/g);
             $scope.addressSearchResult = result.features;
 
             $scope.places.getBplaeneForSearch($scope.searchstring).then(function(result) {
