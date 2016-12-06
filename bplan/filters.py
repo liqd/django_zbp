@@ -62,8 +62,16 @@ class AddressFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
 
         if 'address' in request.GET:
-            address = request.GET["address"]
-            address = (address.replace(' ', '').replace(
+            req_address = request.GET["address"]
+            words = req_address.split(' ')
+            address = ''
+            for word in words:
+                if word[-4:] == 'str.':
+                    word = word[:-1] + 'asse'
+                elif word[-3:] == 'str':
+                    word += 'asse'
+                address += word
+            address = (address.replace(
                 '-', '').replace('ß', 'ss')).lower()
             addresses = queryset.filter(search_name=address)
             return addresses
