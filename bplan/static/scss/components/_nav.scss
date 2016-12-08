@@ -63,6 +63,14 @@
 		& .aul-checked {
 			color: $status-aul;
 		}
+
+		& .imVerfahren-checked {
+			color: $status-imVerfahren;
+		}
+
+		& .festg-checked {
+			color: $status-festg;
+		}
 	}
 	& .no-dropdown {
 		.custom-checkbox {
