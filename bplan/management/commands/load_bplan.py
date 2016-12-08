@@ -40,7 +40,7 @@ class Command(BaseCommand):
                 return True
         return False
 
-    def _get_next_candidate(self, k, half, multipolygon):
+    def _get_next_pseudocentroid(self, k, half, multipolygon):
         a = multipolygon[0][0][k]
         b = multipolygon[0][0][k+1]
         c = multipolygon[0][0][half+k]
@@ -60,10 +60,9 @@ class Command(BaseCommand):
             else:
                 k = 0
                 half = int(len(multipolygon[0][0])/2)
-
                 while k + 1 < half:
                     try:
-                        new_point = self._get_next_candidate(
+                        new_point = self._get_next_pseudocentroid(
                             k, half, multipolygon)
                         new_point_is_happy = self._check_inclusion_and_freedom(
                             multipolygon, new_point, points)
