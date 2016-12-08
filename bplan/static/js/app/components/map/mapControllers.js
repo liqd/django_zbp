@@ -131,8 +131,9 @@ angular.module('app.map.controllers', [])
         	attribution: 'Geoportal Berlin/Bebauungspläne, Geltungsbereiche',
         	maxZoom: 19
         }).addTo(map);
+        map.attributionControl.setPrefix('<a target="_blank" href="http://www.leafletjs.com">Leaflet</a>');
 
-        $scope.districtMarkers = L.layerGroup()
+        $scope.districtMarkers = L.layerGroup();
 
         $scope.districtLayer = L.geoJson($scope.places.district, {
             onEachFeature : function(feature, layer) {
@@ -362,9 +363,9 @@ angular.module('app.map.controllers', [])
                         $scope.map.removeLayer(value);
                     });
                 } else {
-                    _.forEach(value1, function(value) {
-                        if (!$scope.map.hasLayer(value)) {
-                            value.addTo($scope.map).bringToBack();
+                    _.forEach(value, function(value1) {
+                        if (!$scope.map.hasLayer(value1)) {
+                            value1.addTo($scope.map).bringToBack();
                         }
                     });
                 }

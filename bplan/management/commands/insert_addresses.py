@@ -23,6 +23,10 @@ class Command(BaseCommand):
 
     def _get_search_name(self, strname, hsnr):
         strname = strname.replace(' ', '').replace('-', '').replace('ß', 'ss')
+        if strname[-3:] == 'str':
+            strname += "asse"
+        elif strname[-4:] == 'str.':
+            strname = strname[:-1] + "asse"
         hsnr = hsnr.lstrip('0')
         return (strname+hsnr).lower()
 
