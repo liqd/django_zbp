@@ -69,6 +69,8 @@ class Command(BaseCommand):
         return quadrants
 
     def _calculate_point(self, multipolygon, points):
+        # Try three different methods for getting a unique, central point within the bplan polygon:
+        # 1. the centroid
         try:
             point = Point(
                 multipolygon[0].centroid.x, multipolygon[0].centroid.y, srid=4326)
@@ -80,6 +82,7 @@ class Command(BaseCommand):
                 k = 0
                 half = int(len(multipolygon[0][0])/2)
                 while k + 1 < half:
+                    # 2. a "pseudocentroid", i.e. the centroid of a simplified polygon
                     try:
                         new_point = self._get_next_pseudocentroid(
                             k, half, multipolygon)
@@ -95,6 +98,7 @@ class Command(BaseCommand):
                 k = 2
                 bounds = self._get_bounds(multipolygon)
                 while k < 10:
+                    # 3. a "tile center", i.e. the center of one of k^2 square tiles
                     try:
                         new_points = self._get_next_centers(k, bounds)
                         for new_point in new_points:
@@ -105,6 +109,7 @@ class Command(BaseCommand):
                         k += 1
                     except:
                         k += 1
+
                 return Point(multipolygon[0][0][0], srid=4326)
         except:
             return Point(multipolygon[0][0][0], srid=4326)
