@@ -40,6 +40,14 @@ class Command(BaseCommand):
                 return True
         return False
 
+    def _get_bounds(self, multipolygon):
+        # we currently assume all multipolygons to actually be plain polygons
+        min_x = sort(multipolygon[0][0], lambda a,b: a[0] < b[0])[0]
+        max_x = sort(multipolygon[0][0], lambda a,b: a[0] > b[0])[0]
+        min_y = sort(multipolygon[0][0], lambda a,b: a[1] < b[1])[0]
+        max_y = sort(multipolygon[0][0], lambda a,b: a[1] > b[1])[0]
+        return [min_x, max_x, min_y, max_y]
+
     def _get_next_pseudocentroid(self, k, half, multipolygon):
         a = multipolygon[0][0][k]
         b = multipolygon[0][0][k+1]
@@ -48,6 +56,17 @@ class Command(BaseCommand):
         quadrangle = Polygon((a, b, c, d, a))
         return Point(
             quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
+
+    def _get_next_centers(self, k, bounds):
+        centers = []
+        d_x = bounds[1] - bounds[0]
+        d_y = bounds[3] - bounds[2]
+        for i in range(0,k-1):
+            centers.append(Point(
+                bounds[0] + (2*i+1)*d_x/(2*k),
+                bounds[2] + (2*i+1)*d_y/(2*k),
+                srid=4326))
+        return quadrants
 
     def _calculate_point(self, multipolygon, points):
         try:
@@ -70,6 +89,20 @@ class Command(BaseCommand):
                             return new_point
                         else:
                             k += 1
+                    except:
+                        k += 1
+
+                k = 2
+                bounds = self._get_bounds(multipolygon)
+                while k < 10:
+                    try:
+                        new_points = self._get_next_centers(k, bounds)
+                        for new_point in new_points:
+                            new_point_is_happy = self._check_inclusion_and_freedom(
+                                multipolygon, new_point, points)
+                            if new_point_is_happy:
+                                return new_point
+                        k += 1
                     except:
                         k += 1
                 return Point(multipolygon[0][0][0], srid=4326)
