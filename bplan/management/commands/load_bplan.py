@@ -98,7 +98,7 @@ class Command(BaseCommand):
                 k = 2
                 bounds = self._get_bounds(multipolygon)
                 while k < 10:
-                    # 3. a "tile center", i.e. the center of one of k^2 square tiles
+                    # 3. a "tile center", i.e. the center of a diagonal tile in k^2 square tiles
                     try:
                         new_points = self._get_next_centers(k, bounds)
                         for new_point in new_points:
