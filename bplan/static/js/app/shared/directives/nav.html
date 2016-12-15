@@ -42,7 +42,7 @@
                 <a href="" data-ng-click="chooseAddress(address)">
                     <div>
                     <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    {{ address.properties.strname }} {{ address.properties.hsnr }},
+                    {{ address.properties.strname }}<span data-ng-if="address.properties.hsnr.length > 0"> {{ address.properties.hsnr }}</span>,
                     </div>
                     <div><small>{{ address.properties.bezirk_name }},  {{ address.properties.plz }} Berlin</small></div>
                 </a>
