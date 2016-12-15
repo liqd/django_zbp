@@ -50,6 +50,8 @@ $ ./manage.py load_addresses (downloads adresses from WFS as geojson and saves t
 INSERT ADDRESSES
 $ ./manage.py insert_addresses --fromFixtures (inserts data from fixtures, for local development)
 $ ./manage.py insert_addresses (inserts all data from fixtures/addresses to database, might take a while, e.g. 30 minutes or more)
+$ ./manage.py insert_numberless_addresses --fromFixtures (inserts data from fixtures, for local development)
+$ ./manage.py insert_numberless_addresses (inserts all data from fixtures/addresses to database, might take a while, e.g. 2 minutes or more)
 
 ```
 here there is still an ugly error occurring twice that can be disregarded:
