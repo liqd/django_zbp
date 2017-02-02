@@ -27,7 +27,6 @@ class Command(BaseCommand):
             strname += "asse"
         elif strname[-4:] == 'str.':
             strname = strname[:-1] + "asse"
-        hsnr = hsnr.lstrip('0')
         return (strname+hsnr).lower()
 
     def add_arguments(self, parser):

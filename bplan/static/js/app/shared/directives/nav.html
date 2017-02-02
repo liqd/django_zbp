@@ -35,15 +35,14 @@
                 </span>
             </div>
         </form>
-        <span data-ng-if="noHouseNumber" class="help-block">Bitte geben Sie eine Hausnummer an.</span>
-        <span data-ng-if="!noHouseNumber && searchResultCount == 0" class="help-block">Es wurde kein Eintrag gefunden.</span>
+        <span data-ng-if="searchResultCount == 0" class="help-block">Es wurde kein Eintrag gefunden.</span>
         <ul class="dropdown-menu">
             <li>Meinten Sie:</li>
             <li data-ng-repeat="address in addressSearchResult" class="address-search-result-item">
                 <a href="" data-ng-click="chooseAddress(address)">
                     <div>
                     <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    {{ address.properties.strname }} {{ address.properties.hsnr }},
+                    {{ address.properties.strname }}<span data-ng-if="address.properties.hsnr.length > 0"> {{ address.properties.hsnr }}</span>,
                     </div>
                     <div><small>{{ address.properties.bezirk_name }},  {{ address.properties.plz }} Berlin</small></div>
                 </a>
