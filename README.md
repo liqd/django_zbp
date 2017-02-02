@@ -52,6 +52,7 @@ $ ./manage.py insert_addresses --fromFixtures (inserts data from fixtures, for l
 $ ./manage.py insert_addresses (inserts all data from fixtures/addresses to database, might take a while, e.g. 30 minutes or more)
 $ ./manage.py insert_numberless_addresses --fromFixtures (inserts data from fixtures, for local development)
 $ ./manage.py insert_numberless_addresses (inserts all data from fixtures/addresses to database, might take a while, e.g. 2 minutes or more)
+$ ./manage.py insert_numberless_addresses --fromDatabase (inserts data based on database not files, might take a while e.g. 5 minutes or more)
 
 ```
 here there is still an ugly error occurring twice that can be disregarded:

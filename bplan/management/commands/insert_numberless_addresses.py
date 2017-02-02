@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos import Point
+from django.db.models import Min
 
 from bplan.models import Address
 from bplan.models import Bezirk
@@ -47,58 +48,88 @@ class Command(BaseCommand):
                             default=False,
                             help='Load data from fixtures')
 
+        parser.add_argument('--fromDatabase',
+                            action='store_true',
+                            dest='fromDatabase',
+                            default=False,
+                            help='Load data from database')
+
     def handle(self, *args, **options):
 
-        if options['fromFixtures']:
-            fixtures_dir = os.path.join(
-                settings.BASE_DIR, 'bplan', 'fixtures')
+        if options['fromDatabase']:
+            qs = Address.objects.all()
+            streets = qs.values(
+                'strname', 'plz').order_by().annotate(Min('hsnr'))
+
+            for street in streets:
+                base_address = Address.objects.filter(
+                    strname=street['strname'],
+                    plz=street['plz'],
+                    hsnr=street['hsnr__min']).first()
+
+                try:
+                    search_name = self._get_search_name(
+                        self._get_string(base_address.strname), '').rstrip(' ')
+                    new_address, created = Address.objects.get_or_create(
+                        point=base_address.point,
+                        strname=base_address.strname,
+                        search_name=search_name,
+                        hsnr='',
+                        plz=base_address.plz,
+                        gml_id=base_address.gml_id,
+                        spatial_name=base_address.spatial_name,
+                        bezirk=base_address.bezirk)
+                except Exception as e:
+                    print(base_address.strname + ' ' + base_address.hsnr)
+                    print(e)
+
         else:
-            fixtures_dir = os.path.join(
-                settings.BASE_DIR, 'bplan', 'fixtures', 'addresses')
+            if options['fromFixtures']:
+                fixtures_dir = os.path.join(
+                    settings.BASE_DIR, 'bplan', 'fixtures')
+            else:
+                fixtures_dir = os.path.join(
+                    settings.BASE_DIR, 'bplan', 'fixtures', 'addresses')
 
-        filelist = os.listdir(fixtures_dir)
-        lowest_hsnrs = {}
-        lowest_hsnr_features = {}
+            filelist = os.listdir(fixtures_dir)
+            lowest_hsnrs = {}
+            lowest_hsnr_features = {}
 
-        for file in filelist:
+            for file in filelist:
+                filepath = os.path.join(fixtures_dir, file)
+                if not os.path.isdir(filepath) and file.startswith('addresses'):
+                    data_source = DataSource(filepath)
+                    for feature in tqdm(data_source[0]):
+                        point = GEOSGeometry(str(feature.geom), srid=4326)
+                        strname = feature.get("strname") + feature.get("plz")
+                        hsnr = (feature.get("hsnr")).lstrip('0')
+                        if not strname in lowest_hsnrs or \
+                                self._get_int(lowest_hsnrs[strname]) > self._get_int(hsnr):
+                            lowest_hsnrs[strname] = hsnr
+                            lowest_hsnr_features[strname] = feature
 
-            filepath = os.path.join(fixtures_dir, file)
-
-            if not os.path.isdir(filepath) and file.startswith('addresses'):
-
-                data_source = DataSource(filepath)
-
-                for feature in tqdm(data_source[0]):
+            for street in lowest_hsnr_features:
+                feature = lowest_hsnr_features[street]
+                try:
                     point = GEOSGeometry(str(feature.geom), srid=4326)
-                    strname = feature.get("strname") + feature.get("plz")
+                    strname = feature.get("strname")
                     hsnr = (feature.get("hsnr")).lstrip('0')
-                    if not strname in lowest_hsnrs or \
-                        self._get_int(lowest_hsnrs[strname]) > self._get_int(hsnr):
-                        lowest_hsnrs[strname] = hsnr
-                        lowest_hsnr_features[strname] = feature
+                    search_name = self._get_search_name(
+                        self._get_string(strname), '').rstrip(' ')
+                    plz = feature.get("plz")
+                    gml_id = feature.get("gml_id")
+                    spatial_name = feature.get("spatial_name")
+                    bezirk = self._get_bezirk(point)
 
-        for street in lowest_hsnr_features:
-            feature = lowest_hsnr_features[street]
-            try:
-                point = GEOSGeometry(str(feature.geom), srid=4326)
-                strname = feature.get("strname")
-                hsnr = (feature.get("hsnr")).lstrip('0')
-                search_name = self._get_search_name(
-                    self._get_string(strname), '').rstrip(' ')
-                plz = feature.get("plz")
-                gml_id = feature.get("gml_id")
-                spatial_name = feature.get("spatial_name")
-                bezirk = self._get_bezirk(point)
-
-                address, created = Address.objects.get_or_create(
-                    point=point,
-                    strname=strname,
-                    search_name=search_name,
-                    hsnr='',
-                    plz=plz,
-                    gml_id=gml_id,
-                    spatial_name=spatial_name,
-                    bezirk=bezirk)
-            except Exception as e:
-                print(strname + ' ' + hsnr)
-                print(e)
+                    address, created = Address.objects.get_or_create(
+                        point=point,
+                        strname=strname,
+                        search_name=search_name,
+                        hsnr='',
+                        plz=plz,
+                        gml_id=gml_id,
+                        spatial_name=spatial_name,
+                        bezirk=bezirk)
+                except Exception as e:
+                    print(strname + ' ' + hsnr)
+                    print(e)
