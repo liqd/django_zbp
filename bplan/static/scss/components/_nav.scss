@@ -71,6 +71,10 @@
 		& .festg-checked {
 			color: $status-festg;
 		}
+
+		.dropdown-menu-title {
+			padding-left: 22px;
+		}
 	}
 	& .no-dropdown {
 		.custom-checkbox {
@@ -112,7 +116,6 @@
 		border-radius: 0px;
 		-webkit-box-shadow: 0px;
 		box-shadow: 0px;
-		margin: -3px 0 0 -1px;
 		padding-top: 3px;
 		z-index: 1;
 

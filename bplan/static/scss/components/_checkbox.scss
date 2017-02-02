@@ -258,7 +258,6 @@
     > label {
         margin-bottom: 0 !important;
         user-select: none;
-        font-weight: normal;
     }
     > [type="checkbox"][data-indeterminate] + label:after {
         @extend %extend_4;
@@ -325,7 +324,6 @@
     > label {
         margin-bottom: 0 !important;
         user-select: none;
-        font-weight: normal;
     }
     > [type="checkbox"][data-indeterminate] + label:after {
         @extend %extend_4;

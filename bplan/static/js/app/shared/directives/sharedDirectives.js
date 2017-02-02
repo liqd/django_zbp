@@ -12,7 +12,7 @@ angular.module('app.shared.directives', [])
 .directive('ortsteilDirective', ['PlacesService', function(PlacesService) {
     return {
         restrict: 'A',
-        repace: true,
+        replace: false,
         scope: {
             ortsteil: '=',
             updateOrtsteil: '&'
