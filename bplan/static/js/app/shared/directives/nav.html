@@ -86,9 +86,11 @@
            href="#" role="button"
            aria-haspopup="true"
            aria-expanded="false">
-            <span>
-                <i class="fa fa bbg-checked" data-ng-class="{'fa-check-square': places.filters.bbg, 'fa-square': !places.filters.bbg}" aria-hidden="true"></i> <i class="fa fa fa-square aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i>
-            </span> In Beteiligung <span class="caret"></span>
+            <i class="fa fa bbg-checked" data-ng-class="{'fa-check-square': places.filters.bbg, 'fa-square': !places.filters.bbg}" aria-hidden="true"></i> 
+            <i class="fa fa fa-square aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i> 
+            <i class="fa fa imVerfahren-checked" data-ng-class="{'fa-check-square': places.filters.imVerfahren, 'fa-square': !places.filters.imVerfahren}" aria-hidden="true"></i> 
+            <i class="fa fa fa-square festg-checked" data-ng-class="{'fa-check-square': places.filters.festg, 'fa-square': !places.filters.festg}" aria-hidden="true"></i> 
+            Verfahrensstatus <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
             <li>
@@ -111,26 +113,26 @@
                         <label for="checkbox_aul">{{'aul' | status }}</label>
                 </div>
             </li>
+            <li>
+                <div class="custom-checkbox custom-checkbox-imVerfahren">
+                    <input
+                        type="checkbox"
+                        id="checkbox_imVerfahren"
+                        data-ng-model="places.filters.imVerfahren"
+                        data-ng-change="updateFilter()">
+                        <label for="checkbox_imVerfahren">{{'imVerfahren' | status }}</label>
+                </div>
+            </li>
+            <li>
+                <div class="custom-checkbox custom-checkbox-festg">
+                    <input
+                        type="checkbox"
+                        id="checkbox_festg"
+                        data-ng-model="places.filters.festg"
+                        data-ng-change="updateFilter()">
+                        <label for="checkbox_festg">{{'festg' | status }}</label>
+                </div>
+            </li>
         </ul>
-    </li>
-    <li class="no-dropdown">
-        <div class="custom-checkbox custom-checkbox-imVerfahren">
-            <input
-                type="checkbox"
-                id="checkbox_imVerfahren"
-                data-ng-model="places.filters.imVerfahren"
-                data-ng-change="updateFilter()">
-                <label for="checkbox_imVerfahren">{{'imVerfahren' | status }}</label>
-        </div>
-    </li>
-    <li class="no-dropdown">
-        <div class="custom-checkbox custom-checkbox-festg">
-            <input
-                type="checkbox"
-                id="checkbox_festg"
-                data-ng-model="places.filters.festg"
-                data-ng-change="updateFilter()">
-                <label for="checkbox_festg">{{'festg' | status }}</label>
-        </div>
     </li>
 </ul>
