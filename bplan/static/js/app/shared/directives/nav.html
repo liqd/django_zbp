@@ -1,12 +1,12 @@
 <ul class="nav nav-pills">
-    <li>
+    <li data-ng-hide="isMobile">
         <a href=""
            data-ng-class="{active: currentView == 'map'}"
            data-ng-click="setView('map');">
             <i class="fa fa-map-o fa-lg"></i>
         </a>
     </li>
-    <li>
+    <li data-ng-hide="isMobile">
         <a href=""
            data-ng-class="{active: currentView =='list'}"
            data-ng-click="setView('list');">
