@@ -14,25 +14,23 @@
         </a>
     </li>
     <li class="textinput" data-ng-class="{open: searchResultCount > 1 && searchstring}">
-        <form class="navbar-form navbar-left navbar-input-group" role="search">
-            <div class="input-group">
-                <div class="form-group">
-                    <input type="text" data-ng-model="searchstring" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bebauungsplan-Nr.">
-                </div>
-                <span>
-                    <button
-                        class="search-button"
+        <form class="navbar-form navbar-left" ng-submit="getDataForSearch()" navbar-input-group" role="search">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="searchstring" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bebauungsplan-Nr.">
+                    <div
+                        class="input-group-addon search-button"
                         data-ng-click="getDataForSearch()"
-                        data-ng-class="{middle: searchstring}"
-                        type="submit">
+                        data-ng-class="{middle: searchstring}">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                    <button data-ng-if="searchstring"
-                        class="search-button"
+                    </div>
+                    <div
+                        data-ng-if="searchstring"
+                        class="input-group-addon search-button"
                         data-ng-click="resetSearch()">
                         <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                </span>
+                    </div>
+                </div>
             </div>
         </form>
         <span data-ng-if="searchResultCount == 0" class="help-block">Es wurde kein Eintrag gefunden.</span>
