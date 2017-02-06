@@ -179,3 +179,18 @@
     }
   }
 }
+
+.nav-pills {
+	> li {
+			@media (max-width: $screen-xs-max) {
+				float: none;
+
+				.caret {
+					float: right;
+  				margin: 6px 0;
+				}
+			}
+
+	}
+}
+

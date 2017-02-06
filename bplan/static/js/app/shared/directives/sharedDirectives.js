@@ -5,7 +5,18 @@ angular.module('app.shared.directives', [])
 .directive('sharedNav', function() {
     return {
         restrict: 'E',
-        templateUrl: '/static/js/app/shared/directives/nav.html'
+        templateUrl: '/static/js/app/shared/directives/nav.html',
+        link: function(scope) {
+
+            scope.toggleDropdown = function(event) {
+                var element = $(event.currentTarget.parentNode);
+                if(element.hasClass('open')) {
+                    element.removeClass('open');
+                } else {
+                    element.addClass('open');
+                }
+            }
+        }
     };
 })
 
