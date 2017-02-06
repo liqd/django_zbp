@@ -1,12 +1,12 @@
 <ul class="nav nav-pills">
-    <li>
+    <li data-ng-hide="isMobile">
         <a href=""
            data-ng-class="{active: currentView == 'map'}"
            data-ng-click="setView('map');">
             <i class="fa fa-map-o fa-lg"></i>
         </a>
     </li>
-    <li>
+    <li data-ng-hide="isMobile">
         <a href=""
            data-ng-class="{active: currentView =='list'}"
            data-ng-click="setView('list');">
@@ -14,25 +14,23 @@
         </a>
     </li>
     <li class="textinput" data-ng-class="{open: searchResultCount > 1 && searchstring}">
-        <form class="navbar-form navbar-left navbar-input-group" role="search">
-            <div class="input-group">
-                <div class="form-group">
-                    <input type="text" data-ng-model="searchstring" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bebauungsplan-Nr.">
-                </div>
-                <span>
-                    <button
-                        class="search-button"
+        <form class="navbar-form navbar-left" ng-submit="getDataForSearch()" navbar-input-group" role="search">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="searchstring" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bebauungsplan-Nr.">
+                    <div
+                        class="input-group-addon search-button"
                         data-ng-click="getDataForSearch()"
-                        data-ng-class="{middle: searchstring}"
-                        type="submit">
+                        data-ng-class="{middle: searchstring}">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                    <button data-ng-if="searchstring"
-                        class="search-button"
+                    </div>
+                    <div
+                        data-ng-if="searchstring"
+                        class="input-group-addon search-button"
                         data-ng-click="resetSearch()">
                         <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                </span>
+                    </div>
+                </div>
             </div>
         </form>
         <span data-ng-if="searchResultCount == 0" class="help-block">Es wurde kein Eintrag gefunden.</span>
@@ -60,11 +58,11 @@
     </li>
     <li data-ng-if="area" class="dropdown">
         <a class="dropdown-toggle"
-            data-toggle="dropdown"
+            data-ng-click="toggleDropdown($event)"
             href="#" role="button"
             aria-haspopup="true"
             aria-expanded="false">
-            {{ places.currentOrtsteilName }} <span class="caret"></span>
+            {{ places.currentOrtsteilName }} <span class="caret" data-ng-class="{'pull-right': isMobile}"></span>
         </a>
         <ul class="dropdown-menu">
             <li data-ng-hide="places.currentOrtsteilName == 'Alle Ortsteile'"
@@ -80,9 +78,9 @@
             </li>
         </ul>
     </li>
-    <li class="dropdown">
+    <li class="dropdown nav-status-filter" data-ng-class="{'open': dropdownOpen }">
         <a class="dropdown-toggle"
-           data-toggle="dropdown"
+           data-ng-click="toggleDropdown($event)"
            href="#" role="button"
            aria-haspopup="true"
            aria-expanded="false">
@@ -90,7 +88,7 @@
             <i class="fa fa fa-square aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i> 
             <i class="fa fa imVerfahren-checked" data-ng-class="{'fa-check-square': places.filters.imVerfahren, 'fa-square': !places.filters.imVerfahren}" aria-hidden="true"></i> 
             <i class="fa fa fa-square festg-checked" data-ng-class="{'fa-check-square': places.filters.festg, 'fa-square': !places.filters.festg}" aria-hidden="true"></i> 
-            Verfahrensstatus <span class="caret"></span>
+            Verfahrensstatus <span class="caret" data-ng-class="{'pull-right': isMobile}"></span>
         </a>
         <ul class="dropdown-menu">
             <label class="dropdown-menu-title">In Beteiligung</label>

@@ -3,9 +3,18 @@
 angular.module('app.shared.controllers.viewController', [])
 
 .controller('ViewController', ['$scope', '$timeout', '$rootScope', 'PlacesService', function($scope, $timeout, $rootScope, PlacesService) {
+
+
+    $scope.isMobile = window.innerWidth <= 768
     $scope.area = area;
     $scope.places = PlacesService;
-    $scope.currentView = 'map';
+
+    if(!$scope.isMobile) {
+        $scope.currentView = 'map';
+    } else {
+        $scope.currentView = 'list';
+    }
+
     $scope.searchstring = '';
     $scope.addressSearchResult = undefined;
     $scope.bplanSearchResult = undefined;
