@@ -34,12 +34,22 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
                   'bplan_bbg_count', 'point')
         geo_field = 'polygon'
 
+    def _get_param(self, param):
+        return self.context['request'].GET.get(param, None)
+
     def get_bplan_count(self, object):
-        count = BPlan.objects.filter(bezirk=object).count()
-        return count
+        afs_behoer = self._get_param('afs_behoer')
+        bplans = BPlan.objects.filter(bezirk=object)
+        if afs_behoer:
+            return bplans.filter(afs_behoer=afs_behoer).count()
+        return bplans.count()
 
     def get_bplan_festgesetzt_count(self, object):
-        return BPlan.objects.filter(bezirk=object).filter(festg=True).count()
+        afs_behoer = self._get_param('afs_behoer')
+        bplans = BPlan.objects.filter(bezirk=object).filter(festg=True)
+        if afs_behoer:
+            return bplans.filter(afs_behoer=afs_behoer).count()
+        return bplans.count()
 
     def get_bplan_imVerfahren_count(self, object):
         bplan_count = self.get_bplan_count(object)
@@ -49,18 +59,24 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
         return bplan_count - bplan_festgesetzt_count - bplan_aul_count - bplan_bbg_count
 
     def get_bplan_aul_count(self, object):
+        afs_behoer = self._get_param('afs_behoer')
         date = timezone.now().date()
         qs = BPlan.objects.filter(bezirk=object).filter(festg=False)
         qs = qs.exclude(aul_anfang__isnull=True, aul_ende__isnull=True)
-        count = qs.filter(aul_anfang__lte=date, aul_ende__gte=date).count()
-        return count
+        qs = qs.filter(aul_anfang__lte=date, aul_ende__gte=date)
+        if afs_behoer:
+            return qs.filter(afs_behoer=afs_behoer).count()
+        return qs.count()
 
     def get_bplan_bbg_count(self, object):
+        afs_behoer = self._get_param('afs_behoer')
         date = timezone.now().date()
         qs = BPlan.objects.filter(bezirk=object).filter(festg=False)
         qs = qs.exclude(bbg_anfang__isnull=True, bbg_ende__isnull=True)
-        count = qs.filter(bbg_anfang__lte=date, bbg_ende__gte=date).count()
-        return count
+        qs = qs.filter(bbg_anfang__lte=date, bbg_ende__gte=date)
+        if afs_behoer:
+            return qs.filter(afs_behoer=afs_behoer).count()
+        return qs.count()
 
     def get_point(self, object):
         point = Point(
