@@ -26,12 +26,22 @@ class BezirkDetailView(DetailView):
     def dispatch(self, *args, **kwargs):
         return super(BezirkDetailView, self).dispatch(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['afs_behoer'] = self.request.GET.get('afs_behoer','')
+        return context
+
 
 class StadtView(TemplateView):
 
     @xframe_options_exempt
     def dispatch(self, *args, **kwargs):
         return super(StadtView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['afs_behoer'] = self.request.GET.get('afs_behoer','')
+        return context
 
 
 def login_user(request):
