@@ -34,11 +34,15 @@ angular.module('app.shared.services.places', [])
     // loads polygon of district
     places.initMap = function() {
         var deferred = $q.defer();
+
+
+
         $http({
             method: 'GET',
             url: API_END_POINTS.bezirke,
             params: {
-                slug: area
+                slug: area,
+                afs_behoer: afs_behoer
             }
         }).then(function successCallback(response) {
             places.district = response.data;
@@ -96,6 +100,9 @@ angular.module('app.shared.services.places', [])
     };
 
     places.getBplanMultipolygonList = function(params) {
+        if (afs_behoer) {
+            params.afs_behoer = afs_behoer;
+        }
         if (area) {
             params.bezirk__slug = area;
         }
@@ -125,6 +132,9 @@ angular.module('app.shared.services.places', [])
 
         var params = {};
         params.address = searchstring;
+        if(afs_behoer) {
+            params.afs_behoer = afs_behoer;
+        }
         if (area) {
             params.bezirk = area;
         }
@@ -147,6 +157,9 @@ angular.module('app.shared.services.places', [])
     places.getBplaeneForSearch = function(searchstring) {
         var params = {};
         params.bplan = searchstring;
+        if(afs_behoer) {
+            params.afs_behoer = afs_behoer;
+        }
         if (area) {
             params.bezirk__slug = area;
         }
@@ -196,6 +209,9 @@ angular.module('app.shared.services.places', [])
     places.initBplaene = function(filter, target, markers) {
         var deferred = $q.defer();
         var params = filter;
+        if(afs_behoer) {
+            params.afs_behoer = afs_behoer;
+        }
 
         if (area) {
             params.bezirk__slug = area;
