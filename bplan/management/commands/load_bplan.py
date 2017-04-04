@@ -120,6 +120,7 @@ class Command(BaseCommand):
             ' geoJSON %s WFS:"%s%s" %s' % (
                filename, url, '?version=1.1.0' if settings.GDAL_LEGACY else '',
                layer)
+
         try:
             os.remove(filename)
         except:
@@ -211,21 +212,27 @@ class Command(BaseCommand):
         return (bbg_anfang, bbg_ende, aul_anfang, aul_ende)
 
     def _get_www_data(self, feature):
-        www = feature.get("ausleg_www")
-        if www:
-            ausleg_www = www.split('"')[1]
-        else:
+        try:
+            www = feature.get("ausleg_www")
+            if www:
+                ausleg_www = www.split('"')[1]
+        except:
             ausleg_www = None
-        scan = feature.get("scan_www")
-        if scan:
-            scan_www = scan.split('"')[1]
-        else:
+
+        try:
+            scan = feature.get("scan_www")
+            if scan:
+                scan_www = scan.split('"')[1]
+        except:
             scan_www = None
-        grund = feature.get("grund_www")
-        if grund:
-            grund_www = grund.split('"')[1]
-        else:
+
+        try:
+            grund = feature.get("grund_www")
+            if grund:
+                grund_www = grund.split('"')[1]
+        except:
             grund_www = None
+
         return(ausleg_www, scan_www, grund_www)
 
     def _get_other_data(self, feature):
