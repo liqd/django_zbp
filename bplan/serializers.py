@@ -34,12 +34,21 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
                   'bplan_bbg_count', 'point')
         geo_field = 'polygon'
 
+    def _filter_queryset(self, qs):
+        filter = self.context['request'].GET.get('afs_behoer', None)
+        if filter:
+            return qs.filter(afs_behoer=filter)
+        return qs
+
     def get_bplan_count(self, object):
-        count = BPlan.objects.filter(bezirk=object).count()
-        return count
+        bplans = BPlan.objects.filter(bezirk=object)
+        bplans = self._filter_queryset(bplans)
+        return bplans.count()
 
     def get_bplan_festgesetzt_count(self, object):
-        return BPlan.objects.filter(bezirk=object).filter(festg=True).count()
+        bplans = BPlan.objects.filter(bezirk=object).filter(festg=True)
+        bplans = self._filter_queryset(bplans)
+        return bplans.count()
 
     def get_bplan_imVerfahren_count(self, object):
         bplan_count = self.get_bplan_count(object)
@@ -52,15 +61,17 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
         date = timezone.now().date()
         qs = BPlan.objects.filter(bezirk=object).filter(festg=False)
         qs = qs.exclude(aul_anfang__isnull=True, aul_ende__isnull=True)
-        count = qs.filter(aul_anfang__lte=date, aul_ende__gte=date).count()
-        return count
+        qs = qs.filter(aul_anfang__lte=date, aul_ende__gte=date)
+        qs = self._filter_queryset(qs)
+        return qs.count()
 
     def get_bplan_bbg_count(self, object):
         date = timezone.now().date()
         qs = BPlan.objects.filter(bezirk=object).filter(festg=False)
         qs = qs.exclude(bbg_anfang__isnull=True, bbg_ende__isnull=True)
-        count = qs.filter(bbg_anfang__lte=date, bbg_ende__gte=date).count()
-        return count
+        qs = qs.filter(bbg_anfang__lte=date, bbg_ende__gte=date)
+        qs = self._filter_queryset(qs)
+        return qs.count()
 
     def get_point(self, object):
         point = Point(
