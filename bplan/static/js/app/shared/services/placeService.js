@@ -35,8 +35,6 @@ angular.module('app.shared.services.places', [])
     places.initMap = function() {
         var deferred = $q.defer();
 
-
-
         $http({
             method: 'GET',
             url: API_END_POINTS.bezirke,
