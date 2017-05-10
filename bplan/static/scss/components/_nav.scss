@@ -133,6 +133,11 @@
 			padding-left: 0px;
 		}
 	}
+
+  .info-button {
+      font-size: 8px;
+      float: right;
+  }
 }
 
 .no-padding {
@@ -182,15 +187,14 @@
 
 .nav-pills {
 	> li {
-			@media (max-width: $screen-xs-max) {
-				float: none;
+		@media (max-width: $screen-xs-max) {
+			float: none;
 
-				.caret {
-					float: right;
-  				margin: 6px 0;
-				}
+			.caret {
+				float: right;
+				margin: 6px 0;
 			}
-
+		}
 	}
 }
 
