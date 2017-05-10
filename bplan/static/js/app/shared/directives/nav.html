@@ -84,10 +84,10 @@
            href="#" role="button"
            aria-haspopup="true"
            aria-expanded="false">
-            <i class="fa fa bbg-checked" data-ng-class="{'fa-check-square': places.filters.bbg, 'fa-square': !places.filters.bbg}" aria-hidden="true"></i> 
-            <i class="fa fa fa-square aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i> 
-            <i class="fa fa imVerfahren-checked" data-ng-class="{'fa-check-square': places.filters.imVerfahren, 'fa-square': !places.filters.imVerfahren}" aria-hidden="true"></i> 
-            <i class="fa fa fa-square festg-checked" data-ng-class="{'fa-check-square': places.filters.festg, 'fa-square': !places.filters.festg}" aria-hidden="true"></i> 
+            <i class="fa fa bbg-checked" data-ng-class="{'fa-check-square': places.filters.bbg, 'fa-square': !places.filters.bbg}" aria-hidden="true"></i>
+            <i class="fa fa fa-square aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i>
+            <i class="fa fa imVerfahren-checked" data-ng-class="{'fa-check-square': places.filters.imVerfahren, 'fa-square': !places.filters.imVerfahren}" aria-hidden="true"></i>
+            <i class="fa fa fa-square festg-checked" data-ng-class="{'fa-check-square': places.filters.festg, 'fa-square': !places.filters.festg}" aria-hidden="true"></i>
             Verfahrensstatus <span class="caret" data-ng-class="{'pull-right': isMobile}"></span>
         </a>
         <ul class="dropdown-menu">
@@ -137,6 +137,11 @@
         </ul>
     </li>
     <li role="presentation" class="info-button">
-        <a href="#"><i class="fa fa-info btn-circle" aria-hidden="true"></i></a>
+        <a href="/static/information.html" target="blank" aria-label="Allgemeine Informationen">
+            <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle-thin fa-stack-2x"></i>
+                <i class="fa fa-info fa-stack-1x"></i>
+            </span>
+        </a>
     </li>
 </ul>
