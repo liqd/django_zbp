@@ -144,13 +144,13 @@ BOWER_COMPONENTS_ROOT = os.path.join(
     BASE_DIR, 'bplan', 'static', 'third-party')
 
 BOWER_INSTALLED_APPS = (
-    'jquery',
+    'jquery#3.2.1',
     'leaflet#0.7.7',
     'leaflet.markercluster#v0.4.0-hotfix.1',
-    'angular',
-    'fontawesome',
-    'bootstrap-sass',
+    'angular#1.6.4',
+    'fontawesome#4.7.0',
+    'bootstrap-sass#3.3.7',
     'lodash',
-    'angular-loading-bar',
-    'angular-animate'
+    'angular-loading-bar#0.9.0',
+    'angular-animate#1.6.4'
 )
