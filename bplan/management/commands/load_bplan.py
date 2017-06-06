@@ -212,26 +212,31 @@ class Command(BaseCommand):
         return (bbg_anfang, bbg_ende, aul_anfang, aul_ende)
 
     def _get_www_data(self, feature):
+
+        ausleg_www = None
+        scan_www = None
+        grund_www = None
+
         try:
             www = feature.get("ausleg_www")
             if www:
                 ausleg_www = www.split('"')[1]
         except:
-            ausleg_www = None
+            pass
 
         try:
             scan = feature.get("scan_www")
             if scan:
                 scan_www = scan.split('"')[1]
         except:
-            scan_www = None
+            pass
 
         try:
             grund = feature.get("grund_www")
             if grund:
                 grund_www = grund.split('"')[1]
         except:
-            grund_www = None
+            pass
 
         return(ausleg_www, scan_www, grund_www)
 
@@ -287,70 +292,74 @@ class Command(BaseCommand):
 
         for feature in tqdm(data_source[0]):
 
-            planname, spatial_alias, spatial_name = self._get_identifiers(
-                feature)
-            bplanID = planname.replace(" ", "").lower()
-            spatial_type, multipolygon, multipolygon_25833, geometry, bereich = self._get_spatial_data(
-                feature)
-            point = self._calculate_point(multipolygon, points)
-            points.append(point)
-            ortsteile = self._get_ortsteile(geometry)
-            afs_behoer = feature.get("afs_behoer")
-            afs_beschl, afs_l_aend = self._get_imVerfahren_data(feature)
-            festg, festsg_von, festsg_am = self._get_festg_data(feature)
-            bbg_anfang, bbg_ende, aul_anfang, aul_ende = self._get_participation_data(
-                feature)
-            ausleg_www, scan_www, grund_www = self._get_www_data(feature)
-            gml_id, fsg_gvbl_n, fsg_gvbl_s, fsg_gvbl_d, normkontr = self._get_other_data(
-                feature)
+            type = feature.get("spatial_type")
 
-            try:
-                bezirk, bezirk_name = self._get_district(feature)
-                bplan, created = BPlan.objects.update_or_create(
-                    bplanID=bplanID,
-                    spatial_name=spatial_name,
-                    multipolygon=multipolygon,
-                    defaults={
-                        'planname': planname,
-                        'spatial_alias': spatial_alias,
-                        'spatial_name': spatial_name,
-                        'spatial_type': spatial_type,
-                        'multipolygon': multipolygon,
-                        'multipolygon_25833' : multipolygon_25833,
-                        'point': point,
-                        'bereich': bereich,
-                        'bezirk': bezirk,
-                        'bezirk_name': bezirk_name,
-                        'afs_behoer': afs_behoer,
-                        'afs_beschl': afs_beschl,
-                        'afs_l_aend': afs_l_aend,
-                        'festg': festg,
-                        'festsg_von': festsg_von,
-                        'festsg_am': festsg_am,
-                        'bbg_anfang': bbg_anfang,
-                        'bbg_ende': bbg_ende,
-                        'aul_anfang': aul_anfang,
-                        'aul_ende': aul_ende,
-                        'ausleg_www': ausleg_www,
-                        'scan_www': scan_www,
-                        'grund_www': grund_www,
-                        'gml_id': gml_id,
-                        'fsg_gvbl_n': fsg_gvbl_n,
-                        'fsg_gvbl_s': fsg_gvbl_s,
-                        'fsg_gvbl_d': fsg_gvbl_d,
-                        'normkontr': normkontr
-                    }
-                )
-                bplan.save()
-                for ortsteil in ortsteile:
-                    bplan.ortsteile.add(ortsteil)
-                if created:
-                    bplan.download = download
+            if type:
+
+                planname, spatial_alias, spatial_name = self._get_identifiers(
+                    feature)
+                bplanID = planname.replace(" ", "").lower()
+                spatial_type, multipolygon, multipolygon_25833, geometry, bereich = self._get_spatial_data(
+                    feature)
+                point = self._calculate_point(multipolygon, points)
+                points.append(point)
+                ortsteile = self._get_ortsteile(geometry)
+                afs_behoer = feature.get("afs_behoer")
+                afs_beschl, afs_l_aend = self._get_imVerfahren_data(feature)
+                festg, festsg_von, festsg_am = self._get_festg_data(feature)
+                bbg_anfang, bbg_ende, aul_anfang, aul_ende = self._get_participation_data(
+                    feature)
+                ausleg_www, scan_www, grund_www = self._get_www_data(feature)
+                gml_id, fsg_gvbl_n, fsg_gvbl_s, fsg_gvbl_d, normkontr = self._get_other_data(
+                    feature)
+
+                try:
+                    bezirk, bezirk_name = self._get_district(feature)
+                    bplan, created = BPlan.objects.update_or_create(
+                        bplanID=bplanID,
+                        spatial_name=spatial_name,
+                        multipolygon=multipolygon,
+                        defaults={
+                            'planname': planname,
+                            'spatial_alias': spatial_alias,
+                            'spatial_name': spatial_name,
+                            'spatial_type': spatial_type,
+                            'multipolygon': multipolygon,
+                            'multipolygon_25833' : multipolygon_25833,
+                            'point': point,
+                            'bereich': bereich,
+                            'bezirk': bezirk,
+                            'bezirk_name': bezirk_name,
+                            'afs_behoer': afs_behoer,
+                            'afs_beschl': afs_beschl,
+                            'afs_l_aend': afs_l_aend,
+                            'festg': festg,
+                            'festsg_von': festsg_von,
+                            'festsg_am': festsg_am,
+                            'bbg_anfang': bbg_anfang,
+                            'bbg_ende': bbg_ende,
+                            'aul_anfang': aul_anfang,
+                            'aul_ende': aul_ende,
+                            'ausleg_www': ausleg_www,
+                            'scan_www': scan_www,
+                            'grund_www': grund_www,
+                            'gml_id': gml_id,
+                            'fsg_gvbl_n': fsg_gvbl_n,
+                            'fsg_gvbl_s': fsg_gvbl_s,
+                            'fsg_gvbl_d': fsg_gvbl_d,
+                            'normkontr': normkontr
+                        }
+                    )
                     bplan.save()
-            except Exception as e:
-                newError = "Bplan " + planname + ": " + str(e)
-                errors.append(newError)
-                pass
+                    for ortsteil in ortsteile:
+                        bplan.ortsteile.add(ortsteil)
+                    if created:
+                        bplan.download = download
+                        bplan.save()
+                except Exception as e:
+                    newError = "Bplan " + planname + ": " + str(e)
+                    errors.append(newError)
+                    pass
 
         download.errors = errors
         download.save()
