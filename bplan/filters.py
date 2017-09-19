@@ -37,10 +37,9 @@ class OrtsteilFilter(filters.BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
 
-        if 'ortsteil' in request.GET:
-            ortsteilslug = request.GET["ortsteil"]
-            ortsteil = Ortsteil.objects.get(slug=ortsteilslug)
-            return queryset.filter(ortsteile=ortsteil)
+        ortsteilslug = request.GET.get('ortsteil', None)
+        if ortsteilslug:
+            return queryset.filter(ortsteile__slug=ortsteilslug)
         else:
             return queryset
 
@@ -49,10 +48,9 @@ class BezirkFilter(filters.BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
 
-        if 'bezirk' in request.GET:
-            bezirksslug = request.GET["bezirk"]
-            bezirk = Bezirk.objects.get(slug=bezirksslug)
-            return queryset.filter(bezirk=bezirk)
+        bezirksslug = request.GET.get('bezirk', None)
+        if bezirksslug:
+            return queryset.filter(bezirk__slug=bezirksslug)
         else:
             return queryset
 
