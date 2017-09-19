@@ -11,6 +11,7 @@ from .filters import AddressFilter
 from .filters import BezirkFilter
 from .filters import BPlanAddressFilter
 from .filters import BplanFilter
+from .filters import PlzFilter
 from .serializers import BezirkSerializer
 from .serializers import OrtsteilSerializer
 from .serializers import BPlanPointSerializer
@@ -47,7 +48,7 @@ class AddressViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = CustomAddressGeoJsonPagination
     serializer_class = AddressSerializer
     filter_backends = (
-        filters.DjangoFilterBackend, AddressFilter, BezirkFilter)
+        filters.DjangoFilterBackend, AddressFilter, BezirkFilter, PlzFilter)
 
 
 class BezirkViewSet(viewsets.ReadOnlyModelViewSet):

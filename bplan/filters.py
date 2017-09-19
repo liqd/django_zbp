@@ -55,6 +55,15 @@ class BezirkFilter(filters.BaseFilterBackend):
             return queryset
 
 
+class PlzFilter(filters.BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+        plz = request.GET.get('plz', None)
+        if plz:
+            return queryset.filter(plz=plz)
+        return queryset
+
+
 class AddressFilter(filters.BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
