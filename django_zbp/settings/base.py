@@ -44,11 +44,13 @@ INSTALLED_APPS = [
     'bplan',
     'compressor',
     #'debug_toolbar',
+    'corsheaders',
 ]
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
@@ -154,3 +156,7 @@ BOWER_INSTALLED_APPS = (
     'angular-loading-bar#0.9.0',
     'angular-animate#1.6.4'
 )
+
+# Allow Cross-Origin Resource Sharing only for address lookups
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/addresses/.*$'
