@@ -38,14 +38,14 @@
                         <data-shared-nav></data-shared-nav>
                     </div>
 
-                    <div class="row" ng-controller="MapController">
+                    <div ng-controller="MapController">
 
                         <div data-ng-class="{'col-md-12 col-sm-12 col-xs-12' : !popupopen, 'col-md-6 col-sm-6 col-xs-6': popupopen}"
                              data-ng-show="currentView === 'map'" class="no-right-padding">
                             <div class='bplan-map' id="map"></div>
                         </div>
 
-                        <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding"
+                        <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding no-right-padding"
                              data-ng-if ="currentView === 'map' && popupopen">
                             <data-popup data-ng-if="currentItem" closepopup="closePopup" resetsearch="resetSearch" bplan="currentItem"></data-popup>
                         </div>
