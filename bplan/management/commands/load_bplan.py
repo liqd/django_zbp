@@ -212,7 +212,7 @@ class Command(BaseCommand):
         return (bbg_anfang, bbg_ende, aul_anfang, aul_ende)
 
     def _parse_www(self, url):
-        """current format of field is '[[url]] <url>| Link anzeigen'"""
+        """current format of field is '[[url]]http://example.com/document.pdf| Link anzeigen'"""
         return url.split('|')[0].split(']]')[1]
 
     def _get_www_data(self, feature):
