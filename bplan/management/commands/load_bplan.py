@@ -211,6 +211,10 @@ class Command(BaseCommand):
             aul_ende = None
         return (bbg_anfang, bbg_ende, aul_anfang, aul_ende)
 
+    def _parse_www(self, url):
+        """current format of field is '[[url]]http://example.com/document.pdf| Link anzeigen'"""
+        return url.split('|')[0].split(']]')[1]
+
     def _get_www_data(self, feature):
 
         ausleg_www = None
@@ -220,21 +224,21 @@ class Command(BaseCommand):
         try:
             www = feature.get("ausleg_www")
             if www:
-                ausleg_www = www.split('"')[1]
+                ausleg_www = _parse_www(www)
         except:
             pass
 
         try:
             scan = feature.get("scan_www")
             if scan:
-                scan_www = scan.split('"')[1]
+                scan_www = _parse_www(scan)
         except:
             pass
 
         try:
             grund = feature.get("grund_www")
             if grund:
-                grund_www = grund.split('"')[1]
+                grund_www = _parse_www(grund)
         except:
             pass
 
