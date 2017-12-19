@@ -121,8 +121,6 @@ class Command(BaseCommand):
                filename, url, '?version=1.1.0' if settings.GDAL_LEGACY else '',
                layer)
 
-        print(call)
-
         try:
             os.remove(filename)
         except:
