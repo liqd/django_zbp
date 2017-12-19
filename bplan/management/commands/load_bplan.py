@@ -121,6 +121,8 @@ class Command(BaseCommand):
                filename, url, '?version=1.1.0' if settings.GDAL_LEGACY else '',
                layer)
 
+        print(call)
+
         try:
             os.remove(filename)
         except:
@@ -220,21 +222,21 @@ class Command(BaseCommand):
         try:
             www = feature.get("ausleg_www")
             if www:
-                ausleg_www = www.split('"')[1]
+                ausleg_www = www.split('|')[0].split(']]')[1]
         except:
             pass
 
         try:
             scan = feature.get("scan_www")
             if scan:
-                scan_www = scan.split('"')[1]
+                scan_www = scan.split('|')[0].split(']]')[1]
         except:
             pass
 
         try:
             grund = feature.get("grund_www")
             if grund:
-                grund_www = grund.split('"')[1]
+                grund_www = grund.split('|')[0].split(']]')[1]
         except:
             pass
 
