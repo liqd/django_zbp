@@ -224,21 +224,21 @@ class Command(BaseCommand):
         try:
             www = feature.get("ausleg_www")
             if www:
-                ausleg_www = _parse_www(www)
+                ausleg_www = self._parse_www(www)
         except:
             pass
 
         try:
             scan = feature.get("scan_www")
             if scan:
-                scan_www = _parse_www(scan)
+                scan_www = self._parse_www(scan)
         except:
             pass
 
         try:
             grund = feature.get("grund_www")
             if grund:
-                grund_www = _parse_www(grund)
+                grund_www = self._parse_www(grund)
         except:
             pass
 
