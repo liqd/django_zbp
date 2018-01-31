@@ -294,7 +294,7 @@ class Command(BaseCommand):
         errors = []
         points = []
 
-        for feature in tqdm(data_source[0]):
+        for feature in tqdm(data_source[0], disable=(int(options['verbosity']) < 1)):
 
             type = feature.get("spatial_type")
 

@@ -56,7 +56,7 @@ class Command(BaseCommand):
 
                 data_source = DataSource(filepath)
 
-                for feature in tqdm(data_source[0]):
+                for feature in tqdm(data_source[0], disable=(int(options['verbosity']) < 1)):
                     try:
                         point = GEOSGeometry(str(feature.geom), srid=4326)
                         strname = feature.get("strname")

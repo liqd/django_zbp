@@ -99,7 +99,7 @@ class Command(BaseCommand):
                 filepath = os.path.join(fixtures_dir, file)
                 if not os.path.isdir(filepath) and file.startswith('addresses'):
                     data_source = DataSource(filepath)
-                    for feature in tqdm(data_source[0]):
+                    for feature in tqdm(data_source[0], disable=(int(options['verbosity']) < 1)):
                         point = GEOSGeometry(str(feature.geom), srid=4326)
                         strname = feature.get("strname") + feature.get("plz")
                         hsnr = (feature.get("hsnr")).lstrip('0')
