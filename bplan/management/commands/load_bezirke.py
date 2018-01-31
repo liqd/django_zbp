@@ -19,7 +19,7 @@ class Command(BaseCommand):
         fixture_file = os.path.join(fixtures_dir, 'bezirk.geojson')
         data_source = DataSource(fixture_file)
 
-        for feature in tqdm(data_source[0]):
+        for feature in tqdm(data_source[0], disable=(int(options['verbosity']) < 1)):
             polygon = GEOSGeometry(str(feature.geom), srid=4326)
             name = feature.get('spatial_alias')
             slug = slugify(name.replace('ö', 'oe').replace('ä', 'ae').replace('ü','ue'))
