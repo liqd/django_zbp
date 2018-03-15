@@ -7,5 +7,5 @@ db.sqlite3
 django_zbp/settings/local.py
 /bplan/static/third-party/bower_components/
 /bplan/fixtures/addresses/
-/env/
+/venv/
 pyvenv.cfg
