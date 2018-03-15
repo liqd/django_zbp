@@ -26,6 +26,7 @@ watch:
 	$(VIRTUAL_ENV)/bin/python3 manage.py runserver 8005
 
 .PHONY: release
+release: export DJANGO_SETTINGS_MODULE ?= django_zbp.settings.build
 release:
 	npm install bower --silent
 	$(VIRTUAL_ENV)/bin/python3 manage.py bower install
