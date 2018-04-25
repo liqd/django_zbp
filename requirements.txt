@@ -17,5 +17,3 @@ six==1.10.0
 sqlparse==0.1.19
 tqdm==3.8.0
 django-cors-headers==2.0.0
-whitenoise==3.3.1
-brotli==1.0.4

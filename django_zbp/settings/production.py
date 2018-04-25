@@ -2,8 +2,6 @@ from .base import *
 
 DEBUG = False
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 COMPRESS_OFFLINE = True
 
 CACHES = {
