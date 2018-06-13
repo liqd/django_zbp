@@ -12,13 +12,13 @@ cache:
 
 install:
   - sudo apt-get install -y gdal-bin
-  - make install
 
 before_script:
-  - "psql -c 'create database django_zbp;' -U postgres"
+  - psql -c 'create database django_zbp;' -U postgres
   - psql -U postgres -c "create extension postgis"
 
 script:
+  - make install
   - yapf -r django_zbp/ bplan/ --diff
   - python manage.py makemigrations --dry-run --check --noinput
   - venv/bin/python manage.py migrate
