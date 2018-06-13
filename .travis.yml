@@ -21,4 +21,4 @@ script:
 # - coveralls
 env:
   global:
-    DJANGO_SETTINGS='django_zbp.settings.travis'
+    DJANGO_SETTINGS_MODULE='django_zbp.settings.travis'
