@@ -19,6 +19,7 @@ before_script:
   - psql -U postgres -c "create extension postgis"
 
 script:
+  - yapf -r django_zbp/ bplan/ --diff
   - python manage.py makemigrations --dry-run --check --noinput
   - venv/bin/python manage.py migrate
   - make fixtures
