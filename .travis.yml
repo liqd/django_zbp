@@ -1,7 +1,8 @@
-
 language: python
 python:
   - "3.6"
+services:
+  - postgresql
 cache:
   pip: true
   directories:
@@ -9,9 +10,15 @@ cache:
 install:
   - sudo apt-get install -y gdal-bin
   - make install
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -U postgres -c "create extension postgis"
 script:
   - python manage.py makemigrations --dry-run --check --noinput
   - venv/bin/python manage.py migrate
   - make fixtures
 #after_success:
 # - coveralls
+env:
+  global:
+    DJANGO_SETTINGS='django_zbp.settings.travis'
