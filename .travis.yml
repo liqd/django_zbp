@@ -1,0 +1,16 @@
+
+language: python
+python:
+  - "3.6"
+cache:
+  pip: true
+  directories:
+    - node_modules
+install:
+  - make install
+script:
+  - venv/bin/python manage.py migrate
+  - python manage.py makemigrations --dry-run --check --noinput
+  - make fixtures
+#after_success:
+# - coveralls
