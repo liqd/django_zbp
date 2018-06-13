@@ -64,4 +64,4 @@ continue:
 $ ./manage.py runserver
 ```
 
-go to http://localhost:8000/admin/
+go to http://localhost:8005/admin/
