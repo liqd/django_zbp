@@ -1,6 +1,6 @@
-#language: python
-#python:
-#  - "3.6"
+language: python
+python:
+  - "3.6"
 
 addons:
   postgresql: 9.6
@@ -17,7 +17,6 @@ cache:
     - node_modules
 
 install:
-  - sudo apt-get install python3-venv
   - sudo apt-get install -y gdal-bin
 
 before_script:
