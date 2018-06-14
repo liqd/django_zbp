@@ -1,5 +1,6 @@
 VIRTUAL_ENV ?= venv
 
+.PHONY: install
 install:
 	if [ ! -f $(VIRTUAL_ENV)/bin/python3 ]; then python3 -m venv $(VIRTUAL_ENV); fi
 	$(VIRTUAL_ENV)/bin/python3 -m pip install -r requirements.txt
@@ -8,6 +9,15 @@ install:
 	$(VIRTUAL_ENV)/bin/python3 manage.py bower install
 	$(VIRTUAL_ENV)/bin/python3 manage.py migrate
 
+.PHONY: install-hook
+url=https://raw.githubusercontent.com/google/yapf/cfcf45fd197768e3c73826b6fe8ac69de667015b/plugins/pre-commit.sh
+tmp:=$(shell mktemp -d)
+install-hook:
+	curl -o $(tmp)/pre-commit.sh "$(url)"
+	chmod a+x $(tmp)/pre-commit.sh
+	mv $(tmp)/pre-commit.sh .git/hooks/pre-commit
+
+.PHONY: fixtures
 fixtures:
 	$(VIRTUAL_ENV)/bin/python3 manage.py loaddata django_zbp/fixtures/*-dev.json
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_bezirke
@@ -17,12 +27,14 @@ fixtures:
 	$(VIRTUAL_ENV)/bin/python3 manage.py insert_numberless_addresses --fromFixtures
 
 
+.PHONY: load_with_gdal
 load_with_gdal:
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_bplan
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_all
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_addresses
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_numberless_addresses
 
+.PHONY: watch
 watch:
 	$(VIRTUAL_ENV)/bin/python3 manage.py runserver 8005
 
@@ -34,4 +46,3 @@ release:
 	$(VIRTUAL_ENV)/bin/python3 manage.py bower install
 	$(VIRTUAL_ENV)/bin/python3 manage.py compress -v0
 	$(VIRTUAL_ENV)/bin/python3 manage.py collectstatic --noinput -v0
-
