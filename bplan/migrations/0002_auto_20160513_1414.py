@@ -17,7 +17,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Download',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id',
+                 models.AutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
                 ('created', models.DateTimeField(editable=False)),
                 ('errors', models.TextField(blank=True, null=True)),
             ],
@@ -37,7 +42,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bplan',
             name='multipolygon_25833',
-            field=django.contrib.gis.db.models.fields.MultiPolygonField(default='', srid=25833),
+            field=django.contrib.gis.db.models.fields.MultiPolygonField(
+                default='', srid=25833),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -73,15 +79,23 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='ortsteil',
             name='bezirk',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ortsteile', to='bplan.Bezirk'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='ortsteile',
+                to='bplan.Bezirk'),
         ),
         migrations.AddField(
             model_name='bplan',
             name='download',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bplan.Download'),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to='bplan.Download'),
         ),
         migrations.AlterIndexTogether(
             name='bplan',
-            index_together=set([('bbg_anfang', 'bbg_ende'), ('aul_anfang', 'aul_ende')]),
+            index_together=set([('bbg_anfang', 'bbg_ende'), ('aul_anfang',
+                                                             'aul_ende')]),
         ),
     ]

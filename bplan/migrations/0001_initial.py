@@ -11,58 +11,92 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
             name='Bezirk',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id',
+                 models.AutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('polygon', django.contrib.gis.db.models.fields.PolygonField(srid=4326)),
+                ('polygon',
+                 django.contrib.gis.db.models.fields.PolygonField(srid=4326)),
             ],
         ),
         migrations.CreateModel(
             name='BPlan',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id',
+                 models.AutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
                 ('bplanID', models.CharField(max_length=50)),
                 ('planname', models.CharField(max_length=50)),
                 ('spatial_alias', models.CharField(max_length=50)),
                 ('spatial_name', models.CharField(max_length=50)),
                 ('spatial_type', models.CharField(max_length=50)),
-                ('multipolygon', django.contrib.gis.db.models.fields.MultiPolygonField(srid=4326)),
-                ('point', django.contrib.gis.db.models.fields.PointField(blank=True, null=True, srid=4326)),
+                ('multipolygon',
+                 django.contrib.gis.db.models.fields.MultiPolygonField(
+                     srid=4326)),
+                ('point',
+                 django.contrib.gis.db.models.fields.PointField(
+                     blank=True, null=True, srid=4326)),
                 ('bereich', models.TextField()),
                 ('afs_behoer', models.CharField(max_length=256)),
                 ('afs_beschl', models.DateField(blank=True, null=True)),
                 ('afs_l_aend', models.DateField(blank=True, null=True)),
                 ('festg', models.BooleanField(default=False)),
-                ('festsg_von', models.CharField(blank=True, max_length=256, null=True)),
+                ('festsg_von',
+                 models.CharField(blank=True, max_length=256, null=True)),
                 ('festsg_am', models.DateField(blank=True, null=True)),
                 ('bbg_anfang', models.DateField(blank=True, null=True)),
                 ('bbg_ende', models.DateField(blank=True, null=True)),
                 ('aul_anfang', models.DateField(blank=True, null=True)),
                 ('aul_ende', models.DateField(blank=True, null=True)),
-                ('ausleg_www', models.URLField(blank=True, max_length=256, null=True)),
-                ('scan_www', models.URLField(blank=True, max_length=256, null=True)),
-                ('grund_www', models.URLField(blank=True, max_length=256, null=True)),
-                ('gml_id', models.CharField(blank=True, max_length=50, null=True)),
-                ('fsg_gvbl_n', models.CharField(blank=True, max_length=50, null=True)),
-                ('fsg_gvbl_s', models.CharField(blank=True, max_length=50, null=True)),
+                ('ausleg_www',
+                 models.URLField(blank=True, max_length=256, null=True)),
+                ('scan_www',
+                 models.URLField(blank=True, max_length=256, null=True)),
+                ('grund_www',
+                 models.URLField(blank=True, max_length=256, null=True)),
+                ('gml_id',
+                 models.CharField(blank=True, max_length=50, null=True)),
+                ('fsg_gvbl_n',
+                 models.CharField(blank=True, max_length=50, null=True)),
+                ('fsg_gvbl_s',
+                 models.CharField(blank=True, max_length=50, null=True)),
                 ('fsg_gvbl_d', models.DateField(blank=True, null=True)),
-                ('normkontr', models.CharField(blank=True, max_length=50, null=True)),
-                ('bezirk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bplan.Bezirk')),
+                ('normkontr',
+                 models.CharField(blank=True, max_length=50, null=True)),
+                ('bezirk',
+                 models.ForeignKey(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     to='bplan.Bezirk')),
             ],
         ),
         migrations.CreateModel(
             name='Ortsteil',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id',
+                 models.AutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('polygon', django.contrib.gis.db.models.fields.PolygonField(srid=4326)),
-                ('bezirk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bplan.Bezirk')),
+                ('polygon',
+                 django.contrib.gis.db.models.fields.PolygonField(srid=4326)),
+                ('bezirk',
+                 models.ForeignKey(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     to='bplan.Bezirk')),
             ],
         ),
     ]

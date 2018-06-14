@@ -5,8 +5,10 @@ from .models import BPlan
 from .models import Download
 from .models import Address
 
+
 class DownloadAdmin(admin.ModelAdmin):
     list_filter = ('bplan', )
+
 
 admin.site.register(Bezirk, admin.GeoModelAdmin)
 admin.site.register(Ortsteil, admin.GeoModelAdmin)
