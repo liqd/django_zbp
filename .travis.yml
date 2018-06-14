@@ -1,6 +1,6 @@
-language: python
-python:
-  - "3.6"
+#language: python
+#python:
+#  - "3.6"
 
 addons:
   postgresql: 9.6
@@ -18,14 +18,8 @@ cache:
 
 install:
   - sudo apt-get install -y gdal-bin
-  #- sudo apt-get install -y postgresql-postgis
 
 before_script:
-  #- sudo apt-get update
-  #- sudo apt-get autoremove postgis*
-  #- sudo apt-get autoremove postgresql*
-  #- sudo apt-get install postgresql-9.3-postgis-2.1
-
   - psql -U postgres -c "create extension postgis"
   - psql -c 'create database django_zbp;' -U postgres
 
@@ -33,7 +27,6 @@ script:
   - make install
   - yapf -r django_zbp/ bplan/ --diff
   - python manage.py makemigrations --dry-run --check --noinput
-  - venv/bin/python manage.py migrate
   - make fixtures
 
 #after_success:
