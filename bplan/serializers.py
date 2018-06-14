@@ -9,16 +9,15 @@ from django.utils import timezone
 from django.contrib.gis.geos import Point
 
 
-
 class OrtsteilSerializer(GeoFeatureModelSerializer):
-
     class Meta:
         model = Ortsteil
         fields = ('name', 'polygon', 'slug')
         geo_field = 'polygon'
 
 
-class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
+class BezirkSerializer(GeoFeatureModelSerializer,
+                       serializers.HyperlinkedModelSerializer):
     bplan_count = serializers.SerializerMethodField()
     bplan_festgesetzt_count = serializers.SerializerMethodField()
     bplan_imVerfahren_count = serializers.SerializerMethodField()
@@ -28,10 +27,9 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
 
     class Meta:
         model = Bezirk
-        fields = ('name', 'slug', 'polygon', 'ortsteile', 'pk',
-                  'bplan_count', 'bplan_festgesetzt_count',
-                  'bplan_imVerfahren_count', 'bplan_aul_count',
-                  'bplan_bbg_count', 'point')
+        fields = ('name', 'slug', 'polygon', 'ortsteile', 'pk', 'bplan_count',
+                  'bplan_festgesetzt_count', 'bplan_imVerfahren_count',
+                  'bplan_aul_count', 'bplan_bbg_count', 'point')
         geo_field = 'polygon'
 
     def _filter_queryset(self, qs):
@@ -79,7 +77,8 @@ class BezirkSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSe
         return point.coords
 
 
-class AddressSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelSerializer):
+class AddressSerializer(GeoFeatureModelSerializer,
+                        serializers.HyperlinkedModelSerializer):
     bezirk_name = serializers.SerializerMethodField()
 
     class Meta:
@@ -92,10 +91,9 @@ class AddressSerializer(GeoFeatureModelSerializer, serializers.HyperlinkedModelS
 
 
 class SimpleBezirkSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Bezirk
-        fields = ('name',)
+        fields = ('name', )
 
 
 class SimpleBPlanSerializer(serializers.ModelSerializer):
@@ -110,9 +108,11 @@ class SimpleBPlanSerializer(serializers.ModelSerializer):
             return 'festg'
         else:
             date = timezone.now().date()
-            if (object.bbg_anfang and object.bbg_anfang <= date) and (object.bbg_ende and date <= object.bbg_ende):
+            if (object.bbg_anfang and object.bbg_anfang <= date) and (
+                    object.bbg_ende and date <= object.bbg_ende):
                 return 'bbg'
-            elif (object.aul_anfang and object.aul_anfang <= date) and (object.aul_ende and date <= object.aul_ende):
+            elif (object.aul_anfang and object.aul_anfang <= date) and (
+                    object.aul_ende and date <= object.aul_ende):
                 return 'aul'
             else:
                 return 'imVerfahren'
@@ -128,7 +128,8 @@ class BPlanPointSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
         fields = ('point', 'status', 'pk', 'bezirk')
 
 
-class BPlanMultipolygonSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
+class BPlanMultipolygonSerializer(SimpleBPlanSerializer,
+                                  GeoFeatureModelSerializer):
     status = serializers.SerializerMethodField()
 
     class Meta:
@@ -145,4 +146,3 @@ class BPlanSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
         model = BPlan
         id_field = False
         geo_field = 'multipolygon'
-

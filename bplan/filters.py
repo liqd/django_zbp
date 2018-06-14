@@ -10,7 +10,6 @@ from .models import Bezirk
 
 
 class StatusFilter(filters.BaseFilterBackend):
-
     def filter_queryset(self, request, queryset, view):
 
         date = timezone.now()
@@ -20,21 +19,24 @@ class StatusFilter(filters.BaseFilterBackend):
             statustype = request.GET["status"]
 
             if statustype == 'bbg':
-                return queryset.filter(bbg_anfang__lte=date).filter(bbg_ende__gte=date)
+                return queryset.filter(bbg_anfang__lte=date).filter(
+                    bbg_ende__gte=date)
             if statustype == 'aul':
-                return queryset.filter(aul_anfang__lte=date).filter(aul_ende__gte=date)
+                return queryset.filter(aul_anfang__lte=date).filter(
+                    aul_ende__gte=date)
             if statustype == 'imVerfahren':
                 auls = queryset.filter(aul_anfang__lte=date).filter(
-                    aul_ende__gte=date).values_list('id', flat=True)
+                    aul_ende__gte=date).values_list(
+                        'id', flat=True)
                 bbgs = queryset.filter(bbg_anfang__lte=date).filter(
-                    bbg_ende__gte=date).values_list('id', flat=True)
+                    bbg_ende__gte=date).values_list(
+                        'id', flat=True)
                 return queryset.exclude(pk__in=auls).exclude(pk__in=bbgs)
 
         return queryset
 
 
 class OrtsteilFilter(filters.BaseFilterBackend):
-
     def filter_queryset(self, request, queryset, view):
 
         ortsteilslug = request.GET.get('ortsteil', None)
@@ -45,7 +47,6 @@ class OrtsteilFilter(filters.BaseFilterBackend):
 
 
 class BezirkFilter(filters.BaseFilterBackend):
-
     def filter_queryset(self, request, queryset, view):
 
         bezirksslug = request.GET.get('bezirk', None)
@@ -56,7 +57,6 @@ class BezirkFilter(filters.BaseFilterBackend):
 
 
 class PlzFilter(filters.BaseFilterBackend):
-
     def filter_queryset(self, request, queryset, view):
         plz = request.GET.get('plz', None)
         if plz:
@@ -65,7 +65,6 @@ class PlzFilter(filters.BaseFilterBackend):
 
 
 class AddressFilter(filters.BaseFilterBackend):
-
     def filter_queryset(self, request, queryset, view):
 
         if 'address' in request.GET:
@@ -78,8 +77,7 @@ class AddressFilter(filters.BaseFilterBackend):
                 elif word[-3:] == 'str':
                     word += 'asse'
                 address += word
-            address = (address.replace(
-                '-', '').replace('ß', 'ss')).lower()
+            address = (address.replace('-', '').replace('ß', 'ss')).lower()
             addresses = queryset.filter(search_name=address)
             return addresses
         else:
@@ -87,7 +85,6 @@ class AddressFilter(filters.BaseFilterBackend):
 
 
 class BplanFilter(filters.BaseFilterBackend):
-
     def filter_queryset(self, request, queryset, view):
 
         if 'bplan' in request.GET:
@@ -100,7 +97,6 @@ class BplanFilter(filters.BaseFilterBackend):
 
 
 class BPlanAddressFilter(filters.BaseFilterBackend):
-
     def get_filter_point(self, request):
         point_string = request.query_params.get('point', None)
         if not point_string:
@@ -108,7 +104,9 @@ class BPlanAddressFilter(filters.BaseFilterBackend):
         try:
             (x, y) = (float(n) for n in point_string.split(','))
         except ValueError:
-            raise ParseError('Invalid geometry string supplied for parameter {0}'.format(self.point_param))
+            raise ParseError(
+                'Invalid geometry string supplied for parameter {0}'.format(
+                    self.point_param))
         p = Point(x, y, srid=4326)
         p.transform(25833)
 
@@ -118,9 +116,8 @@ class BPlanAddressFilter(filters.BaseFilterBackend):
 
         if 'point' in request.GET:
             p = self.get_filter_point(request)
-            queryset = queryset.filter(multipolygon_25833__dwithin=(p, D(m=500)))
+            queryset = queryset.filter(
+                multipolygon_25833__dwithin=(p, D(m=500)))
             return queryset
         else:
             return queryset
-
-

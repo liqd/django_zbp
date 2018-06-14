@@ -15,10 +15,8 @@ from bplan.models import Bezirk
 
 
 class Command(BaseCommand):
-
     def _get_bezirk(self, point):
-        bezirk = Bezirk.objects.get(
-            polygon__intersects=point)
+        bezirk = Bezirk.objects.get(polygon__intersects=point)
         return bezirk
 
     def _get_search_name(self, strname, hsnr):
@@ -27,24 +25,24 @@ class Command(BaseCommand):
             strname += "asse"
         elif strname[-4:] == 'str.':
             strname = strname[:-1] + "asse"
-        return (strname+hsnr).lower()
+        return (strname + hsnr).lower()
 
     def add_arguments(self, parser):
 
-        parser.add_argument('--fromFixtures',
-                            action='store_true',
-                            dest='fromFixtures',
-                            default=False,
-                            help='Load data from fixtures')
+        parser.add_argument(
+            '--fromFixtures',
+            action='store_true',
+            dest='fromFixtures',
+            default=False,
+            help='Load data from fixtures')
 
     def handle(self, *args, **options):
 
         if options['fromFixtures']:
-            fixtures_dir = os.path.join(
-                settings.BASE_DIR, 'bplan', 'fixtures')
+            fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan', 'fixtures')
         else:
-            fixtures_dir = os.path.join(
-                settings.BASE_DIR, 'bplan', 'fixtures', 'addresses')
+            fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan', 'fixtures',
+                                        'addresses')
 
         filelist = os.listdir(fixtures_dir)
 
@@ -56,7 +54,9 @@ class Command(BaseCommand):
 
                 data_source = DataSource(filepath)
 
-                for feature in tqdm(data_source[0], disable=(int(options['verbosity']) < 1)):
+                for feature in tqdm(
+                        data_source[0],
+                        disable=(int(options['verbosity']) < 1)):
                     try:
                         point = GEOSGeometry(str(feature.geom), srid=4326)
                         strname = feature.get("strname")

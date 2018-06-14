@@ -13,23 +13,28 @@ from bplan.models import Ortsteil
 
 
 class Command(BaseCommand):
-
     def handle(self, *args, **options):
 
         fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan', 'fixtures')
         fixture_file = os.path.join(fixtures_dir, 'ortsteil.geojson')
         data_source = DataSource(fixture_file)
 
-        for feature in tqdm(data_source[0], disable=(int(options['verbosity']) < 1)):
+        for feature in tqdm(
+                data_source[0], disable=(int(options['verbosity']) < 1)):
             polygon = GEOSGeometry(str(feature.geom), srid=4326)
             name = feature.get("spatial_alias")
-            slug = slugify(name.replace('ö', 'oe').replace('ä', 'ae').replace('ü','ue'))
+            slug = slugify(
+                name.replace('ö', 'oe').replace('ä', 'ae').replace('ü', 'ue'))
             bezirk = feature.get("BEZIRK")
 
             bezirks_model = Bezirk.objects.get(name=bezirk)
 
             try:
-                ortsteil = Ortsteil.objects.create(name=name, slug=slug, polygon=polygon, bezirk=bezirks_model)
+                ortsteil = Ortsteil.objects.create(
+                    name=name,
+                    slug=slug,
+                    polygon=polygon,
+                    bezirk=bezirks_model)
                 print(ortsteil)
             except Exception as e:
                 print(e)

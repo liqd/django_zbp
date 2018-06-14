@@ -17,15 +17,24 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Address',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('point', django.contrib.gis.db.models.fields.PointField(srid=4326)),
+                ('id',
+                 models.AutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
+                ('point',
+                 django.contrib.gis.db.models.fields.PointField(srid=4326)),
                 ('strname', models.CharField(max_length=256)),
                 ('hsnr', models.CharField(max_length=50)),
                 ('search_name', models.CharField(max_length=256)),
                 ('plz', models.CharField(max_length=50)),
                 ('gml_id', models.CharField(max_length=50)),
                 ('spatial_name', models.CharField(max_length=50)),
-                ('bezirk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bplan.Bezirk')),
+                ('bezirk',
+                 models.ForeignKey(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     to='bplan.Bezirk')),
             ],
         ),
     ]
