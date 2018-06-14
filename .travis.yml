@@ -12,6 +12,7 @@ cache:
 
 install:
   - sudo apt-get install -y gdal-bin
+  - sudo apt-get install -y postgis
 
 before_script:
   - psql -c 'create database django_zbp;' -U postgres
