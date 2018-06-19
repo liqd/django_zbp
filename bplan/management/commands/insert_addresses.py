@@ -103,8 +103,8 @@ def parse_fis_broker_address_file(file):
 
     catch_tag = False
     collecting = []
-    for event, elem in etree.iterparse(
-            file, events=('start', 'end', 'start-ns', 'end-ns')):
+    for event, elem in tqdm(etree.iterparse(
+            file, events=('start', 'end', 'start-ns', 'end-ns'))):
         if event == 'start-ns' or event == 'end-ns':
             continue
 
@@ -154,20 +154,23 @@ def get_all(item, keys):
 
 
 def get_streets(gml_file):
-    #parsed = parse_fis_broker_address_file(gml_file)
+    parsed = parse_fis_broker_address_file(gml_file)
 
-    import pickle
-    parsed = pickle.loads(open('./pick', 'rb').read())
+    def getiter():
+        for comp_key, comp_values in parsed['components'].items():
+            all_keys = [comp_key] + comp_values
 
-    for comp_key, comp_values in parsed['components'].items():
-        all_keys = [comp_key] + comp_values
+            entry = {}
+            for part in parsed.keys():
+                values = get_all(parsed[part], all_keys)
+                if not values:
+                    print('Unknown reference in: {}, tried keys {}'.format(part, all_keys))
+                    continue
+                entry[part] = values
 
-        entry = {}
-        for part in parsed.keys():
-            values = get_all(parsed[part], all_keys)
-            entry[part] = values
+            yield comp_key, entry
 
-        yield comp_key, entry
+    return len(parsed['components']), getiter()
 
 
 class Command(BaseCommand):
@@ -185,14 +188,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         gml_file = options['gml_file']
-        streets = get_streets(gml_file)
-        for (gml_id, street) in streets:
+        print('Parsing xml file ...')
+        total, streets = get_streets(gml_file)
+        print('Inserting into database ...')
+        for (gml_id, street) in tqdm(streets, total=total):
             values = {}
 
-            print('Inserting {} ...'.format(gml_id))
-            #if not street['pos']:
-                #continue
-                #print('NO POS HERE')
+            #print('Inserting {} ...'.format(gml_id))
+
+            # I think that is an error in the xml parsing library
+            if not street['pos'][0]:
+                print('Could not get position for {}'.format(gml_id))
+                continue
             
             a, b = street['pos'][0].split()
             values['point'] = Point(float(a), float(b))
@@ -209,4 +216,4 @@ class Command(BaseCommand):
             addr, created = Address.objects.update_or_create(
                 gml_id=gml_id, defaults=values)
             action = 'created' if created else 'updated'
-            print('{}: {}'.format(action.capitalize(), addr))
+            #print('{}: {}'.format(action.capitalize(), addr))
