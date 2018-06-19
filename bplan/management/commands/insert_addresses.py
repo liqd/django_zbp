@@ -1,3 +1,15 @@
+'''
+With this you can import addresses provided by the fis broker: https://fbinter.stadt-berlin.de/
+The supported data type is named "INSPIRE GML". It is XML based,
+to parse this you will need about 16GB of RAM for all addresses in Berlin.
+
+To download it go to: https://fbinter.stadt-berlin.de/fb/index.jsp
+Then click on "Adressen im INSPIRE-Datenmodell"
+Then click on "Downloaddienst (ATOM)"
+Then you get a zip file: http://fbarc.stadt-berlin.de/FIS_Broker_Atom/AD/AD_AdressenBerlin.zip
+Here you may find your .gml file with all addresses of Berlin
+'''
+
 import os
 import json
 import xml.etree.ElementTree as etree
@@ -176,6 +188,9 @@ def get_streets(gml_file):
 
 
 class Command(BaseCommand):
+
+    help = 'Import addresses in the inspire gml format'
+
     def _get_search_name(self, strname, hsnr):
         strname = strname.replace(' ', '').replace('-', '').replace('ß', 'ss')
         if strname[-3:] == 'str':
