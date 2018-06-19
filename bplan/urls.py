@@ -10,25 +10,26 @@ from .api import BPlanDataViewSet
 from .api import AddressViewSet
 from . import views
 
-
 router = routers.DefaultRouter()
 router.register(r'addresses', AddressViewSet, base_name='addresse')
 router.register(r'bezirke', BezirkViewSet, base_name='bezirk')
 router.register(r'ortsteile', OrtsteilViewSet, base_name='ortsteil')
 router.register(r'bplan/points', BPlanPointViewSet, base_name='bplan_points')
-router.register(r'bplan/multipolygons',
-                BPlanMultipolygonViewSet, base_name='bplan_multipoligon')
+router.register(
+    r'bplan/multipolygons',
+    BPlanMultipolygonViewSet,
+    base_name='bplan_multipoligon')
 router.register(r'bplan/data', BPlanDataViewSet, base_name='bplan_data')
 router.register(r'bplan', BPlanViewSet, base_name='bplan_all')
-
-
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^berlin/$',
-        views.StadtView.as_view(template_name="bplan/berlin.html"), name='berlin'),
+        views.StadtView.as_view(template_name="bplan/berlin.html"),
+        name='berlin'),
     url(r'^berlin/(?P<slug>[a-z\-]+)/',
-        views.BezirkDetailView.as_view(), name='bezirk'),
+        views.BezirkDetailView.as_view(),
+        name='bezirk'),
     url(r'^login/', views.login_user, name='login'),
     url(r'^logout/', views.logout_user, name='logout'),
     url(r'^downloads/', views.downloads, name='downloads'),

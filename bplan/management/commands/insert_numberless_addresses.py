@@ -16,10 +16,8 @@ from bplan.models import Bezirk
 
 
 class Command(BaseCommand):
-
     def _get_bezirk(self, point):
-        bezirk = Bezirk.objects.get(
-            polygon__intersects=point)
+        bezirk = Bezirk.objects.get(polygon__intersects=point)
         return bezirk
 
     def _get_int(self, string):
@@ -33,7 +31,7 @@ class Command(BaseCommand):
             strname += "asse"
         elif strname[-4:] == 'str.':
             strname = strname[:-1] + "asse"
-        return (strname+hsnr).lower()
+        return (strname + hsnr).lower()
 
     def _get_string(self, string):
         while string[-1].isdigit():
@@ -42,24 +40,26 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
 
-        parser.add_argument('--fromFixtures',
-                            action='store_true',
-                            dest='fromFixtures',
-                            default=False,
-                            help='Load data from fixtures')
+        parser.add_argument(
+            '--fromFixtures',
+            action='store_true',
+            dest='fromFixtures',
+            default=False,
+            help='Load data from fixtures')
 
-        parser.add_argument('--fromDatabase',
-                            action='store_true',
-                            dest='fromDatabase',
-                            default=False,
-                            help='Load data from database')
+        parser.add_argument(
+            '--fromDatabase',
+            action='store_true',
+            dest='fromDatabase',
+            default=False,
+            help='Load data from database')
 
     def handle(self, *args, **options):
 
         if options['fromDatabase']:
             qs = Address.objects.all()
-            streets = qs.values(
-                'strname', 'plz').order_by().annotate(Min('hsnr'))
+            streets = qs.values('strname', 'plz').order_by().annotate(
+                Min('hsnr'))
 
             for street in streets:
                 base_address = Address.objects.filter(
@@ -85,11 +85,11 @@ class Command(BaseCommand):
 
         else:
             if options['fromFixtures']:
-                fixtures_dir = os.path.join(
-                    settings.BASE_DIR, 'bplan', 'fixtures')
+                fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan',
+                                            'fixtures')
             else:
-                fixtures_dir = os.path.join(
-                    settings.BASE_DIR, 'bplan', 'fixtures', 'addresses')
+                fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan',
+                                            'fixtures', 'addresses')
 
             filelist = os.listdir(fixtures_dir)
             lowest_hsnrs = {}
@@ -97,9 +97,12 @@ class Command(BaseCommand):
 
             for file in filelist:
                 filepath = os.path.join(fixtures_dir, file)
-                if not os.path.isdir(filepath) and file.startswith('addresses'):
+                if not os.path.isdir(filepath) and file.startswith(
+                        'addresses'):
                     data_source = DataSource(filepath)
-                    for feature in tqdm(data_source[0], disable=(int(options['verbosity']) < 1)):
+                    for feature in tqdm(
+                            data_source[0],
+                            disable=(int(options['verbosity']) < 1)):
                         point = GEOSGeometry(str(feature.geom), srid=4326)
                         strname = feature.get("strname") + feature.get("plz")
                         hsnr = (feature.get("hsnr")).lstrip('0')

@@ -49,7 +49,6 @@ class Address(models.Model):
         return self.strname + ' ' + self.hsnr
 
 
-
 class BPlan(models.Model):
 
     bplanID = models.CharField(max_length=50)
@@ -88,7 +87,5 @@ class BPlan(models.Model):
         return self.planname
 
     class Meta:
-        index_together = [
-            ["bbg_anfang", "bbg_ende"],
-            ["aul_anfang", "aul_ende"]
-        ]
+        index_together = [["bbg_anfang", "bbg_ende"],
+                          ["aul_anfang", "aul_ende"]]

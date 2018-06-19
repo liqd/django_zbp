@@ -16,7 +16,6 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -86,23 +85,24 @@ WSGI_APPLICATION = 'django_zbp.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
-)
-
+COMPRESS_PRECOMPILERS = (('text/x-scss', 'django_libsass.SassCompiler'), )
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -121,7 +121,6 @@ USE_L10N = True
 
 LOGIN_URL = '/login/'
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
@@ -136,26 +135,18 @@ STATICFILES_FINDERS = [
     'djangobower.finders.BowerFinder',
 ]
 
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, 'static')
-]
+STATICFILES_DIRS = [os.path.join(PROJECT_DIR, 'static')]
 
 BOWER_PATH = os.path.join(BASE_DIR, 'node_modules', '.bin', 'bower')
 
-BOWER_COMPONENTS_ROOT = os.path.join(
-    BASE_DIR, 'bplan', 'static', 'third-party')
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'bplan', 'static',
+                                     'third-party')
 
-BOWER_INSTALLED_APPS = (
-    'jquery#3.2.1',
-    'leaflet#0.7.7',
-    'leaflet.markercluster#v0.4.0-hotfix.1',
-    'angular#1.6.4',
-    'fontawesome#4.7.0',
-    'bootstrap-sass#3.3.7',
-    'lodash',
-    'angular-loading-bar#0.9.0',
-    'angular-animate#1.6.4'
-)
+BOWER_INSTALLED_APPS = ('jquery#3.2.1', 'leaflet#0.7.7',
+                        'leaflet.markercluster#v0.4.0-hotfix.1',
+                        'angular#1.6.4', 'fontawesome#4.7.0',
+                        'bootstrap-sass#3.3.7', 'lodash',
+                        'angular-loading-bar#0.9.0', 'angular-animate#1.6.4')
 
 # Allow Cross-Origin Resource Sharing only for address lookups
 CORS_ORIGIN_ALLOW_ALL = True
