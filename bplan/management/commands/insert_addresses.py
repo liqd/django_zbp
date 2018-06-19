@@ -155,11 +155,10 @@ def get_all(item, keys):
 
 def get_streets(gml_file):
     #parsed = parse_fis_broker_address_file(gml_file)
-    #res = parse_fis_broker_address_file('data_orig.gml')
-    #pprint(res)
 
     import pickle
     parsed = pickle.loads(open('./pick', 'rb').read())
+
     for comp_key, comp_values in parsed['components'].items():
         all_keys = [comp_key] + comp_values
 
@@ -190,11 +189,15 @@ class Command(BaseCommand):
         for (gml_id, street) in streets:
             values = {}
 
+            print('Inserting {} ...'.format(gml_id))
+            #if not street['pos']:
+                #continue
+                #print('NO POS HERE')
+            
             a, b = street['pos'][0].split()
             values['point'] = Point(float(a), float(b))
             values['strname'] = street['street_names'][0]
-            values['hsnr'] = ''.join(street['street_number'])
-            print(street['street_number'], values['hsnr'])
+            values['hsnr'] = ''.join(street['street_number'][0])
             values['search_name'] = self._get_search_name(
                 values['strname'], values['hsnr'])
             values['plz'] = street['postal_codes'][0]
