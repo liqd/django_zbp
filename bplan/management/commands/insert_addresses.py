@@ -103,8 +103,9 @@ def parse_fis_broker_address_file(file):
 
     catch_tag = False
     collecting = []
-    for event, elem in tqdm(etree.iterparse(
-            file, events=('start', 'end', 'start-ns', 'end-ns'))):
+    for event, elem in tqdm(
+            etree.iterparse(
+                file, events=('start', 'end', 'start-ns', 'end-ns'))):
         if event == 'start-ns' or event == 'end-ns':
             continue
 
@@ -164,7 +165,8 @@ def get_streets(gml_file):
             for part in parsed.keys():
                 values = get_all(parsed[part], all_keys)
                 if not values:
-                    print('Unknown reference in: {}, tried keys {}'.format(part, all_keys))
+                    print('Unknown reference in: {}, tried keys {}'.format(
+                        part, all_keys))
                     continue
                 entry[part] = values
 
@@ -200,7 +202,7 @@ class Command(BaseCommand):
             if not street['positions'][0]:
                 print('Could not get position for {}'.format(gml_id))
                 continue
-            
+
             a, b = street['positions'][0].split()
             values['point'] = Point(float(a), float(b))
             values['strname'] = street['street_names'][0]
