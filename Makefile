@@ -23,16 +23,7 @@ fixtures:
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_bezirke
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_ortsteile
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_bplan --fromFixtures
-	$(VIRTUAL_ENV)/bin/python3 manage.py insert_addresses --fromFixtures
-	$(VIRTUAL_ENV)/bin/python3 manage.py insert_numberless_addresses --fromFixtures
 
-
-.PHONY: load_with_gdal
-load_with_gdal:
-	$(VIRTUAL_ENV)/bin/python3 manage.py load_bplan
-	$(VIRTUAL_ENV)/bin/python3 manage.py load_all
-	$(VIRTUAL_ENV)/bin/python3 manage.py load_addresses
-	$(VIRTUAL_ENV)/bin/python3 manage.py load_numberless_addresses
 
 .PHONY: watch
 watch:
