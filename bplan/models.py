@@ -17,7 +17,7 @@ class Download(models.Model):
 
 
 class Bezirk(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     slug = models.CharField(max_length=50)
     polygon = models.PolygonField(srid=4326)
 
@@ -26,7 +26,7 @@ class Bezirk(models.Model):
 
 
 class Ortsteil(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     slug = models.CharField(max_length=50, default='')
     bezirk = models.ForeignKey(Bezirk, related_name='ortsteile')
     polygon = models.PolygonField(srid=4326)
@@ -36,12 +36,12 @@ class Ortsteil(models.Model):
 
 
 class Address(models.Model):
+    gml_id = models.CharField(max_length=50, unique=True)
     point = models.PointField(srid=4326)
     strname = models.CharField(max_length=256)
     hsnr = models.CharField(max_length=50)
     search_name = models.CharField(max_length=256)
     plz = models.CharField(max_length=50)
-    gml_id = models.CharField(max_length=50)
     spatial_name = models.CharField(max_length=50)
     bezirk = models.ForeignKey(Bezirk)
 
@@ -51,7 +51,7 @@ class Address(models.Model):
 
 class BPlan(models.Model):
 
-    bplanID = models.CharField(max_length=50)
+    bplanID = models.CharField(max_length=50, unique=True)
     planname = models.CharField(max_length=50)
     spatial_alias = models.CharField(max_length=50)
     spatial_name = models.CharField(max_length=50)
