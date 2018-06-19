@@ -92,8 +92,8 @@ def parse_fis_broker_address_file(file):
 
     collectors = {
         'address': [
-            PositionCollector('pos'),
-            StreetNumberCollector('street_number'),
+            PositionCollector('positions'),
+            StreetNumberCollector('street_numbers'),
             ComponentsCollector('components')
         ],
         'thoroughfarename': [TextCollector('street_names')],
@@ -197,14 +197,14 @@ class Command(BaseCommand):
             #print('Inserting {} ...'.format(gml_id))
 
             # I think that is an error in the xml parsing library
-            if not street['pos'][0]:
+            if not street['positions'][0]:
                 print('Could not get position for {}'.format(gml_id))
                 continue
             
-            a, b = street['pos'][0].split()
+            a, b = street['positions'][0].split()
             values['point'] = Point(float(a), float(b))
             values['strname'] = street['street_names'][0]
-            values['hsnr'] = ''.join(street['street_number'][0])
+            values['hsnr'] = ''.join(street['street_numbers'][0])
             values['search_name'] = self._get_search_name(
                 values['strname'], values['hsnr'])
             values['plz'] = street['postal_codes'][0]
