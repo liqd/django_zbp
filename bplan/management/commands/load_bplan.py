@@ -318,8 +318,6 @@ class Command(BaseCommand):
                     bezirk, bezirk_name = self._get_district(feature)
                     bplan, created = BPlan.objects.update_or_create(
                         bplanID=bplanID,
-                        spatial_name=spatial_name,
-                        multipolygon=multipolygon,
                         defaults={
                             'planname': planname,
                             'spatial_alias': spatial_alias,
