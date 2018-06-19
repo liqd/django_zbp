@@ -10,6 +10,7 @@ from django.conf import settings
 from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Point
 
 from bplan.models import Address
 from bplan.models import Bezirk
@@ -53,8 +54,14 @@ class ComponentsCollector(BaseCollect):
             self.entry_data.append(component)
 
 
-def create_tag_text_collector(tag):
+def create_tag_text_collector(tag, multiple=False):
     class Collector(BaseCollect):
+
+        if multiple:
+
+            def get_default_entry_data(self):
+                return []
+
         def begin_tag(self, elem):
 
             if not elem.tag.lower().endswith('}%s' % tag):
@@ -67,7 +74,10 @@ def create_tag_text_collector(tag):
             if not text:
                 return
 
-            self.entry_data = text
+            if multiple:
+                self.entry_data.append(text)
+            else:
+                self.entry_data = text
 
     return Collector
 
@@ -76,7 +86,8 @@ def parse_fis_broker_address_file(file):
 
     PostalCodeCollector = create_tag_text_collector('postcode')
     PositionCollector = create_tag_text_collector('pos')
-    StreetNumberCollector = create_tag_text_collector('designator')
+    StreetNumberCollector = create_tag_text_collector(
+        'designator', multiple=True)
     TextCollector = create_tag_text_collector('text')
 
     collectors = {
@@ -157,14 +168,10 @@ def get_streets(gml_file):
             values = get_all(parsed[part], all_keys)
             entry[part] = values
 
-        yield entry
+        yield comp_key, entry
 
 
 class Command(BaseCommand):
-    def _get_bezirk(self, point):
-        bezirk = Bezirk.objects.get(polygon__intersects=point)
-        return bezirk
-
     def _get_search_name(self, strname, hsnr):
         strname = strname.replace(' ', '').replace('-', '').replace('ß', 'ss')
         if strname[-3:] == 'str':
@@ -180,26 +187,23 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         gml_file = options['gml_file']
         streets = get_streets(gml_file)
-        for street in streets:
-            print(street)
+        for (gml_id, street) in streets:
+            values = {}
 
-            import pdb
-            pdb.set_trace()
-            point = GEOSGeometry(str(feature.geom), srid=4326)
-            strname = feature.get("strname")
-            hsnr = (feature.get("hsnr")).lstrip('0')
-            search_name = self._get_search_name(strname, hsnr)
-            plz = feature.get("plz")
-            gml_id = feature.get("gml_id")
-            spatial_name = feature.get("spatial_name")
-            bezirk = self._get_bezirk(point)
+            a, b = street['pos'][0].split()
+            values['point'] = Point(float(a), float(b))
+            values['strname'] = street['street_names'][0]
+            values['hsnr'] = ''.join(street['street_number'])
+            print(street['street_number'], values['hsnr'])
+            values['search_name'] = self._get_search_name(
+                values['strname'], values['hsnr'])
+            values['plz'] = street['postal_codes'][0]
 
-            address, created = Address.objects.get_or_create(
-                point=point,
-                strname=strname,
-                search_name=search_name,
-                hsnr=hsnr,
-                plz=plz,
-                gml_id=gml_id,
-                spatial_name=spatial_name,
-                bezirk=bezirk)
+            bezirk_name = street['names'][-1]
+            values['bezirk'] = Bezirk.objects.get(name=bezirk_name)
+            values['gml_id'] = gml_id
+
+            addr, created = Address.objects.update_or_create(
+                gml_id=gml_id, defaults=values)
+            action = 'created' if created else 'updated'
+            print('{}: {}'.format(action.capitalize(), addr))
