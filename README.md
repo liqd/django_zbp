@@ -30,9 +30,9 @@ DATABASES = {
 ```
 
 ``` bash
-$ ./manage.py migrate
-$ ./manage.py bower install
-$ ./manage.py createsuperuser
+
+INSTALL DEPENDENCIES
+$ make install
 
 LOAD DISTRICTS AND ORTSTEILE
 $ ./manage.py load_bezirke
@@ -40,24 +40,17 @@ $ ./manage.py load_ortsteile
 
 LOAD BPLAN
 $ ./manage.py load_bplan --fromFixtures (to load data from fixtures, no GDAL required)
-$ ../manage.py load_bplan (to load data from WFS, GDAL required)
+$ ./manage.py load_bplan (to load data from WFS, GDAL required)
 
-$ ./manage.py load_all (load districts, ortsteile,bplans , GDAL required)
-
-LOAD ADDRESSES
-$ ./manage.py load_addresses (downloads adresses from WFS as geojson and saves them in finxtures/addresses, GDAL required, might take some minutes)
+$ ./manage.py load_all (load districts, ortsteile, bplans, GDAL required)
 
 INSERT ADDRESSES
-$ ./manage.py insert_addresses --fromFixtures (inserts data from fixtures, for local development)
-$ ./manage.py insert_addresses (inserts all data from fixtures/addresses to database, might take a while, e.g. 30 minutes or more)
-$ ./manage.py insert_numberless_addresses --fromFixtures (inserts data from fixtures, for local development)
-$ ./manage.py insert_numberless_addresses (inserts all data from fixtures/addresses to database, might take a while, e.g. 2 minutes or more)
-$ ./manage.py insert_numberless_addresses --fromDatabase (inserts data based on database not files, might take a while e.g. 5 minutes or more)
+$ wget http://fbarc.stadt-berlin.de/FIS_Broker_Atom/AD/AD_AdressenBerlin.zip
+$ unzip *.zip
+$ ./manage.py insert_addresses *.gml
+
 
 ```
-here there is still an ugly error occurring twice that can be disregarded:
-
-> GEOS_ERROR: TopologyException: side location conflict at ...
 
 continue:
 ```

@@ -28,19 +28,18 @@ class BezirkDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['afs_behoer'] = self.request.GET.get('afs_behoer','')
+        context['afs_behoer'] = self.request.GET.get('afs_behoer', '')
         return context
 
 
 class StadtView(TemplateView):
-
     @xframe_options_exempt
     def dispatch(self, *args, **kwargs):
         return super(StadtView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['afs_behoer'] = self.request.GET.get('afs_behoer','')
+        context['afs_behoer'] = self.request.GET.get('afs_behoer', '')
         return context
 
 
@@ -60,7 +59,8 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return render_to_response('logout.html', context_instance=RequestContext(request))
+    return render_to_response(
+        'logout.html', context_instance=RequestContext(request))
 
 
 @login_required
@@ -75,5 +75,7 @@ def downloads(request):
 
     downloads = Download.objects.all().order_by('-created')[:20]
 
-    return render(request, 'downloads.html', {'downloads': downloads, 'errors': errors})
-
+    return render(request, 'downloads.html', {
+        'downloads': downloads,
+        'errors': errors
+    })

@@ -24,7 +24,6 @@ from django.conf import settings
 
 
 class Command(BaseCommand):
-
     def _check_freedom(self, point, points):
         for other_point in points:
             if point.distance(other_point) < 0.0001:
@@ -42,30 +41,30 @@ class Command(BaseCommand):
 
     def _get_bounds(self, multipolygon):
         # we currently assume all multipolygons to actually be plain polygons
-        min_x = sort(multipolygon[0][0], lambda a,b: a[0] < b[0])[0]
-        max_x = sort(multipolygon[0][0], lambda a,b: a[0] > b[0])[0]
-        min_y = sort(multipolygon[0][0], lambda a,b: a[1] < b[1])[0]
-        max_y = sort(multipolygon[0][0], lambda a,b: a[1] > b[1])[0]
+        min_x = sort(multipolygon[0][0], lambda a, b: a[0] < b[0])[0]
+        max_x = sort(multipolygon[0][0], lambda a, b: a[0] > b[0])[0]
+        min_y = sort(multipolygon[0][0], lambda a, b: a[1] < b[1])[0]
+        max_y = sort(multipolygon[0][0], lambda a, b: a[1] > b[1])[0]
         return [min_x, max_x, min_y, max_y]
 
     def _get_next_pseudocentroid(self, k, half, multipolygon):
         a = multipolygon[0][0][k]
-        b = multipolygon[0][0][k+1]
-        c = multipolygon[0][0][half+k]
-        d = multipolygon[0][0][half+k+1]
+        b = multipolygon[0][0][k + 1]
+        c = multipolygon[0][0][half + k]
+        d = multipolygon[0][0][half + k + 1]
         quadrangle = Polygon((a, b, c, d, a))
-        return Point(
-            quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
+        return Point(quadrangle.centroid.x, quadrangle.centroid.y, srid=4326)
 
     def _get_next_centers(self, k, bounds):
         centers = []
         d_x = bounds[1] - bounds[0]
         d_y = bounds[3] - bounds[2]
-        for i in range(0,k-1):
-            centers.append(Point(
-                bounds[0] + (2*i+1)*d_x/(2*k),
-                bounds[2] + (2*i+1)*d_y/(2*k),
-                srid=4326))
+        for i in range(0, k - 1):
+            centers.append(
+                Point(
+                    bounds[0] + (2 * i + 1) * d_x / (2 * k),
+                    bounds[2] + (2 * i + 1) * d_y / (2 * k),
+                    srid=4326))
         return quadrants
 
     def _calculate_point(self, multipolygon, points):
@@ -73,14 +72,16 @@ class Command(BaseCommand):
         # 1. the centroid
         try:
             point = Point(
-                multipolygon[0].centroid.x, multipolygon[0].centroid.y, srid=4326)
+                multipolygon[0].centroid.x,
+                multipolygon[0].centroid.y,
+                srid=4326)
             point_is_happy = self._check_inclusion_and_freedom(
                 multipolygon, point, points)
             if point_is_happy:
                 return point
             else:
                 k = 0
-                half = int(len(multipolygon[0][0])/2)
+                half = int(len(multipolygon[0][0]) / 2)
                 while k + 1 < half:
                     # 2. a "pseudocentroid", i.e. the centroid of a simplified polygon
                     try:
@@ -130,12 +131,11 @@ class Command(BaseCommand):
         if result != 0:
             raise Exception("Could not download data")
 
-
     def _get_identifiers(self, feature):
         planname = feature.get("planname")
         spatial_alias = feature.get("spatial_alias")
         spatial_name = feature.get("spatial_name")
-        return(planname, spatial_alias, spatial_name)
+        return (planname, spatial_alias, spatial_name)
 
     def _get_spatial_data(self, feature):
         spatial_type = feature.get("spatial_type")
@@ -148,31 +148,29 @@ class Command(BaseCommand):
 
         multipolygon_25833 = copy.deepcopy(multipolygon)
         multipolygon_25833.transform(25833)
-        return(spatial_type, multipolygon, multipolygon_25833, geometry, bereich)
+        return (spatial_type, multipolygon, multipolygon_25833, geometry,
+                bereich)
 
     def _get_district(self, feature):
         b = feature.get("bezirk")
         bezirk = Bezirk.objects.get(name=b)
         bezirk_name = bezirk.name
-        return(bezirk, bezirk_name)
+        return (bezirk, bezirk_name)
 
     def _get_ortsteile(self, geometry):
-        ortsteile = Ortsteil.objects.filter(
-            polygon__intersects=geometry)
+        ortsteile = Ortsteil.objects.filter(polygon__intersects=geometry)
         return ortsteile
 
     def _get_imVerfahren_data(self, feature):
         try:
-            afs_beschl = dateutil.parser.parse(
-                feature.get("afs_beschl"))
+            afs_beschl = dateutil.parser.parse(feature.get("afs_beschl"))
         except:
             afs_beschl = None
         try:
-            afs_l_aend = dateutil.parser.parse(
-                feature.get("afs_l_aend"))
+            afs_l_aend = dateutil.parser.parse(feature.get("afs_l_aend"))
         except:
             afs_l_aend = None
-        return(afs_beschl, afs_l_aend)
+        return (afs_beschl, afs_l_aend)
 
     def _get_festg_data(self, feature):
         try:
@@ -192,8 +190,7 @@ class Command(BaseCommand):
 
     def _get_participation_data(self, feature):
         try:
-            bbg_anfang = dateutil.parser.parse(
-                feature.get("bbg_anfang"))
+            bbg_anfang = dateutil.parser.parse(feature.get("bbg_anfang"))
         except:
             bbg_anfang = None
         try:
@@ -201,8 +198,7 @@ class Command(BaseCommand):
         except:
             bbg_ende = None
         try:
-            aul_anfang = dateutil.parser.parse(
-                feature.get("aul_anfang"))
+            aul_anfang = dateutil.parser.parse(feature.get("aul_anfang"))
         except:
             aul_anfang = None
         try:
@@ -242,7 +238,7 @@ class Command(BaseCommand):
         except:
             pass
 
-        return(ausleg_www, scan_www, grund_www)
+        return (ausleg_www, scan_www, grund_www)
 
     def _get_other_data(self, feature):
         try:
@@ -258,19 +254,19 @@ class Command(BaseCommand):
         except:
             fsg_gvbl_s = None
         try:
-            fsg_gvbl_d = dateutil.parser.parse(
-                feature.get("fsg_gvbl_d"))
+            fsg_gvbl_d = dateutil.parser.parse(feature.get("fsg_gvbl_d"))
         except:
             fsg_gvbl_d = None
         try:
             normkontr = feature.get("normkontr")
         except:
             normkontr = None
-        return(gml_id, fsg_gvbl_n, fsg_gvbl_s, fsg_gvbl_d, normkontr)
+        return (gml_id, fsg_gvbl_n, fsg_gvbl_s, fsg_gvbl_d, normkontr)
 
     def add_arguments(self, parser):
 
-        parser.add_argument('--fromFixtures',
+        parser.add_argument(
+            '--fromFixtures',
             action='store_true',
             dest='fromFixtures',
             default=False,
@@ -294,7 +290,8 @@ class Command(BaseCommand):
         errors = []
         points = []
 
-        for feature in tqdm(data_source[0], disable=(int(options['verbosity']) < 1)):
+        for feature in tqdm(
+                data_source[0], disable=(int(options['verbosity']) < 1)):
 
             type = feature.get("spatial_type")
 
@@ -321,15 +318,13 @@ class Command(BaseCommand):
                     bezirk, bezirk_name = self._get_district(feature)
                     bplan, created = BPlan.objects.update_or_create(
                         bplanID=bplanID,
-                        spatial_name=spatial_name,
-                        multipolygon=multipolygon,
                         defaults={
                             'planname': planname,
                             'spatial_alias': spatial_alias,
                             'spatial_name': spatial_name,
                             'spatial_type': spatial_type,
                             'multipolygon': multipolygon,
-                            'multipolygon_25833' : multipolygon_25833,
+                            'multipolygon_25833': multipolygon_25833,
                             'point': point,
                             'bereich': bereich,
                             'bezirk': bezirk,
@@ -352,8 +347,7 @@ class Command(BaseCommand):
                             'fsg_gvbl_s': fsg_gvbl_s,
                             'fsg_gvbl_d': fsg_gvbl_d,
                             'normkontr': normkontr
-                        }
-                    )
+                        })
                     bplan.save()
                     for ortsteil in ortsteile:
                         bplan.ortsteile.add(ortsteil)
