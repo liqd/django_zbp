@@ -17,5 +17,3 @@ rjsmin==1.0.12
 six==1.11.0
 sqlparse==0.2.4
 tqdm==4.23.4
-whitenoise==3.3.1
-brotli==1.0.4
