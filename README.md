@@ -42,13 +42,13 @@ LOAD BPLAN
 $ ./manage.py load_bplan --fromFixtures (to load data from fixtures, no GDAL required)
 $ ./manage.py load_bplan (to load data from WFS, GDAL required)
 
-$ ./manage.py load_all (load districts, ortsteile, bplans, GDAL required)
-
 INSERT ADDRESSES
 $ wget http://fbarc.stadt-berlin.de/FIS_Broker_Atom/AD/AD_AdressenBerlin.zip
 $ unzip *.zip
 $ ./manage.py insert_addresses *.gml
 
+LOAD ALL DATA
+$ ./manage.py populate_database
 
 ```
 
