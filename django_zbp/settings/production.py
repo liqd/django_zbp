@@ -2,8 +2,6 @@ from .base import *
 
 DEBUG = False
 
-COMPRESS_OFFLINE = True
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',

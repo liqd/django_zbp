@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'djangobower',
     'bplan',
-    'compressor',
     #'debug_toolbar',
     'corsheaders',
 ]
@@ -102,8 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-COMPRESS_PRECOMPILERS = (('text/x-scss', 'django_libsass.SassCompiler'), )
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -131,7 +128,6 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
     'djangobower.finders.BowerFinder',
 ]
 
