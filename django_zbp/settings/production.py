@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-COMPRESS_OFFLINE = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CACHES = {
     'default': {
