@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
+    'django_cloudflare_push.middleware.push_middleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
