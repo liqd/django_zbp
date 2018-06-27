@@ -173,15 +173,18 @@ def get_streets(gml_file):
             all_keys = [comp_key] + comp_values
 
             entry = {}
+            missing = False
             for part in parsed.keys():
                 values = get_all(parsed[part], all_keys)
-                if not values:
-                    print('Unknown reference in: {}, tried keys {}'.format(
-                        part, all_keys))
+                if not values or not values[0]:
+                    print('No value for {} at component {}'.format(
+                        repr(part), repr(comp_key)))
+                    missing = True
                     continue
                 entry[part] = values
 
-            yield comp_key, entry
+            if not missing:
+                yield comp_key, entry
 
     return len(parsed['components']), getiter()
 
