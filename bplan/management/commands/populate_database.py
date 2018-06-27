@@ -32,5 +32,4 @@ class Command(BaseCommand):
         p = subprocess.Popen(['sh'], stdin=subprocess.PIPE)
         p.stdin.write((SHELL_SCRIPT + '\n').encode())
         p.stdin.close()
-        exit = p.wait()
-        assert 0, exit
+        assert not p.wait(), 'script returned non exit status code'
