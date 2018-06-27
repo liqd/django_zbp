@@ -1,4 +1,4 @@
-{% load static %}
+{% load compress static %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -18,7 +18,9 @@
 
         <link href='https://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
 
-        <link rel="stylesheet" href="{% static 'scss/all.compiled.css' %}" />
+        {% compress css %}
+            <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/all.scss' %}" />
+        {% endcompress %}
 
         <script type="text/javascript">
             area = "{% block area %}{% endblock %}";
@@ -135,7 +137,7 @@
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'third-party/bower_components/jquery/dist/jquery.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/lodash/lodash.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'third-party/bower_components/lodash/dist/lodash.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/angular/angular.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet/dist/leaflet.js' %}"></script>
