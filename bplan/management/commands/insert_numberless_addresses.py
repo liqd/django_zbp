@@ -38,22 +38,6 @@ class Command(BaseCommand):
             string = string[0:-1]
         return string
 
-    def add_arguments(self, parser):
-
-        parser.add_argument(
-            '--fromFixtures',
-            action='store_true',
-            dest='fromFixtures',
-            default=False,
-            help='Load data from fixtures')
-
-        parser.add_argument(
-            '--fromDatabase',
-            action='store_true',
-            dest='fromDatabase',
-            default=False,
-            help='Load data from database')
-
     def handle(self, *args, **options):
 
         qs = Address.objects.all()
