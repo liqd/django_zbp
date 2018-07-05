@@ -203,7 +203,13 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
 
-        parser.add_argument('gml_file', help='Load data from this gml file')
+        addresses_fixture = os.path.join(settings.BASE_DIR, 'bplan',
+                                         'fixtures', 'addresses.gml')
+        parser.add_argument(
+            'gml_file',
+            help='Load data from this gml file. Default is from fixture',
+            default=addresses_fixture,
+            nargs='?')
 
     def handle(self, *args, **options):
         gml_file = options['gml_file']
