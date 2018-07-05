@@ -2,7 +2,6 @@ import copy
 import os
 import sys
 import json
-import dateutil.parser
 
 from tqdm import tqdm
 
@@ -163,12 +162,12 @@ class Command(BaseCommand):
 
     def _get_imVerfahren_data(self, feature):
         try:
-            afs_beschl = dateutil.parser.parse(feature.get("afs_beschl"))
-        except:
+            afs_beschl = feature.get("afs_beschl").date
+        except AttributeError:
             afs_beschl = None
         try:
-            afs_l_aend = dateutil.parser.parse(feature.get("afs_l_aend"))
-        except:
+            afs_l_aend = feature.get("afs_l_aend").date
+        except AttributeError:
             afs_l_aend = None
         return (afs_beschl, afs_l_aend)
 
@@ -180,30 +179,30 @@ class Command(BaseCommand):
             festg = None
         try:
             festsg_von = feature.get("festsg_von")
-        except:
+        except AttributeError:
             festsg_von = None
         try:
-            festsg_am = dateutil.parser.parse(feature.get("festsg_am"))
-        except:
+            festsg_am = feature.get("festsg_am").date
+        except AttributeError:
             festsg_am = None
         return (festg, festsg_von, festsg_am)
 
     def _get_participation_data(self, feature):
         try:
-            bbg_anfang = dateutil.parser.parse(feature.get("bbg_anfang"))
-        except:
+            bbg_anfang = feature.get("BBG_ANFANG").date
+        except AttributeError:
             bbg_anfang = None
         try:
-            bbg_ende = dateutil.parser.parse(feature.get("bbg_ende"))
-        except:
+            bbg_ende = feature.get("BBG_ENDE").date
+        except AttributeError:
             bbg_ende = None
         try:
-            aul_anfang = dateutil.parser.parse(feature.get("aul_anfang"))
-        except:
+            aul_anfang = feature.get("AUL_ANFANG").date
+        except AttributeError:
             aul_anfang = None
         try:
-            aul_ende = dateutil.parser.parse(feature.get("aul_ende"))
-        except:
+            aul_ende = feature.get("AUL_ENDE").date
+        except AttributeError:
             aul_ende = None
         return (bbg_anfang, bbg_ende, aul_anfang, aul_ende)
 
@@ -254,8 +253,8 @@ class Command(BaseCommand):
         except:
             fsg_gvbl_s = None
         try:
-            fsg_gvbl_d = dateutil.parser.parse(feature.get("fsg_gvbl_d"))
-        except:
+            fsg_gvbl_d = feature.get("fsg_gvbl_d").date
+        except AttributeError:
             fsg_gvbl_d = None
         try:
             normkontr = feature.get("normkontr")
