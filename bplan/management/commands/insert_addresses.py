@@ -203,7 +203,13 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
 
-        parser.add_argument('gml_file', help='Load data from this gml file')
+        addresses_fixture = os.path.join(settings.BASE_DIR, 'bplan',
+                                         'fixtures', 'addresses.gml')
+        parser.add_argument(
+            'gml_file',
+            help='Load data from this gml file. Default is from fixture',
+            default=addresses_fixture,
+            nargs='?')
 
     def handle(self, *args, **options):
         gml_file = options['gml_file']
@@ -221,7 +227,7 @@ class Command(BaseCommand):
                 continue
 
             a, b = street['positions'][0].split()
-            values['point'] = Point(float(a), float(b))
+            values['point'] = Point(float(a), float(b), srid=25833)
             values['strname'] = street['street_names'][0]
             values['hsnr'] = ''.join(street['street_numbers'][0])
             values['search_name'] = self._get_search_name(
@@ -236,3 +242,6 @@ class Command(BaseCommand):
                 gml_id=gml_id, defaults=values)
             action = 'created' if created else 'updated'
             #print('{}: {}'.format(action.capitalize(), addr))
+
+            addr.point.transform(4326)
+            addr.save()
