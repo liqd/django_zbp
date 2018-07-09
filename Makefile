@@ -24,7 +24,6 @@ fixtures:
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_ortsteile
 	$(VIRTUAL_ENV)/bin/python3 manage.py load_bplan --fromFixtures
 
-
 .PHONY: watch
 watch:
 	$(VIRTUAL_ENV)/bin/python3 manage.py runserver 8005
