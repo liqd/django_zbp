@@ -500,4 +500,371 @@
 			<ad:postCode>12277</ad:postCode>
 		</ad:PostalDescriptor>
 	</gml:featureMember>
+	<gml:featureMember>
+		<ad:ThoroughfareName gml:id="ThoroughfareName_01316">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>ThoroughfareName_01316</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:alternativeIdentifier>01316</ad:alternativeIdentifier>
+			<ad:beginLifespanVersion xsi:nil="false" nilReason="">1960-01-01T00:00:00Z</ad:beginLifespanVersion>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:name>
+				<ad:ThoroughfareNameValue>
+					<ad:name>
+						<gn:GeographicalName>
+							<gn:language>deu</gn:language>
+							<gn:nativeness nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:nameStatus nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:sourceOfName>Amtsblatt Berlin</gn:sourceOfName>
+							<gn:pronunciation nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:spelling>
+								<gn:SpellingOfName>
+									<gn:text>Flughafenstraße</gn:text>
+									<gn:script nilReason="Unpopulated" xsi:nil="true"/>
+								</gn:SpellingOfName>
+							</gn:spelling>
+							<gn:grammaticalNumber xlink:href="http://inspire.ec.europa.eu/codelist/GrammaticalNumberValue/singular"/>
+						</gn:GeographicalName>
+					</ad:name>
+				</ad:ThoroughfareNameValue>
+			</ad:name>
+		</ad:ThoroughfareName>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:Address gml:id="Address_DEBE08YYF0000RLx">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>Address_DEBE08YYF0000RLx</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:position>
+				<ad:GeographicPosition>
+					<ad:geometry>
+						<gml:Point gml:id="Address_DEBE08YYF0000RLx-0" srsName="EPSG:25833" srsDimension="2">
+							<gml:pos>393207.556999959 5815698.84999967</gml:pos>
+						</gml:Point>
+					</ad:geometry>
+					<ad:specification xlink:href="http://inspire.ec.europa.eu/codelist/GeometrySpecificationValue/parcel"/>
+					<ad:method xlink:href="http://inspire.ec.europa.eu/codelist/GeometryMethodValue/byAdministrator"/>
+					<ad:default>true</ad:default>
+				</ad:GeographicPosition>
+			</ad:position>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:locator>
+				<ad:AddressLocator>
+					<ad:designator>
+						<ad:LocatorDesignator>
+							<ad:designator>39</ad:designator>
+							<ad:type xlink:href="http://inspire.ec.europa.eu/codelist/LocatorDesignatorTypeValue/addressNumber"/>
+						</ad:LocatorDesignator>
+					</ad:designator>
+					<ad:level xlink:href="http://inspire.ec.europa.eu/codelist/LocatorLevelValue/siteLevel"/>
+					<ad:withinScopeOf nilReason="Unpopulated" xsi:nil="true"/>
+				</ad:AddressLocator>
+			</ad:locator>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:beginLifespanVersion xsi:nil="false" nilReason="">2008-01-28T00:00:00Z</ad:beginLifespanVersion>
+			<ad:parcel nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:parentAddress nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:building nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:component xlink:href="#ThoroughfareName_01316"/>
+			<ad:component xlink:href="#AdminUnitName_Deutschland"/>
+			<ad:component xlink:href="#AdminUnitName_Berlin"/>
+			<ad:component xlink:href="#AdminUnitName_08"/>
+			<ad:component xlink:href="#PostalDescriptor_12053"/>
+			<ad:component xlink:href="#AddressAreaName_08010211"/>
+			<ad:component xlink:href="#AddressAreaName_079118"/>
+		</ad:Address>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:AdminUnitName gml:id="AdminUnitName_08">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>AdminUnitName_08</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:alternativeIdentifier>08</ad:alternativeIdentifier>
+			<ad:beginLifespanVersion xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:name>
+				<gn:GeographicalName>
+					<gn:language>deu</gn:language>
+					<gn:nativeness nilReason="Unpopulated" xsi:nil="true"/>
+					<gn:nameStatus nilReason="Unpopulated" xsi:nil="true"/>
+					<gn:sourceOfName nilReason="Unpopulated" xsi:nil="true"/>
+					<gn:pronunciation nilReason="Unpopulated" xsi:nil="true"/>
+					<gn:spelling>
+						<gn:SpellingOfName>
+							<gn:text>Neukölln</gn:text>
+							<gn:script nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:transliterationScheme nilReason="Unpopulated" xsi:nil="true"/>
+						</gn:SpellingOfName>
+					</gn:spelling>
+					<gn:grammaticalGender xlink:href="http://inspire.ec.europa.eu/codelist/GrammaticalGenderValue/neuter"/>
+					<gn:grammaticalNumber xlink:href="http://inspire.ec.europa.eu/codelist/GrammaticalNumberValue/singular"/>
+				</gn:GeographicalName>
+			</ad:name>
+			<ad:level xlink:href="http://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/6thOrder"/>
+			<ad:adminUnit nilReason="Unpopulated" xsi:nil="true"/>
+		</ad:AdminUnitName>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:PostalDescriptor gml:id="PostalDescriptor_12053">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>PostalDescriptor_12053</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:alternativeIdentifier nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:beginLifespanVersion xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:postCode>12053</ad:postCode>
+		</ad:PostalDescriptor>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:ThoroughfareName gml:id="ThoroughfareName_00879">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>ThoroughfareName_00879</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:alternativeIdentifier>00879</ad:alternativeIdentifier>
+			<ad:beginLifespanVersion xsi:nil="false" nilReason="">1960-01-01T00:00:00Z</ad:beginLifespanVersion>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:name>
+				<ad:ThoroughfareNameValue>
+					<ad:name>
+						<gn:GeographicalName>
+							<gn:language>deu</gn:language>
+							<gn:nativeness nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:nameStatus nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:sourceOfName>Amtsblatt Berlin</gn:sourceOfName>
+							<gn:pronunciation nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:spelling>
+								<gn:SpellingOfName>
+									<gn:text>Columbiadamm</gn:text>
+									<gn:script nilReason="Unpopulated" xsi:nil="true"/>
+								</gn:SpellingOfName>
+							</gn:spelling>
+							<gn:grammaticalNumber xlink:href="http://inspire.ec.europa.eu/codelist/GrammaticalNumberValue/singular"/>
+						</gn:GeographicalName>
+					</ad:name>
+				</ad:ThoroughfareNameValue>
+			</ad:name>
+		</ad:ThoroughfareName>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:Address gml:id="Address_DEBE07YY90000iLx">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>Address_DEBE07YY90000iLx</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:position>
+				<ad:GeographicPosition>
+					<ad:geometry>
+						<gml:Point gml:id="Address_DEBE07YY90000iLx-0" srsName="EPSG:25833" srsDimension="2">
+							<gml:pos>390814.328999954 5816213.13099966</gml:pos>
+						</gml:Point>
+					</ad:geometry>
+					<ad:specification xlink:href="http://inspire.ec.europa.eu/codelist/GeometrySpecificationValue/parcel"/>
+					<ad:method xlink:href="http://inspire.ec.europa.eu/codelist/GeometryMethodValue/byAdministrator"/>
+					<ad:default>true</ad:default>
+				</ad:GeographicPosition>
+			</ad:position>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:locator>
+				<ad:AddressLocator>
+					<ad:designator>
+						<ad:LocatorDesignator>
+							<ad:designator>25</ad:designator>
+							<ad:type xlink:href="http://inspire.ec.europa.eu/codelist/LocatorDesignatorTypeValue/addressNumber"/>
+						</ad:LocatorDesignator>
+					</ad:designator>
+					<ad:level xlink:href="http://inspire.ec.europa.eu/codelist/LocatorLevelValue/siteLevel"/>
+					<ad:withinScopeOf nilReason="Unpopulated" xsi:nil="true"/>
+				</ad:AddressLocator>
+			</ad:locator>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:beginLifespanVersion xsi:nil="false" nilReason="">2008-01-28T00:00:00Z</ad:beginLifespanVersion>
+			<ad:parcel nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:parentAddress nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:building nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:component xlink:href="#ThoroughfareName_00879"/>
+			<ad:component xlink:href="#AdminUnitName_Deutschland"/>
+			<ad:component xlink:href="#AdminUnitName_Berlin"/>
+			<ad:component xlink:href="#AdminUnitName_07"/>
+			<ad:component xlink:href="#PostalDescriptor_10965"/>
+			<ad:component xlink:href="#AddressAreaName_07040401"/>
+			<ad:component xlink:href="#AddressAreaName_069602"/>
+		</ad:Address>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:PostalDescriptor gml:id="PostalDescriptor_10965">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>PostalDescriptor_10965</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:alternativeIdentifier nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:beginLifespanVersion xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:postCode>10965</ad:postCode>
+		</ad:PostalDescriptor>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:ThoroughfareName gml:id="ThoroughfareName_02642">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>ThoroughfareName_02642</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:alternativeIdentifier>02642</ad:alternativeIdentifier>
+			<ad:beginLifespanVersion xsi:nil="false" nilReason="">1960-01-01T00:00:00Z</ad:beginLifespanVersion>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:name>
+				<ad:ThoroughfareNameValue>
+					<ad:name>
+						<gn:GeographicalName>
+							<gn:language>deu</gn:language>
+							<gn:nativeness nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:nameStatus nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:sourceOfName>Amtsblatt Berlin</gn:sourceOfName>
+							<gn:pronunciation nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:spelling>
+								<gn:SpellingOfName>
+									<gn:text>Kurfürstendamm</gn:text>
+									<gn:script nilReason="Unpopulated" xsi:nil="true"/>
+								</gn:SpellingOfName>
+							</gn:spelling>
+							<gn:grammaticalNumber xlink:href="http://inspire.ec.europa.eu/codelist/GrammaticalNumberValue/singular"/>
+						</gn:GeographicalName>
+					</ad:name>
+				</ad:ThoroughfareNameValue>
+			</ad:name>
+		</ad:ThoroughfareName>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:Address gml:id="Address_DEBE04YY50000qNS">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>Address_DEBE04YY50000qNS</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:position>
+				<ad:GeographicPosition>
+					<ad:geometry>
+						<gml:Point gml:id="Address_DEBE04YY50000qNS-0" srsName="EPSG:25833" srsDimension="2">
+							<gml:pos>385350.025999942 5818066.27299965</gml:pos>
+						</gml:Point>
+					</ad:geometry>
+					<ad:specification xlink:href="http://inspire.ec.europa.eu/codelist/GeometrySpecificationValue/parcel"/>
+					<ad:method xlink:href="http://inspire.ec.europa.eu/codelist/GeometryMethodValue/byAdministrator"/>
+					<ad:default>true</ad:default>
+				</ad:GeographicPosition>
+			</ad:position>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:locator>
+				<ad:AddressLocator>
+					<ad:designator>
+						<ad:LocatorDesignator>
+							<ad:designator>63</ad:designator>
+							<ad:type xlink:href="http://inspire.ec.europa.eu/codelist/LocatorDesignatorTypeValue/addressNumber"/>
+						</ad:LocatorDesignator>
+					</ad:designator>
+					<ad:level xlink:href="http://inspire.ec.europa.eu/codelist/LocatorLevelValue/siteLevel"/>
+					<ad:withinScopeOf nilReason="Unpopulated" xsi:nil="true"/>
+				</ad:AddressLocator>
+			</ad:locator>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:beginLifespanVersion xsi:nil="false" nilReason="">2008-01-28T00:00:00Z</ad:beginLifespanVersion>
+			<ad:parcel nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:parentAddress nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:building nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:component xlink:href="#ThoroughfareName_02642"/>
+			<ad:component xlink:href="#AdminUnitName_Deutschland"/>
+			<ad:component xlink:href="#AdminUnitName_Berlin"/>
+			<ad:component xlink:href="#AdminUnitName_04"/>
+			<ad:component xlink:href="#PostalDescriptor_10707"/>
+			<ad:component xlink:href="#AddressAreaName_04030929"/>
+			<ad:component xlink:href="#AddressAreaName_023274"/>
+		</ad:Address>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:AdminUnitName gml:id="AdminUnitName_04">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>AdminUnitName_04</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:alternativeIdentifier>04</ad:alternativeIdentifier>
+			<ad:beginLifespanVersion xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:name>
+				<gn:GeographicalName>
+					<gn:language>deu</gn:language>
+					<gn:nativeness nilReason="Unpopulated" xsi:nil="true"/>
+					<gn:nameStatus nilReason="Unpopulated" xsi:nil="true"/>
+					<gn:sourceOfName nilReason="Unpopulated" xsi:nil="true"/>
+					<gn:pronunciation nilReason="Unpopulated" xsi:nil="true"/>
+					<gn:spelling>
+						<gn:SpellingOfName>
+							<gn:text>Charlottenburg-Wilmersdorf</gn:text>
+							<gn:script nilReason="Unpopulated" xsi:nil="true"/>
+							<gn:transliterationScheme nilReason="Unpopulated" xsi:nil="true"/>
+						</gn:SpellingOfName>
+					</gn:spelling>
+					<gn:grammaticalGender xlink:href="http://inspire.ec.europa.eu/codelist/GrammaticalGenderValue/neuter"/>
+					<gn:grammaticalNumber xlink:href="http://inspire.ec.europa.eu/codelist/GrammaticalNumberValue/singular"/>
+				</gn:GeographicalName>
+			</ad:name>
+			<ad:level xlink:href="http://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/6thOrder"/>
+			<ad:adminUnit nilReason="Unpopulated" xsi:nil="true"/>
+		</ad:AdminUnitName>
+	</gml:featureMember>
+	<gml:featureMember>
+		<ad:PostalDescriptor gml:id="PostalDescriptor_10707">
+			<ad:inspireId>
+				<base:Identifier>
+					<base:localId>PostalDescriptor_10707</base:localId>
+					<base:namespace>https://registry.gdi-de.org/id/de.be.ad.adr/</base:namespace>
+					<base:versionId xsi:nil="true" nilReason="Unpopulated"/>
+				</base:Identifier>
+			</ad:inspireId>
+			<ad:alternativeIdentifier nilReason="Unpopulated" xsi:nil="true"/>
+			<ad:beginLifespanVersion xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:status xlink:href="http://inspire.ec.europa.eu/codelist/StatusValue/current"/>
+			<ad:validFrom xsi:nil="true" nilReason="Unpopulated"/>
+			<ad:postCode>10707</ad:postCode>
+		</ad:PostalDescriptor>
+	</gml:featureMember>
 </gml:FeatureCollection>
