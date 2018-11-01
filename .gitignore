@@ -9,3 +9,4 @@ django_zbp/settings/local.py
 /bplan/fixtures/addresses/
 /venv/
 pyvenv.cfg
+package-lock.json
