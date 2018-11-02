@@ -5,7 +5,7 @@ db.sqlite3
 /static
 .DS_Store
 django_zbp/settings/local.py
-/bplan/static/
+/bplan/static/**
 /bplan/fixtures/addresses/
 /venv/
 pyvenv.cfg
