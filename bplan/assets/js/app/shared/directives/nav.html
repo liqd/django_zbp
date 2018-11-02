@@ -1,0 +1,147 @@
+<ul class="nav nav-pills">
+    <li data-ng-hide="isMobile">
+        <a href=""
+           data-ng-class="{active: currentView == 'map'}"
+           data-ng-click="setView('map');">
+            <i class="fa fa-map-o fa-lg"></i>
+        </a>
+    </li>
+    <li data-ng-hide="isMobile">
+        <a href=""
+           data-ng-class="{active: currentView =='list'}"
+           data-ng-click="setView('list');">
+            <i class="fa fa-list fa-lg"></i>
+        </a>
+    </li>
+    <li class="textinput" data-ng-class="{open: searchResultCount > 1 && searchstring}">
+        <form class="navbar-form navbar-left" ng-submit="getDataForSearch()" navbar-input-group" role="search">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="searchstring" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bebauungsplan-Nr.">
+                    <div
+                        class="input-group-addon search-button"
+                        data-ng-click="getDataForSearch()"
+                        data-ng-class="{middle: searchstring}">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                    <div
+                        data-ng-if="searchstring"
+                        class="input-group-addon search-button"
+                        data-ng-click="resetSearch()">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <span data-ng-if="searchResultCount == 0" class="help-block">Es wurde kein Eintrag gefunden.</span>
+        <ul class="dropdown-menu">
+            <li>Meinten Sie:</li>
+            <li data-ng-repeat="address in addressSearchResult" class="address-search-result-item">
+                <a href="" data-ng-click="chooseAddress(address)">
+                    <div>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    {{ address.properties.strname }}<span data-ng-if="address.properties.hsnr.length > 0"> {{ address.properties.hsnr }}</span>,
+                    </div>
+                    <div><small>{{ address.properties.bezirk_name }},  {{ address.properties.plz }} Berlin</small></div>
+                </a>
+            </li>
+            <li data-ng-repeat="bplan in bplanSearchResult" class="address-search-result-item">
+                <a href="" data-ng-click="chooseBplan(bplan)">
+                    <div>
+                    <i class="fa fa-map-o" aria-hidden="true"></i>
+                    Bebauungsplan: {{ bplan.properties.planname }}
+                    </div>
+                    <div><small>{{ bplan.properties.bezirk_name }}</small></div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li data-ng-if="area" class="dropdown">
+        <a class="dropdown-toggle"
+            data-ng-click="toggleDropdown($event)"
+            href="#" role="button"
+            aria-haspopup="true"
+            aria-expanded="false">
+            {{ places.currentOrtsteilName }} <span class="caret" data-ng-class="{'pull-right': isMobile}"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li data-ng-hide="places.currentOrtsteilName == 'Alle Ortsteile'"
+                data-ng-click="resetOrtsteil();">
+                <a href="">Alle Ortsteile</a>
+            </li>
+            <li data-ng-repeat="ortsteil in places.ortsteile">
+                <a  data-ortsteil-directive
+                    data-update-ortsteil="updateOrtsteil()"
+                    ortsteil="ortsteil"
+                    href="">
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="dropdown nav-status-filter" data-ng-class="{'open': dropdownOpen }">
+        <a class="dropdown-toggle"
+           data-ng-click="toggleDropdown($event)"
+           href="#" role="button"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fa fa bbg-checked" data-ng-class="{'fa-check-square': places.filters.bbg, 'fa-square': !places.filters.bbg}" aria-hidden="true"></i>
+            <i class="fa fa fa-square aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i>
+            <i class="fa fa imVerfahren-checked" data-ng-class="{'fa-check-square': places.filters.imVerfahren, 'fa-square': !places.filters.imVerfahren}" aria-hidden="true"></i>
+            <i class="fa fa fa-square festg-checked" data-ng-class="{'fa-check-square': places.filters.festg, 'fa-square': !places.filters.festg}" aria-hidden="true"></i>
+            Verfahrensstatus <span class="caret" data-ng-class="{'pull-right': isMobile}"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <label class="dropdown-menu-title">In Beteiligung</label>
+            <li>
+                <div class="custom-checkbox custom-checkbox-bbg">
+                    <input
+                        type="checkbox"
+                        id="checkbox_bbg"
+                        data-ng-model="places.filters.bbg"
+                        data-ng-change="updateFilter()">
+                        <label for="checkbox_bbg">{{'bbg' | status }}</label>
+                </div>
+            </li>
+            <li>
+                <div class="custom-checkbox custom-checkbox-aul">
+                    <input
+                        type="checkbox"
+                        id="checkbox_aul"
+                        data-ng-model="places.filters.aul"
+                        data-ng-change="updateFilter()">
+                        <label for="checkbox_aul">{{'aul' | status }}</label>
+                </div>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <div class="custom-checkbox custom-checkbox-imVerfahren">
+                    <input
+                        type="checkbox"
+                        id="checkbox_imVerfahren"
+                        data-ng-model="places.filters.imVerfahren"
+                        data-ng-change="updateFilter()">
+                        <label for="checkbox_imVerfahren">{{'imVerfahren' | status }}</label>
+                </div>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <div class="custom-checkbox custom-checkbox-festg">
+                    <input
+                        type="checkbox"
+                        id="checkbox_festg"
+                        data-ng-model="places.filters.festg"
+                        data-ng-change="updateFilter()">
+                        <label for="checkbox_festg">{{'festg' | status }}</label>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li role="presentation" class="info-button">
+        <a href="/static/information.html" target="_blank" aria-label="Allgemeine Informationen">
+            <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle-thin fa-stack-2x"></i>
+                <i class="fa fa-info fa-stack-1x"></i>
+            </span>
+        </a>
+    </li>
+</ul>
