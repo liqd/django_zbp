@@ -125,18 +125,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'djangobower.finders.BowerFinder',
-]
-
 STATICFILES_DIRS = [os.path.join(PROJECT_DIR, 'static')]
-
-BOWER_PATH = os.path.join(BASE_DIR, 'node_modules', '.bin', 'bower')
-
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'bplan', 'static',
-                                     'third-party')
 
 # Allow Cross-Origin Resource Sharing only for address lookups
 CORS_ORIGIN_ALLOW_ALL = True
