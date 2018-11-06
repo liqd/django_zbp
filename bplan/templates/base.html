@@ -12,13 +12,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/leaflet/dist/leaflet.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/font-awesome/css/font-awesome.min.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/angular-loading-bar/build/loading-bar.min.css' %}" />
-
+        <link rel="stylesheet" type="text/css" href="{% static 'leaflet.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor.css' %}">
         <link href='https://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
-
-        <link rel="stylesheet" href="{% static 'scss/all.compiled.css' %}" />
 
         <script type="text/javascript">
             area = "{% block area %}{% endblock %}";
@@ -134,14 +130,11 @@
         {% endverbatim %}
 
         {# Global javascript #}
-        <script type="text/javascript" src="{% static 'third-party/bower_components/jquery/dist/jquery.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/lodash/dist/lodash.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/angular/angular.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet/dist/leaflet.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/angular-loading-bar/build/loading-bar.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/angular-animate/angular-animate.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/leaflet.markercluster/dist/leaflet.markercluster.js' %}"></script>
+        <script type="text/javascript" src="{% static 'vendor.js' %}"></script>
+        <script type="text/javascript" src="{% static 'angularbundle.js' %}"></script>
+        <script type="text/javascript" src="{% static 'leaflet.js' %}"></script>
+
+
         <script type="text/javascript" src="{% static 'js/app/app.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/shared/services/placeService.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/app/shared/controllers/viewController.js' %}"></script>

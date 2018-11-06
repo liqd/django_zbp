@@ -39,9 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'rest_framework',
     'rest_framework_gis',
-    'djangobower',
     'bplan',
-    #'debug_toolbar',
     'corsheaders',
 ]
 
@@ -127,24 +125,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'djangobower.finders.BowerFinder',
-]
-
 STATICFILES_DIRS = [os.path.join(PROJECT_DIR, 'static')]
-
-BOWER_PATH = os.path.join(BASE_DIR, 'node_modules', '.bin', 'bower')
-
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'bplan', 'static',
-                                     'third-party')
-
-BOWER_INSTALLED_APPS = ('jquery#3.2.1', 'leaflet#0.7.7',
-                        'leaflet.markercluster#v0.4.0-hotfix.1',
-                        'angular#1.6.4', 'fontawesome#4.7.0',
-                        'bootstrap-sass#3.3.7', 'lodash#4.17.10',
-                        'angular-loading-bar#0.9.0', 'angular-animate#1.6.4')
 
 # Allow Cross-Origin Resource Sharing only for address lookups
 CORS_ORIGIN_ALLOW_ALL = True

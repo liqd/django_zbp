@@ -5,17 +5,9 @@ install:
 	if [ ! -f $(VIRTUAL_ENV)/bin/python3 ]; then python3 -m venv $(VIRTUAL_ENV); fi
 	$(VIRTUAL_ENV)/bin/python3 -m pip install -r requirements.txt
 	$(VIRTUAL_ENV)/bin/python3 -m pip install -r requirements-dev.txt
-	npm install bower
-	$(VIRTUAL_ENV)/bin/python3 manage.py bower install
 	$(VIRTUAL_ENV)/bin/python3 manage.py migrate
-
-.PHONY: install-hook
-url=https://raw.githubusercontent.com/google/yapf/cfcf45fd197768e3c73826b6fe8ac69de667015b/plugins/pre-commit.sh
-tmp:=$(shell mktemp -d)
-install-hook:
-	curl -o $(tmp)/pre-commit.sh "$(url)"
-	chmod a+x $(tmp)/pre-commit.sh
-	mv $(tmp)/pre-commit.sh .git/hooks/pre-commit
+	npm install --no-save
+	npm run build
 
 .PHONY: fixtures
 fixtures:
@@ -26,16 +18,18 @@ fixtures:
 
 .PHONY: watch
 watch:
+	$(VIRTUAL_ENV)/bin/sassc bplan/assets/scss/all.scss bplan/assets/css/all.css
+	npm run build:dev
 	$(VIRTUAL_ENV)/bin/python3 manage.py runserver 8005
 
 .PHONY: release
 release: export DJANGO_SETTINGS_MODULE ?= django_zbp.settings.build
 release:
-	npm install bower --silent
+	npm install --no-save
+	npm run build
 	$(VIRTUAL_ENV)/bin/python3 -m pip install -r requirements.txt -q
-	$(VIRTUAL_ENV)/bin/python3 manage.py bower install
 	$(VIRTUAL_ENV)/bin/python3 manage.py collectstatic --noinput -v0 --ignore firebug-lite
 
 .PHONY: compile-scss
 compile-scss:
-	venv/bin/sassc bplan/static/scss/all.scss bplan/static/scss/all.compiled.css
+	$(VIRTUAL_ENV)/bin/sassc bplan/assets/scss/all.scss bplan/assets/css/all.css
