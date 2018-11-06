@@ -25,7 +25,6 @@ before_script:
 
 script:
   - make install
-  - yapf -r django_zbp/ bplan/ --diff
   - $VIRTUAL_ENV/bin/python manage.py makemigrations --dry-run --check --noinput
   - make fixtures
 
