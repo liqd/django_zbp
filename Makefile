@@ -6,7 +6,6 @@ install:
 	$(VIRTUAL_ENV)/bin/python3 -m pip install -r requirements.txt
 	$(VIRTUAL_ENV)/bin/python3 -m pip install -r requirements-dev.txt
 	$(VIRTUAL_ENV)/bin/python3 manage.py migrate
-	$(VIRTUAL_ENV)/bin/sassc bplan/assets/scss/all.scss bplan/assets/css/all.css
 	npm install --no-save
 	npm run build
 
