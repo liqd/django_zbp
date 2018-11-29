@@ -20,8 +20,9 @@
     "mapbox-gl": "^0.50.0",
     "mapbox-gl-leaflet": "0.0.3",
     "mini-css-extract-plugin": "^0.4.4",
-    "webpack-merge": "4.1.4",
-    "webpack": "^4.23.0"
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.23.0",
+    "webpack-merge": "4.1.4"
   },
   "devDependencies": {
     "webpack-cli": "^3.1.2"
