@@ -126,11 +126,17 @@ angular.module('app.map.controllers', [])
 
     // This function is called once after the data is loaded initially (creates the map)
     var createMap = function(){
-        var map = $window.L.map('map');
-        L.tileLayer('https://maps.berlinonline.de/tile/osmbright_bde/{z}/{x}/{y}.png', {
-        	attribution: 'Geoportal Berlin/Bebauungspläne, Geltungsbereiche',
-        	maxZoom: 19
-        }).addTo(map);
+
+        var map = $window.L.map('map', {
+            maxZoom: 19
+        });
+
+        var colouredMap = L.mapboxGL({
+          accessToken: 'no-token',
+          style: 'https://vector.maps.berlinonline.de/styles/klokantech-basic/style.json',
+          maxZoom: 19
+        }).addTo(map)
+
         map.attributionControl.setPrefix('<a target="_blank" href="http://www.leafletjs.com">Leaflet</a>');
 
         $scope.districtMarkers = L.layerGroup();
@@ -152,7 +158,7 @@ angular.module('app.map.controllers', [])
             $scope.districtMarkers.addTo(map);
         }
 
-        map.fitBounds($scope.districtLayer);
+        map.fitBounds($scope.districtLayer.getBounds());
         var currentZoom = map.getZoom();
         map.options.minZoom = currentZoom;
         map.on('zoomend', function (e){
@@ -202,7 +208,7 @@ angular.module('app.map.controllers', [])
                 $scope.map.invalidateSize();
                 $scope.map.setView($scope.currentMarker._latlng);
                 setTimeout(function(){
-                    $scope.map.fitBounds($scope.currentPolygon);
+                    $scope.map.fitBounds($scope.currentPolygon.getBounds());
                 }, 200);
             }, 100);
         })

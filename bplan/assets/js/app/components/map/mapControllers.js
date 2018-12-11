@@ -126,36 +126,16 @@ angular.module('app.map.controllers', [])
 
     // This function is called once after the data is loaded initially (creates the map)
     var createMap = function(){
-        var greyMap = L.mapboxGL({
-          accessToken: 'no-token',
-          style: 'https://vector.maps.berlinonline.de/styles/positron-gl-style/style.json',
-          maxZoom: 19
-        })
+
+        var map = $window.L.map('map', {
+            maxZoom: 19
+        });
 
         var colouredMap = L.mapboxGL({
           accessToken: 'no-token',
           style: 'https://vector.maps.berlinonline.de/styles/klokantech-basic/style.json',
           maxZoom: 19
-        })
-
-        var brightMap = L.mapboxGL({
-          accessToken: 'no-token',
-          style: 'https://vector.maps.berlinonline.de/styles/osm-bright/style.json',
-          maxZoom: 19
-        })
-
-        var map = $window.L.map('map', {
-            maxZoom: 19,
-            layers: [greyMap, colouredMap, brightMap]
-        });
-
-        var baseMaps = {
-            "OSMBright": brightMap,
-            "Klokantech": colouredMap,
-            "Positron": greyMap
-        };
-
-        L.control.layers(baseMaps).addTo(map);
+        }).addTo(map)
 
         map.attributionControl.setPrefix('<a target="_blank" href="http://www.leafletjs.com">Leaflet</a>');
 
