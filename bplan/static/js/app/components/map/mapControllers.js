@@ -492,7 +492,7 @@ angular.module('app.map.controllers', [])
             var multipolygon = L.geoJson(data);
             multipolygon.setStyle(style);
             marker.multipolygon = multipolygon;
-            $scope.map.fitBounds(multipolygon);
+            $scope.map.fitBounds(multipolygon.getBounds());
             updatePolygonAfterBplanChange(marker, multipolygon);
         });
     });
