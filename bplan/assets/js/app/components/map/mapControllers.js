@@ -133,7 +133,7 @@ angular.module('app.map.controllers', [])
         var token = '9aVUrssbx7PKNUKo3WtXY6MqETI6Q336u5D142QS'
         var colouredMap = L.mapboxGL({
             accessToken: 'no-token',
-            style: 'https://vector.maps.berlinonline.de/styles/klokantech-basic/style.json',
+            style: 'https://maps.berlinonline.de/styles/klokantech-basic/style.json',
             maxZoom: 19,
             transformRequest: function (url, resourceType) {
                 if(resourceType === 'Tile' && 0 === url.indexOf('https://maps')) {
