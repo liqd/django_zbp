@@ -7,21 +7,21 @@
 			border: none;
 			color: $gray-light;
 			font-size: $font-size;
-			font-family: 'Arimo', serif;
+			font-family: $font-family-base;
 			padding: 0 12px 0 12px;
 		}
 		& a:hover {
 			background-color: white;
 			color: $gray-light;
 			font-size: $font-size;
-			font-family: 'Arimo', serif;
+			font-family: $font-family-base;
 			padding: 0 12px 0 12px;
 		}
 		& a:focus {
 			background-color: white;
 			color: $gray-light;
 			font-size: $font-size;
-			font-family: 'Arimo', serif;
+			font-family: $font-family-base;
 			padding: 0 12px 0 12px;
 		}
 	}
@@ -33,7 +33,7 @@
 	padding: 10px;
 	color: $gray-light;
 	font-size: $font-size;
-	font-family: 'Arimo', serif;
+	font-family: $font-family-base;
 	min-height: 95px;
 
 	@media (max-width: $screen-xs-max) {

@@ -10,7 +10,7 @@
 	-webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
-    font-family: 'Arimo', serif;
+    font-family: $font-family-base;
 }
 
 .search-button {
@@ -21,7 +21,7 @@
 	border-bottom: 1px solid $gray-lighter;
 	background-color: $white;
 	font-size: $font-size;
-	font-family: 'Arimo', serif;
+	font-family: $font-family-base;
 	padding: 2px 7px 2px 7px;
 	outline: 0;
 	border-radius: 0px;
