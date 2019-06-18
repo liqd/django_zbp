@@ -2,12 +2,12 @@
     font-family: "Arimo";
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/Arimo-Regular.ttf') format('truetype');
+    src: url('/static/fonts/Arimo-Regular.ttf') format('truetype');
 }
 
 @font-face {
     font-family: "Arimo";
     font-style: bold;
     font-weight: 700;
-    src: url('../fonts/Arimo-Bold.ttf') format('truetype');
+    src: url('/static/fonts/Arimo-Bold.ttf') format('truetype');
 }
