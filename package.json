@@ -8,6 +8,7 @@
     "angular": "^1.6.4",
     "angular-animate": "^1.6.4",
     "angular-loading-bar": "^0.9.0",
+    "autoprefixer": "9.6.0",
     "bootstrap-sass": "^3.3.7",
     "copy-webpack-plugin": "^4.5.4",
     "css-loader": "2.1.1",
@@ -21,6 +22,9 @@
     "mapbox-gl": "0.53.0",
     "mapbox-gl-leaflet": "0.0.4",
     "mini-css-extract-plugin": "0.6.0",
+    "node-sass": "4.12.0",
+    "postcss-loader": "3.0.0",
+    "sass-loader": "7.1.0",
     "terser-webpack-plugin": "1.2.3",
     "webpack": "4.30.0",
     "webpack-merge": "4.1.4"
@@ -29,8 +33,8 @@
     "webpack-cli": "^3.1.2"
   },
   "scripts": {
-    "build": "webpack --config webpack.prod.js --mode production",
-    "build:dev": "webpack --config webpack.config.js --mode development",
+    "build:prod": "webpack --config webpack.prod.js --mode production",
+    "build": "webpack --config webpack.config.js --mode development",
     "watch": "webpack --config webpack.config.js --watch --mode development"
   },
   "repository": {
@@ -46,5 +50,6 @@
   "bugs": {
     "url": "https://github.com/liqd/django_zbp/issues"
   },
-  "homepage": "https://github.com/liqd/django_zbp#readme"
+  "homepage": "https://github.com/liqd/django_zbp#readme",
+  "browserslist": "last 3 versions, ie >= 11"
 }

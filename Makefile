@@ -18,15 +18,15 @@ fixtures:
 
 .PHONY: watch
 watch:
-	$(VIRTUAL_ENV)/bin/sassc bplan/assets/scss/all.scss bplan/assets/css/all.css
-	npm run build:dev
+	trap 'kill %1' KILL; \
+	npm run watch & \
 	$(VIRTUAL_ENV)/bin/python3 manage.py runserver 8005
 
 .PHONY: release
 release: export DJANGO_SETTINGS_MODULE ?= django_zbp.settings.build
 release:
 	npm install --no-save
-	npm run build
+	npm run build:prod
 	$(VIRTUAL_ENV)/bin/python3 -m pip install -r requirements.txt -q
 	$(VIRTUAL_ENV)/bin/python3 manage.py collectstatic --noinput -v0 --ignore firebug-lite
 

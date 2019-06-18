@@ -16,7 +16,7 @@ module.exports = {
       'bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
       'font-awesome/css/font-awesome.min.css',
       'angular-loading-bar/build/loading-bar.min.css',
-      './bplan/assets/css/all.css',
+      './bplan/assets/scss/all.scss',
       './bplan/assets/fonts/Arimo-Bold.ttf',
       './bplan/assets/fonts/Arimo-Regular.ttf'
     ],
@@ -45,13 +45,25 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader
           },
           {
             loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                require('autoprefixer')
+              ]
+            }
+          },
+          {
+            loader: 'sass-loader'
           }
         ]
       },
