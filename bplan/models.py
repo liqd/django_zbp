@@ -28,7 +28,7 @@ class Bezirk(models.Model):
 class Ortsteil(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.CharField(max_length=50, default='')
-    bezirk = models.ForeignKey(Bezirk, related_name='ortsteile')
+    bezirk = models.ForeignKey(Bezirk, related_name='ortsteile', on_delete=models.CASCADE)
     polygon = models.PolygonField(srid=4326)
 
     def __str__(self):
@@ -43,7 +43,7 @@ class Address(models.Model):
     search_name = models.CharField(max_length=256)
     plz = models.CharField(max_length=50)
     spatial_name = models.CharField(max_length=50)
-    bezirk = models.ForeignKey(Bezirk)
+    bezirk = models.ForeignKey(Bezirk, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.strname + ' ' + self.hsnr
@@ -60,7 +60,7 @@ class BPlan(models.Model):
     multipolygon_25833 = models.MultiPolygonField(srid=25833)
     point = models.PointField(blank=True, null=True, srid=4326)
     bereich = models.TextField()
-    bezirk = models.ForeignKey(Bezirk)
+    bezirk = models.ForeignKey(Bezirk, on_delete=models.CASCADE)
     bezirk_name = models.CharField(max_length=50)
     ortsteile = models.ManyToManyField(Ortsteil)
     afs_behoer = models.CharField(max_length=256)
@@ -81,7 +81,7 @@ class BPlan(models.Model):
     fsg_gvbl_s = models.CharField(max_length=50, blank=True, null=True)
     fsg_gvbl_d = models.DateField(blank=True, null=True)
     normkontr = models.CharField(max_length=50, blank=True, null=True)
-    download = models.ForeignKey(Download, blank=True, null=True)
+    download = models.ForeignKey(Download, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.planname

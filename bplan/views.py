@@ -14,9 +14,9 @@ from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from django.views.generic import TemplateView
 from django.views.decorators.clickjacking import xframe_options_exempt
-from django.core.urlresolvers import reverse
 
 
 class BezirkDetailView(DetailView):
