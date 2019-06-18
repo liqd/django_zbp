@@ -126,8 +126,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: './bplan/assets/img/**/*',
-        to: 'img/',
+        from: './bplan/assets/images/**/*',
+        to: 'images/',
         flatten: true
       },
       {

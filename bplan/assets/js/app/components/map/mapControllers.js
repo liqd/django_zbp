@@ -34,7 +34,7 @@ angular.module('app.map.controllers', [])
 
     var RedIcon = L.Icon.Default.extend({
         options: {
-                iconUrl: '/static/img/marker-icon-2.png'
+                iconUrl: '/static/images/marker-icon-2.png'
         }
     });
     var icon = new RedIcon();
