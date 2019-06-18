@@ -16,7 +16,9 @@ module.exports = {
       'bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
       'font-awesome/css/font-awesome.min.css',
       'angular-loading-bar/build/loading-bar.min.css',
-      './bplan/assets/css/all.css'
+      './bplan/assets/css/all.css',
+      './bplan/assets/fonts/Arimo-Bold.ttf',
+      './bplan/assets/fonts/Arimo-Regular.ttf'
     ],
     angularbundle: [
       'angular',
