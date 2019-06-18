@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
             model_name='bplan',
             name='multipolygon_25833',
             field=django.contrib.gis.db.models.fields.MultiPolygonField(
-                default='', srid=25833),
+                srid=25833),
             preserve_default=False,
         ),
         migrations.AddField(
