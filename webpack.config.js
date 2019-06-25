@@ -33,6 +33,8 @@ module.exports = {
       'leaflet/dist/leaflet.css',
       'leaflet.markercluster',
       'leaflet.markercluster/dist/MarkerCluster.css',
+      'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css',
+      'leaflet-defaulticon-compatibility'
     ]
   },
   output: {
