@@ -23,8 +23,9 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="popup-entry">
-                <div><b>Aktueller Status:</b></div>
-                <div>{{ bplan.status | status }}</div>
+                <div><b>Aktueller Status: </b></div>
+                <div data-ng-if="bplan.status_normkontr !== ''">{{ bplan.status | status }}, {{ bplan.status_normkontr }}</div>
+                <div data-ng-if="bplan.status_normkontr == ''">{{ bplan.status | status }}</div>
             </div>
         </div>
     </div>

@@ -98,6 +98,7 @@ class SimpleBezirkSerializer(serializers.ModelSerializer):
 
 class SimpleBPlanSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
+    status_normkontr = serializers.SerializerMethodField()
 
     class Meta:
         model = BPlan
@@ -117,9 +118,17 @@ class SimpleBPlanSerializer(serializers.ModelSerializer):
             else:
                 return 'imVerfahren'
 
+    def get_status_normkontr(self, object):
+        if object.normkontr == 'unwirksam' or object.normkontr == 'nichtig':
+            return 'unwirksam'
+        elif object.normkontr == 'teilunwirksam' or object.normkontr == 'teilnichtig':
+            return 'teilunwirksam'
+        return ''
+
 
 class BPlanPointSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
     status = serializers.SerializerMethodField()
+    status_normkontr = serializers.SerializerMethodField()
 
     class Meta:
         model = BPlan
@@ -131,6 +140,7 @@ class BPlanPointSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
 class BPlanMultipolygonSerializer(SimpleBPlanSerializer,
                                   GeoFeatureModelSerializer):
     status = serializers.SerializerMethodField()
+    status_normkontr = serializers.SerializerMethodField()
 
     class Meta:
         model = BPlan
@@ -141,6 +151,7 @@ class BPlanMultipolygonSerializer(SimpleBPlanSerializer,
 
 class BPlanSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
     status = serializers.SerializerMethodField()
+    status_normkontr = serializers.SerializerMethodField()
 
     class Meta:
         model = BPlan

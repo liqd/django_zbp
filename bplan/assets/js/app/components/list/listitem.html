@@ -10,7 +10,7 @@
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div><b>Aktueller Status</b></div>
-            <div>{{ status | status }}</div>
+            <div>{{ status | status }} {{ bplan.status_normkontr }}</div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div data-ng-if="bplan.status == 'aul' || status == 'bbg'"><b>Enddatum</b></div>
