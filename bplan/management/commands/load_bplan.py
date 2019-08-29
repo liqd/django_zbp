@@ -286,6 +286,9 @@ class Command(BaseCommand):
 
         download = Download.objects.create()
 
+        if data_source:
+            BPlan.objects.all().delete()
+
         errors = []
         points = []
 
