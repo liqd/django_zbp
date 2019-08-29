@@ -123,6 +123,7 @@ class SimpleBPlanSerializer(serializers.ModelSerializer):
             return 'unwirksam'
         elif object.normkontr == 'teilunwirksam' or object.normkontr == 'teilnichtig':
             return 'teilunwirksam'
+        return ''
 
 
 class BPlanPointSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
