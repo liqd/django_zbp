@@ -6,7 +6,7 @@
   "dependencies": {
     "acorn": "7.1.0",
     "angular": "1.7.9",
-    "angular-animate": "1.7.8",
+    "angular-animate": "1.7.9",
     "angular-loading-bar": "0.9.0",
     "autoprefixer": "9.7.4",
     "bootstrap-sass": "3.4.1",
