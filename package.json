@@ -31,7 +31,7 @@
     "webpack-merge": "4.2.2"
   },
   "devDependencies": {
-    "webpack-cli": "3.3.10"
+    "webpack-cli": "3.3.11"
   },
   "scripts": {
     "build:prod": "webpack --config webpack.prod.js --mode production",
