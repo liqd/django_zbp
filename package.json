@@ -18,7 +18,7 @@
     "jquery": "3.4.1",
     "leaflet": "1.6.0",
     "leaflet-defaulticon-compatibility": "0.1.1",
-    "leaflet.markercluster": "1.4.1",
+    "leaflet.markercluster": "github:liqd/Leaflet.markercluster#5ed89b26922c51083fc9632a2c01425b9261a0f5",
     "lodash": "4.17.15",
     "mapbox-gl": "1.4.1",
     "mapbox-gl-leaflet": "0.0.11",
