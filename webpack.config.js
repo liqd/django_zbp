@@ -6,7 +6,6 @@ var path = require('path')
 module.exports = {
   entry: {
     vendor: [
-      'jquery',
       'lodash',
       'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot',
       'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg',
@@ -29,7 +28,7 @@ module.exports = {
       'leaflet',
       'mapbox-gl-leaflet',
       'mapbox-gl/dist/mapbox-gl.js',
-      'mapbox-gl/src/css/mapbox-gl.css',
+      'mapbox-gl/dist/mapbox-gl.css',
       'leaflet/dist/leaflet.css',
       'leaflet.markercluster',
       'leaflet.markercluster/dist/MarkerCluster.css',
@@ -82,46 +81,28 @@ module.exports = {
         options: {
           name: 'images/[name].[ext]'
         }
-      },
-      {
-        test: require.resolve('jquery'),
-        use: [{
-          loader: 'expose-loader',
-          options: 'jQuery'
-        },{
-          loader: 'expose-loader',
-          options: '$'
-        }]
-      },
-      {
-        test: require.resolve('leaflet'),
-        use: [{
-          loader: 'expose-loader',
-          options: 'L'
-        },{
-          loader: 'expose-loader',
-          options: 'leaflet'
-        }]
-      },
-      {
-        test: require.resolve('angular'),
-        use: [{
-          loader: 'expose-loader',
-          options: 'angular'
-        }
-      ]
-      },
-      {
-        test: require.resolve('mapbox-gl'),
-        use: [{
-          loader: 'expose-loader',
-          options: 'mapboxgl'
-        }
-      ]
       }
     ]
   },
+  resolve: {
+    extensions: ['*', '.js', '.jsx', '.scss', '.css'],
+    alias: {
+      jquery$: 'jquery/dist/jquery.min.js',
+      'mapbox-gl$': 'mapbox-gl/dist/mapbox-gl.js'
+    },
+    // when using `npm link`, dependencies are resolved against the linked
+    // folder by default. This may result in dependencies being included twice.
+    // Setting `resolve.root` forces webpack to resolve all dependencies
+    // against the local directory.
+    modules: [path.resolve('./node_modules')]
+  },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      L: 'leaflet',
+      mapboxgl: 'mapbox-gl'
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
