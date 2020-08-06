@@ -10,7 +10,7 @@ angular.module('app.map.directives', [])
             closepopup: '=',
             resetsearch: '='
         },
-        templateUrl: '/static/js/app/components/map/popup.html',
+        templateUrl: '/static/html/app/components/map/popup.html',
         link: function(scope) {
 
             scope.closePopup = function() {

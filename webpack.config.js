@@ -5,6 +5,28 @@ var path = require('path')
 
 module.exports = {
   entry: {
+    app: [
+      'leaflet',
+      'mapbox-gl-leaflet',
+      'mapbox-gl/dist/mapbox-gl.js',
+      'mapbox-gl/dist/mapbox-gl.css',
+      'leaflet/dist/leaflet.css',
+      'leaflet.markercluster',
+      'leaflet.markercluster/dist/MarkerCluster.css',
+      'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css',
+      'leaflet-defaulticon-compatibility',
+      'angular',
+      'angular-animate',
+      'angular-loading-bar',
+      './bplan/assets/js/app/app.js',
+      './bplan/assets/js/app/shared/services/placeService.js',
+      './bplan/assets/js/app/shared/controllers/viewController.js',
+      './bplan/assets/js/app/components/map/mapControllers.js',
+      './bplan/assets/js/app/components/list/listControllers.js',
+      './bplan/assets/js/app/components/list/listDirectives.js',
+      './bplan/assets/js/app/components/map/mapDirectives.js',
+      './bplan/assets/js/app/shared/directives/sharedDirectives.js'
+    ],
     vendor: [
       'lodash',
       'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot',
@@ -19,21 +41,8 @@ module.exports = {
       './bplan/assets/fonts/Arimo-Bold.ttf',
       './bplan/assets/fonts/Arimo-Regular.ttf'
     ],
-    angularbundle: [
-      'angular',
-      'angular-animate',
-      'angular-loading-bar'
-    ],
-    leaflet: [
-      'leaflet',
-      'mapbox-gl-leaflet',
-      'mapbox-gl/dist/mapbox-gl.js',
-      'mapbox-gl/dist/mapbox-gl.css',
-      'leaflet/dist/leaflet.css',
-      'leaflet.markercluster',
-      'leaflet.markercluster/dist/MarkerCluster.css',
-      'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css',
-      'leaflet-defaulticon-compatibility'
+    custom: [
+      './bplan/assets/js/custom.js'
     ]
   },
   output: {
@@ -114,8 +123,8 @@ module.exports = {
         flatten: true
       },
       {
-        from: './bplan/assets/js/',
-        to: 'js/',
+        from: './bplan/assets/html/',
+        to: 'html/',
         flatten: false
       }
     ])

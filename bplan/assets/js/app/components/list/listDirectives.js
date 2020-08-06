@@ -11,7 +11,7 @@ angular.module('app.list.directives', [])
             index: '=',
             currentbplan: '='
         },
-        templateUrl: '/static/js/app/components/list/listitem.html',
+        templateUrl: '/static/html/app/components/list/listitem.html',
         link: function(scope) {
 
             PlacesService.getBplanDetail(scope.pk).then(function(data) {
@@ -34,7 +34,7 @@ angular.module('app.list.directives', [])
             index: '=',
             currentbplan: '='
         },
-        templateUrl: '/static/js/app/components/list/listitemmobile.html',
+        templateUrl: '/static/html/app/components/list/listitemmobile.html',
         link: function(scope) {
 
             PlacesService.getBplanDetail(scope.pk).then(function(data) {

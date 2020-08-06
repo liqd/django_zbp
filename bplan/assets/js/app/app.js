@@ -21,8 +21,3 @@ var app = angular.module('app',[
 	cfpLoadingBarProvider.includeSpinner = false;
     cfpLoadingBarProvider.latencyThreshold = 500;
 }]);
-
-
-
-
-
