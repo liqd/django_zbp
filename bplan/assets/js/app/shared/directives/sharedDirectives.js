@@ -5,7 +5,7 @@ angular.module('app.shared.directives', [])
 .directive('sharedNav', function() {
     return {
         restrict: 'E',
-        templateUrl: '/static/js/app/shared/directives/nav.html',
+        templateUrl: '/static/html/app/shared/directives/nav.html',
         link: function(scope) {
 
             scope.toggleDropdown = function(event) {

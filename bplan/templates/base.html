@@ -12,8 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'leaflet.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'vendor.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'app.css' %}">
 
         <script type="text/javascript">
             area = "{% block area %}{% endblock %}";
@@ -130,18 +130,7 @@
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'vendor.js' %}"></script>
-        <script type="text/javascript" src="{% static 'angularbundle.js' %}"></script>
-        <script type="text/javascript" src="{% static 'leaflet.js' %}"></script>
-
-
-        <script type="text/javascript" src="{% static 'js/app/app.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/app/shared/services/placeService.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/app/shared/controllers/viewController.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/app/components/map/mapControllers.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/app/components/list/listControllers.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/app/components/list/listDirectives.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/app/components/map/mapDirectives.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/app/shared/directives/sharedDirectives.js' %}"></script>
+        <script type="text/javascript" src="{% static 'app.js' %}"></script>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
