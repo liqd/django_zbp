@@ -1,2 +1,2 @@
 pre-commit==2.6.0
-libsass==0.20.0
+libsass==0.20.1
