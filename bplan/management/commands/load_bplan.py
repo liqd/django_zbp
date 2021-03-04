@@ -274,7 +274,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         url = 'http://fbinter.stadt-berlin.de/fb/'\
-            'wfs/geometry/senstadt/re_bplan'
+            'wfs/data/senstadt/sach_bplan'
 
         if options['fromFixtures']:
             fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan', 'fixtures')
