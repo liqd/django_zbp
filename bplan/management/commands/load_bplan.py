@@ -8,6 +8,7 @@ from tqdm import tqdm
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.contrib.gis.gdal import DataSource
+from django.contrib.gis.gdal.error import GDALException
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos import MultiPolygon
 from django.contrib.gis.geos import Point
@@ -130,14 +131,11 @@ class Command(BaseCommand):
         if result != 0:
             raise Exception("Could not download data")
 
-    def _get_identifiers(self, feature):
+    def _get_identifier(self, feature):
         planname = feature.get("planname")
-        spatial_alias = feature.get("spatial_alias")
-        spatial_name = feature.get("spatial_name")
-        return (planname, spatial_alias, spatial_name)
+        return planname
 
     def _get_spatial_data(self, feature):
-        spatial_type = feature.get("spatial_type")
         geometry = GEOSGeometry(str(feature.geom), srid=4326)
         bereich = feature.get("bereich")
         if geometry.geom_type == "Polygon":
@@ -147,7 +145,7 @@ class Command(BaseCommand):
 
         multipolygon_25833 = copy.deepcopy(multipolygon)
         multipolygon_25833.transform(25833)
-        return (spatial_type, multipolygon, multipolygon_25833, geometry,
+        return (multipolygon, multipolygon_25833, geometry,
                 bereich)
 
     def _get_district(self, feature):
@@ -281,8 +279,8 @@ class Command(BaseCommand):
             fixture_file = os.path.join(fixtures_dir, 'bplan.geojson')
             data_source = DataSource(fixture_file)
         else:
-            self._download_geodata('/tmp/re_bplan.json', url, 'fis:re_bplan')
-            data_source = DataSource('/tmp/re_bplan.json')
+            self._download_geodata('/tmp/sach_bplan.json', url, 'fis:sach_bplan')
+            data_source = DataSource('/tmp/sach_bplan.json')
 
         download = Download.objects.create()
 
@@ -295,14 +293,17 @@ class Command(BaseCommand):
         for feature in tqdm(
                 data_source[0], disable=(int(options['verbosity']) < 1)):
 
-            type = feature.get("spatial_type")
+            geometry = None
+            try:
+                geometry = feature.geom
+            except GDALException:
+                pass
 
-            if type:
+            if geometry:
 
-                planname, spatial_alias, spatial_name = self._get_identifiers(
-                    feature)
+                planname = self._get_identifier(feature)
                 bplanID = planname.replace(" ", "").lower()
-                spatial_type, multipolygon, multipolygon_25833, geometry, bereich = self._get_spatial_data(
+                multipolygon, multipolygon_25833, geometry, bereich = self._get_spatial_data(
                     feature)
                 point = self._calculate_point(multipolygon, points)
                 points.append(point)
@@ -322,9 +323,6 @@ class Command(BaseCommand):
                         bplanID=bplanID,
                         defaults={
                             'planname': planname,
-                            'spatial_alias': spatial_alias,
-                            'spatial_name': spatial_name,
-                            'spatial_type': spatial_type,
                             'multipolygon': multipolygon,
                             'multipolygon_25833': multipolygon_25833,
                             'point': point,
