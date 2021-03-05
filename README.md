@@ -7,8 +7,7 @@ Zentrale Bplan Plattform for Berlin based on Django 1.9.4 and PostgreSQL/PostGIS
 
 ``` bash
 $ git clone git@github.com:liqd/django_zbp.git
-$ cd django_zbp
-$ npm install bower
+$ make install
 $ pip install -r requirements.txt
 $ cp django_zbp/settings/local.sample.py django_zbp/settings/local.py
 $ edit django_zbp/settings/local.py -> set GDAL_LEGACY to True in your local settings if GDAL <= 1.10
