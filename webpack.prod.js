@@ -1,4 +1,4 @@
-const common = require('./webpack.config.js')
+const common = require('./webpack.common.js')
 const { merge } = require('webpack-merge')
 const TerserPlugin = require('terser-webpack-plugin')
 

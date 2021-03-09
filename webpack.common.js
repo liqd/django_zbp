@@ -6,18 +6,29 @@ var path = require('path')
 module.exports = {
   entry: {
     app: [
+      'angular',
+      'angular-animate',
+      'angular-loading-bar',
+      'angular-loading-bar/build/loading-bar.min.css',
+      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot',
+      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg',
+      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf',
+      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff',
+      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2',
+      'bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
+      'font-awesome/css/font-awesome.min.css',
       'leaflet',
-      'mapbox-gl-leaflet',
-      'mapbox-gl/dist/mapbox-gl.js',
-      'mapbox-gl/dist/mapbox-gl.css',
       'leaflet/dist/leaflet.css',
       'leaflet.markercluster',
       'leaflet.markercluster/dist/MarkerCluster.css',
       'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css',
-      'leaflet-defaulticon-compatibility',
-      'angular',
-      'angular-animate',
-      'angular-loading-bar',
+      'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.min.js',
+      'lodash',
+      'mapbox-gl',
+      'mapbox-gl-leaflet',
+      './bplan/assets/scss/all.scss',
+      './bplan/assets/fonts/Arimo-Bold.ttf',
+      './bplan/assets/fonts/Arimo-Regular.ttf',
       './bplan/assets/js/app/app.js',
       './bplan/assets/js/app/shared/services/placeService.js',
       './bplan/assets/js/app/shared/controllers/viewController.js',
@@ -27,23 +38,12 @@ module.exports = {
       './bplan/assets/js/app/components/map/mapDirectives.js',
       './bplan/assets/js/app/shared/directives/sharedDirectives.js'
     ],
-    vendor: [
-      'lodash',
-      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot',
-      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg',
-      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf',
-      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff',
-      'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2',
-      'bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-      'font-awesome/css/font-awesome.min.css',
-      'angular-loading-bar/build/loading-bar.min.css',
-      './bplan/assets/scss/all.scss',
-      './bplan/assets/fonts/Arimo-Bold.ttf',
-      './bplan/assets/fonts/Arimo-Regular.ttf'
-    ],
-    custom: [
-      './bplan/assets/js/custom.js'
-    ]
+    custom: {
+      import: [
+        './bplan/assets/js/custom.js'
+      ],
+      dependOn: 'app'
+    }
   },
   output: {
     libraryTarget: 'this',
@@ -66,10 +66,11 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                require('autoprefixer')
-              ]
+              postcssOptions: {
+                plugins: [
+                  require('autoprefixer')
+                ]
+              }
             }
           },
           {
@@ -96,8 +97,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx', '.scss', '.css'],
     alias: {
-      jquery$: 'jquery/dist/jquery.min.js',
-      'mapbox-gl$': 'mapbox-gl/dist/mapbox-gl.js'
+      jquery$: 'jquery/dist/jquery.min.js'
     },
     // when using `npm link`, dependencies are resolved against the linked
     // folder by default. This may result in dependencies being included twice.
