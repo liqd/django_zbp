@@ -1,7 +1,12 @@
 language: python
-dist: xenial
+dist: bionic
 python:
   - "3.6"
+node_js:
+- '8'
+cache:
+  pip: true
+  npm: true
 
 addons:
   postgresql: 10
@@ -11,10 +16,6 @@ addons:
 
 services:
   - postgresql
-
-cache:
-  pip: true
-  npm: true
 
 install:
   - sudo apt-get install -y gdal-bin
