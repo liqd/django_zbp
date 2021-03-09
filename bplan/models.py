@@ -53,9 +53,6 @@ class BPlan(models.Model):
 
     bplanID = models.CharField(max_length=50, unique=True)
     planname = models.CharField(max_length=50)
-    spatial_alias = models.CharField(max_length=50)
-    spatial_name = models.CharField(max_length=50)
-    spatial_type = models.CharField(max_length=50)
     multipolygon = models.MultiPolygonField(srid=4326)
     multipolygon_25833 = models.MultiPolygonField(srid=25833)
     point = models.PointField(blank=True, null=True, srid=4326)
