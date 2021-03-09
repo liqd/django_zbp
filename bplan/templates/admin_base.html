@@ -12,10 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'third-party/bower_components/font-awesome/css/font-awesome.min.css' %}">
-
-        <link rel="stylesheet" href="{% static 'scss/all.compiled.css' %}" />
-
+        <link rel="stylesheet" type="text/css" href="{% static 'app.css' %}">
 
     </head>
 
@@ -50,8 +47,7 @@
 
 
         {# Global javascript #}
-        <script type="text/javascript" src="{% static 'third-party/bower_components/jquery/dist/jquery.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'third-party/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'app.js' %}"></script>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}

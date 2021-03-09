@@ -12,7 +12,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'vendor.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'app.css' %}">
 
         <script type="text/javascript">
@@ -129,7 +128,6 @@
         {% endverbatim %}
 
         {# Global javascript #}
-        <script type="text/javascript" src="{% static 'vendor.js' %}"></script>
         <script type="text/javascript" src="{% static 'app.js' %}"></script>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
