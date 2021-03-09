@@ -132,7 +132,6 @@ angular.module('app.map.controllers', [])
         });
         var token = '9aVUrssbx7PKNUKo3WtXY6MqETI6Q336u5D142QS'
         var colouredMap = L.mapboxGL({
-            accessToken: 'no-token',
             style: 'https://maps.berlinonline.de/styles/klokantech-basic/style.json',
             maxZoom: 19,
             transformRequest: function (url, resourceType) {
@@ -144,7 +143,7 @@ angular.module('app.map.controllers', [])
             }
         }).addTo(map)
 
-        map.attributionControl.setPrefix('<a target="_blank" href="http://www.leafletjs.com">Leaflet</a>');
+        map.attributionControl.setPrefix('<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">&copy; MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>');
 
         $scope.districtMarkers = L.layerGroup();
 
