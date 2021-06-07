@@ -155,5 +155,6 @@ class BPlanSerializer(SimpleBPlanSerializer, GeoFeatureModelSerializer):
 
     class Meta:
         model = BPlan
+        fields = '__all__'
         id_field = False
         geo_field = 'multipolygon'
