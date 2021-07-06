@@ -5,8 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "acorn": "7.4.0",
-    "angular": "1.8.0",
-    "angular-animate": "1.8.0",
+    "angular": "1.8.2",
+    "angular-animate": "1.8.2",
     "angular-loading-bar": "0.9.0",
     "autoprefixer": "9.8.6",
     "bootstrap-sass": "3.4.1",
