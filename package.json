@@ -15,7 +15,7 @@
     "fibers": "5.0.0",
     "file-loader": "6.2.0",
     "font-awesome": "4.7.0",
-    "jquery": "3.5.1",
+    "jquery": "3.6.0",
     "leaflet": "1.7.1",
     "leaflet-defaulticon-compatibility": "0.1.1",
     "leaflet.markercluster": "github:liqd/Leaflet.markercluster#5ed89b26922c51083fc9632a2c01425b9261a0f5",
