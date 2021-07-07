@@ -11,7 +11,7 @@
     "autoprefixer": "10.2.6",
     "bootstrap-sass": "3.4.1",
     "copy-webpack-plugin": "5.1.2",
-    "css-loader": "4.3.0",
+    "css-loader": "5.2.6",
     "fibers": "5.0.0",
     "file-loader": "6.2.0",
     "font-awesome": "4.7.0",
