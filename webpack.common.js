@@ -116,17 +116,17 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css'
     }),
-    new CopyWebpackPlugin([
+    new CopyWebpackPlugin({
+      patterns: [
       {
         from: './bplan/assets/images/**/*',
-        to: 'images/',
-        flatten: true
+        to: 'images/[name][ext]',
       },
       {
         from: './bplan/assets/html/',
         to: 'html/',
-        flatten: false
       }
-    ])
+   ],
+    })
   ]
 }
