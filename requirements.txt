@@ -6,7 +6,7 @@ django-filter==2.4.0
 djangorestframework-gis==0.17
 djangorestframework==3.12.4
 psycopg2-binary==2.8.6 # pyup: <2.9
-python-dateutil==2.8.1
+python-dateutil==2.8.2
 rcssmin==1.0.6
 rjsmin==1.1.0
 six==1.16.0
