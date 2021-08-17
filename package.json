@@ -32,7 +32,7 @@
     "webpack-merge": "5.8.0"
   },
   "devDependencies": {
-    "webpack-cli": "4.7.2"
+    "webpack-cli": "4.8.0"
   },
   "scripts": {
     "build:prod": "webpack --config webpack.prod.js --mode production",
