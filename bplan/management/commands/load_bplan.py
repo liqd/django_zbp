@@ -132,12 +132,12 @@ class Command(BaseCommand):
             raise Exception("Could not download data")
 
     def _get_identifier(self, feature):
-        planname = feature.get("planname")
+        planname = feature.get("PLANNAME")
         return planname
 
     def _get_spatial_data(self, feature):
         geometry = GEOSGeometry(str(feature.geom), srid=4326)
-        bereich = feature.get("bereich")
+        bereich = feature.get("BEREICH")
         if geometry.geom_type == "Polygon":
             multipolygon = MultiPolygon(geometry, srid=4326)
         else:
@@ -149,7 +149,7 @@ class Command(BaseCommand):
                 bereich)
 
     def _get_district(self, feature):
-        b = feature.get("bezirk")
+        b = feature.get("BEZIRK")
         bezirk = Bezirk.objects.get(name=b)
         bezirk_name = bezirk.name
         return (bezirk, bezirk_name)
@@ -160,11 +160,11 @@ class Command(BaseCommand):
 
     def _get_imVerfahren_data(self, feature):
         try:
-            afs_beschl = feature.get("afs_beschl").date
+            afs_beschl = feature.get("AFS_BESCHL").date
         except AttributeError:
             afs_beschl = None
         try:
-            afs_l_aend = feature.get("afs_l_aend").date
+            afs_l_aend = feature.get("AFS_L_AEND").date
         except AttributeError:
             afs_l_aend = None
         return (afs_beschl, afs_l_aend)
@@ -176,11 +176,11 @@ class Command(BaseCommand):
         except:
             festg = None
         try:
-            festsg_von = feature.get("festsg_von")
+            festsg_von = feature.get("FESTSG_VON")
         except AttributeError:
             festsg_von = None
         try:
-            festsg_am = feature.get("festsg_am").date
+            festsg_am = feature.get("FESTSG_AM").date
         except AttributeError:
             festsg_am = None
         return (festg, festsg_von, festsg_am)
@@ -204,10 +204,6 @@ class Command(BaseCommand):
             aul_ende = None
         return (bbg_anfang, bbg_ende, aul_anfang, aul_ende)
 
-    def _parse_www(self, url):
-        """current format of field is '[[url]]http://example.com/document.pdf| Link anzeigen'"""
-        return url.split('|')[0].split(']]')[1]
-
     def _get_www_data(self, feature):
 
         ausleg_www = None
@@ -215,23 +211,23 @@ class Command(BaseCommand):
         grund_www = None
 
         try:
-            www = feature.get("ausleg_www")
+            www = feature.get("AUSLEG_WWW")
             if www:
-                ausleg_www = self._parse_www(www)
+                ausleg_www = www
         except:
             pass
 
         try:
-            scan = feature.get("scan_www")
+            scan = feature.get("SCAN_WWW")
             if scan:
-                scan_www = self._parse_www(scan)
+                scan_www = scan
         except:
             pass
 
         try:
-            grund = feature.get("grund_www")
+            grund = feature.get("GRUND_WWW")
             if grund:
-                grund_www = self._parse_www(grund)
+                grund_www = grund
         except:
             pass
 
@@ -243,19 +239,19 @@ class Command(BaseCommand):
         except:
             gml_id = None
         try:
-            fsg_gvbl_n = feature.get("fsg_gvbl_n")
+            fsg_gvbl_n = feature.get("FSG_GVBL_N")
         except:
             fsg_gvbl_n = None
         try:
-            fsg_gvbl_s = feature.get("fsg_gvbl_s")
+            fsg_gvbl_s = feature.get("FSG_GVBL_S")
         except:
             fsg_gvbl_s = None
         try:
-            fsg_gvbl_d = feature.get("fsg_gvbl_d").date
+            fsg_gvbl_d = feature.get("FSG_GVBL_D").date
         except AttributeError:
             fsg_gvbl_d = None
         try:
-            normkontr = feature.get("normkontr")
+            normkontr = feature.get("NORMKONTR")
         except:
             normkontr = None
         return (gml_id, fsg_gvbl_n, fsg_gvbl_s, fsg_gvbl_d, normkontr)
@@ -308,7 +304,7 @@ class Command(BaseCommand):
                 point = self._calculate_point(multipolygon, points)
                 points.append(point)
                 ortsteile = self._get_ortsteile(geometry)
-                afs_behoer = feature.get("afs_behoer")
+                afs_behoer = feature.get("AFS_BEHOER")
                 afs_beschl, afs_l_aend = self._get_imVerfahren_data(feature)
                 festg, festsg_von, festsg_am = self._get_festg_data(feature)
                 bbg_anfang, bbg_ende, aul_anfang, aul_ende = self._get_participation_data(
