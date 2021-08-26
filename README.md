@@ -7,22 +7,34 @@ Zentrale Bplan Plattform for Berlin based on Django 1.9.4 and PostgreSQL/PostGIS
 
 ## Set up
 
+### Requirements:
+
+ * postgresql
+ * gdal
+ * postgis
+
 ``` bash
 $ git clone git@github.com:liqd/django_zbp.git
 $ make install
 $ cp django_zbp/settings/local.sample.py django_zbp/settings/local.py
 $ edit django_zbp/settings/local.py -> set GDAL_LEGACY to True in your local settings if GDAL <= 1.10
 ```
-
-edit *django_zbp/settings/local.py* for your database connection
+create a postgres db and superuser
+```bash
+$ sudo -u postgres psql
+postgres=# create database my_database;
+postgres=# create user my_user with encrypted password 'my_password';
+postgres=# alter role my_user SUPERUSER;
+ ```
+and then edit *django_zbp/settings/local.py* for your database connection
 
 ``` python
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'your db name',
-        'USER': 'your db username',
-        'PASSWORD': 'your db username password',
+        'NAME': 'my_database',
+        'USER': 'my_user',
+        'PASSWORD': 'my_password',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -57,4 +69,4 @@ continue:
 $ ./manage.py runserver
 ```
 
-go to http://localhost:8005/admin/
+go to http://localhost:8000/admin/
