@@ -4,7 +4,7 @@
   "description": "Zentrale Bplan Plattform for Berlin based on Django 1.9.4 and PostgreSQL/PostGIS",
   "main": "index.js",
   "dependencies": {
-    "acorn": "8.4.1",
+    "acorn": "8.7.0",
     "angular": "1.8.2",
     "angular-animate": "1.8.2",
     "angular-loading-bar": "0.9.0",
