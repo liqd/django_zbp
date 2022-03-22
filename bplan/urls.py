@@ -1,5 +1,5 @@
+from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
-from django.conf.urls import url, include
 from rest_framework import routers
 from .api import BezirkViewSet
 from .api import OrtsteilViewSet
@@ -23,15 +23,15 @@ router.register(r'bplan/data', BPlanDataViewSet, basename='bplan_data')
 router.register(r'bplan', BPlanViewSet, basename='bplan_all')
 
 urlpatterns = [
-    url(r'^api/', include(router.urls)),
-    url(r'^berlin/$',
-        views.StadtView.as_view(template_name="bplan/berlin.html"),
-        name='berlin'),
-    url(r'^berlin/(?P<slug>[a-z\-]+)/',
-        views.BezirkDetailView.as_view(),
-        name='bezirk'),
-    url(r'^login/', views.login_user, name='login'),
-    url(r'^logout/', views.logout_user, name='logout'),
-    url(r'^downloads/', views.downloads, name='downloads'),
-    url(r'^$', RedirectView.as_view(pattern_name='berlin'), name='index')
+    path('api/', include(router.urls)),
+    path('berlin/',
+         views.StadtView.as_view(template_name="bplan/berlin.html"),
+         name='berlin'),
+    re_path(r'^berlin/(?P<slug>[a-z\-]+)/',
+            views.BezirkDetailView.as_view(),
+            name='bezirk'),
+    path('login/', views.login_user, name='login'),
+    path('logout/', views.logout_user, name='logout'),
+    path('downloads/', views.downloads, name='downloads'),
+    path('', RedirectView.as_view(pattern_name='berlin'), name='index')
 ]
