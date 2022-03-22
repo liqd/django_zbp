@@ -8,7 +8,7 @@ from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.shortcuts import render
 from django.shortcuts import Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
@@ -59,8 +59,9 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return render_to_response(
-        'logout.html', context_instance=RequestContext(request))
+    return render(
+        request,
+        'logout.html')
 
 
 @login_required
