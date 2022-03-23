@@ -116,11 +116,12 @@ class Command(BaseCommand):
             return Point(multipolygon[0][0][0], srid=4326)
 
     def _download_geodata(self, filename, url, layer):
-        call = 'ogr2ogr -s_srs EPSG:25833'\
-            ' -t_srs WGS84 -f'\
-            ' geoJSON %s WFS:"%s%s" %s' % (
-               filename, url, '?version=1.1.0' if settings.GDAL_LEGACY else '',
-               layer)
+        call = 'ogr2ogr -s_srs EPSG:25833' \
+               ' -t_srs WGS84 -f' \
+               ' geoJSON %s WFS:"%s%s" %s' % (
+                   filename, url,
+                   '?version=1.1.0' if settings.GDAL_LEGACY else '',
+                   layer)
 
         try:
             os.remove(filename)
@@ -138,6 +139,23 @@ class Command(BaseCommand):
     def _get_spatial_data(self, feature):
         geometry = GEOSGeometry(str(feature.geom), srid=4326)
         bereich = feature.get("BEREICH")
+
+        if geometry.geom_type == "GeometryCollection":
+            num_polygons = 0
+            new_geometry = None
+            for geom in geometry:
+                if geom.geom_type == "Polygon" or geom.geom_type == "MultiPolygon":
+                    new_geometry = GEOSGeometry(geom)
+                    num_polygons += 1
+            if num_polygons == 0:
+                print("No Polygons found in GeometryCollection, discarding "
+                      "BPLAN " + feature.get("PLANNAME"))
+                return
+            elif num_polygons > 1:
+                print(
+                    "Multiple Polygons found in GeometryColleection for BPLAN " + feature.get(
+                        "PLANNAME") + " - only using the last")
+            geometry = new_geometry
         if geometry.geom_type == "Polygon":
             multipolygon = MultiPolygon(geometry, srid=4326)
         else:
@@ -267,15 +285,16 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        url = 'http://fbinter.stadt-berlin.de/fb/'\
-            'wfs/data/senstadt/sach_bplan'
+        url = 'http://fbinter.stadt-berlin.de/fb/' \
+              'wfs/data/senstadt/sach_bplan'
 
         if options['fromFixtures']:
             fixtures_dir = os.path.join(settings.BASE_DIR, 'bplan', 'fixtures')
             fixture_file = os.path.join(fixtures_dir, 'bplan.geojson')
             data_source = DataSource(fixture_file)
         else:
-            self._download_geodata('/tmp/sach_bplan.json', url, 'fis:sach_bplan')
+            self._download_geodata('/tmp/sach_bplan.json', url,
+                                   'fis:sach_bplan')
             data_source = DataSource('/tmp/sach_bplan.json')
 
         download = Download.objects.create()
