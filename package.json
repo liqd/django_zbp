@@ -20,7 +20,7 @@
     "leaflet-defaulticon-compatibility": "0.1.1",
     "leaflet.markercluster": "github:liqd/Leaflet.markercluster#5ed89b26922c51083fc9632a2c01425b9261a0f5",
     "lodash": "4.17.21",
-    "mapbox-gl": "1.13.1",
+    "mapbox-gl": "1.13.2",
     "mapbox-gl-leaflet": "0.0.15",
     "mini-css-extract-plugin": "2.6.0",
     "node-sass": "7.0.0",
