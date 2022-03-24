@@ -1,6 +1,6 @@
 # django_zbp
 
-![Build Status](https://github.com/liqd/a4-meinberlin/actions/workflows/django.yml/badge.svg)
+![Build Status](https://github.com/liqd/django_zbp/actions/workflows/django.yml/badge.svg)
 
 Zentrale Bplan Plattform for Berlin based on Django 1.9.4 and PostgreSQL/PostGIS
 
@@ -20,10 +20,14 @@ $ cp django_zbp/settings/local.sample.py django_zbp/settings/local.py
 $ edit django_zbp/settings/local.py -> set GDAL_LEGACY to True in your local settings if GDAL <= 1.10
 ```
 create a postgres db and superuser
-```bash
+``` bash
 $ sudo -u postgres psql
 postgres=# create database my_database;
 postgres=# create user my_user with encrypted password 'my_password';
+postgres=# grant all privileges on database'my_database' to my_user;
+```
+if the last step does not work, you can also do
+``` bash
 postgres=# alter role my_user SUPERUSER;
  ```
 and then edit *django_zbp/settings/local.py* for your database connection
@@ -46,13 +50,8 @@ DATABASES = {
 INSTALL DEPENDENCIES
 $ make install
 
-LOAD DISTRICTS AND ORTSTEILE
-$ ./manage.py load_bezirke
-$ ./manage.py load_ortsteile
-
-LOAD BPLAN
-$ ./manage.py load_bplan --fromFixtures (to load data from fixtures, no GDAL required)
-$ ./manage.py load_bplan (to load data from WFS, GDAL required)
+FILL DB, LOAD DISTRICTS, ORTSTEILE AND BPLANS
+$ make fixtures
 
 INSERT ADDRESSES
 $ wget http://fbarc.stadt-berlin.de/FIS_Broker_Atom/AD/AD_AdressenBerlin.zip
@@ -64,9 +63,15 @@ $ ./manage.py populate_database
 
 ```
 
+The Bplans loaded via the `make fixtures` are from the fixtures. To get them from the FIS-broker, do
+``` bash
+$ ./manage.py load_bplan
+```
+In this case, GDAL is required to be installed.
+
 continue:
 ```
-$ ./manage.py runserver
+$ make watch
 ```
 
-go to http://localhost:8000/admin/
+go to http://localhost:8005/admin/
