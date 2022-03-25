@@ -6,7 +6,7 @@ to parse this you will need about 16GB of RAM for all addresses in Berlin.
 To download it go to: https://fbinter.stadt-berlin.de/fb/index.jsp
 Then click on "Adressen im INSPIRE-Datenmodell"
 Then click on "Downloaddienst (ATOM)"
-Then you get a zip file: http://fbarc.stadt-berlin.de/FIS_Broker_Atom/AD/AD_AdressenBerlin.zip
+Then you get a zip file: https://fbinter.stadt-berlin.de/fb/atom/AD/AD_AdressenBerlin.zip
 Here you may find your .gml file with all addresses of Berlin
 '''
 
