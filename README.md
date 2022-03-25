@@ -54,7 +54,7 @@ FILL DB, LOAD DISTRICTS, ORTSTEILE AND BPLANS
 $ make fixtures
 
 INSERT ADDRESSES
-$ wget http://fbarc.stadt-berlin.de/FIS_Broker_Atom/AD/AD_AdressenBerlin.zip
+$ wget https://fbinter.stadt-berlin.de/fb/atom/AD/AD_AdressenBerlin.zip
 $ unzip *.zip
 $ ./manage.py insert_addresses *.gml
 
