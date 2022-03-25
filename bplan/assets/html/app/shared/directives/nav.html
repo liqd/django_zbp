@@ -3,14 +3,14 @@
         <a href=""
            data-ng-class="{active: currentView == 'map'}"
            data-ng-click="setView('map');">
-            <i class="fa fa-map-o fa-lg"></i>
+            <i class="far fa-map fa-lg" aria-label="Karte zeigen"></i>
         </a>
     </li>
     <li data-ng-hide="isMobile">
         <a href=""
            data-ng-class="{active: currentView =='list'}"
            data-ng-click="setView('list');">
-            <i class="fa fa-list fa-lg"></i>
+            <i class="fas fa-list fa-lg" aria-label="Liste zeigen"></i>
         </a>
     </li>
     <li class="textinput" data-ng-class="{open: searchResultCount > 1 && searchstring}">
@@ -22,13 +22,13 @@
                         class="input-group-addon search-button"
                         data-ng-click="getDataForSearch()"
                         data-ng-class="{middle: searchstring}">
-                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <i class="fas fa-search" aria-label="Adresse oder Bebauungsplan-Nr. suchen"></i>
                     </div>
                     <div
                         data-ng-if="searchstring"
                         class="input-group-addon search-button"
                         data-ng-click="resetSearch()">
-                        <i class="fa fa-times" aria-hidden="true"></i>
+                        <i class="fas fa-times" aria-label="Suche löschen"></i>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
             <li data-ng-repeat="address in addressSearchResult" class="address-search-result-item">
                 <a href="" data-ng-click="chooseAddress(address)">
                     <div>
-                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                     {{ address.properties.strname }}<span data-ng-if="address.properties.hsnr.length > 0"> {{ address.properties.hsnr }}</span>,
                     </div>
                     <div><small>{{ address.properties.bezirk_name }},  {{ address.properties.plz }} Berlin</small></div>
@@ -48,7 +48,7 @@
             <li data-ng-repeat="bplan in bplanSearchResult" class="address-search-result-item">
                 <a href="" data-ng-click="chooseBplan(bplan)">
                     <div>
-                    <i class="fa fa-map-o" aria-hidden="true"></i>
+                    <i class="far fa-map" aria-hidden="true"></i>
                     Bebauungsplan: {{ bplan.properties.planname }}
                     </div>
                     <div><small>{{ bplan.properties.bezirk_name }}</small></div>
@@ -84,10 +84,10 @@
            href="#" role="button"
            aria-haspopup="true"
            aria-expanded="false">
-            <i class="fa fa bbg-checked" data-ng-class="{'fa-check-square': places.filters.bbg, 'fa-square': !places.filters.bbg}" aria-hidden="true"></i>
-            <i class="fa fa fa-square aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i>
-            <i class="fa fa imVerfahren-checked" data-ng-class="{'fa-check-square': places.filters.imVerfahren, 'fa-square': !places.filters.imVerfahren}" aria-hidden="true"></i>
-            <i class="fa fa fa-square festg-checked" data-ng-class="{'fa-check-square': places.filters.festg, 'fa-square': !places.filters.festg}" aria-hidden="true"></i>
+            <i class="fas fas bbg-checked" data-ng-class="{'fa-check-square': places.filters.bbg, 'fa-square': !places.filters.bbg}" aria-hidden="true"></i>
+            <i class="fas fas aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i>
+            <i class="fas fas imVerfahren-checked" data-ng-class="{'fa-check-square': places.filters.imVerfahren, 'fa-square': !places.filters.imVerfahren}" aria-hidden="true"></i>
+            <i class="fas fas festg-checked" data-ng-class="{'fa-check-square': places.filters.festg, 'fa-square': !places.filters.festg}" aria-hidden="true"></i>
             Verfahrensstatus <span class="caret" data-ng-class="{'pull-right': isMobile}"></span>
         </a>
         <ul class="dropdown-menu">
@@ -139,8 +139,8 @@
     <li role="presentation" class="info-button">
         <a href="https://mein.berlin.de/b-plan-karte-hilfe/" target="_blank" aria-label="Allgemeine Informationen">
             <span class="fa-stack fa-lg" aria-hidden="true">
-                <i class="fa fa-circle-thin fa-stack-2x"></i>
-                <i class="fa fa-info fa-stack-1x"></i>
+                <i class="far fa-circle fa-stack-2x"></i>
+                <i class="fas fa-info fa-stack-1x"></i>
             </span>
         </a>
     </li>
