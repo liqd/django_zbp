@@ -6,6 +6,10 @@ var path = require('path')
 module.exports = {
   entry: {
     app: [
+      '@fortawesome/fontawesome-free/scss/fontawesome.scss',
+      '@fortawesome/fontawesome-free/scss/brands.scss',
+      '@fortawesome/fontawesome-free/scss/regular.scss',
+      '@fortawesome/fontawesome-free/scss/solid.scss',
       'angular',
       'angular-animate',
       'angular-loading-bar',
@@ -16,7 +20,6 @@ module.exports = {
       'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff',
       'bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2',
       'bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-      'font-awesome/css/font-awesome.min.css',
       'leaflet',
       'leaflet/dist/leaflet.css',
       'leaflet.markercluster',
@@ -79,17 +82,19 @@ module.exports = {
         ]
       },
       {
-        test: /fonts\/.*\.(svg|woff2?|ttf|eot)(\?.*)?$/,
-        loader: 'file-loader',
-        options: {
-          name: 'fonts/[name].[ext]'
+        test: /(fonts|files)\/.*\.(svg|woff2?|ttf|eot|otf)(\?.*)?$/,
+        // defines asset should always have seperate file
+        type: 'asset/resource',
+        generator: {
+          // defines custom location of those files
+          filename: 'fonts/[name][ext]'
         }
       },
       {
         test: /\.svg$|\.png$/,
-        loader: 'file-loader',
-        options: {
-          name: 'images/[name].[ext]'
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]'
         }
       }
     ]
