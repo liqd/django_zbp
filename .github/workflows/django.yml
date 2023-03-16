@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: '14.x'
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -50,7 +50,7 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Cache pip packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-pip-packages
         with:
