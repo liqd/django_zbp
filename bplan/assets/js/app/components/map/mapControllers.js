@@ -5,6 +5,7 @@ angular.module('app.map.controllers', [])
 .controller('MapController', ['$scope', '$rootScope', '$window', '$timeout', 'PlacesService', function($scope, $rootScope, $window, $timeout, PlacesService) {
     $scope.places = PlacesService;
 
+    $scope.baseurl = map_baseurl;
     $scope.polygons = {};
     $scope.polygons.aul = {};
     $scope.polygons.bbg = {};
@@ -132,7 +133,7 @@ angular.module('app.map.controllers', [])
         });
         var token = '9aVUrssbx7PKNUKo3WtXY6MqETI6Q336u5D142QS'
         var colouredMap = L.mapboxGL({
-            style: 'https://maps.berlinonline.de/styles/klokantech-basic/style.json',
+            style: $scope.baseurl,
             maxZoom: 19,
             transformRequest: function (url, resourceType) {
                 if(resourceType === 'Tile' && 0 === url.indexOf('https://maps')) {

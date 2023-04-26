@@ -132,3 +132,4 @@ STATICFILES_DIRS = [os.path.join(PROJECT_DIR, 'static')]
 # Allow Cross-Origin Resource Sharing only for address lookups
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/addresses/.*$'
+MAP_BASEURL = "https://basemap.berlin.de/gdz_basemapde_vektor/styles/bm_web_col.json"
