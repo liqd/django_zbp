@@ -29,7 +29,7 @@ class Ortsteil(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.CharField(max_length=50, default='')
     bezirk = models.ForeignKey(Bezirk, related_name='ortsteile', on_delete=models.CASCADE)
-    polygon = models.PolygonField(srid=4326)
+    polygon = models.MultiPolygonField(srid=4326)
 
     def __str__(self):
         return self.name
