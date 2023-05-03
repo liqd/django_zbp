@@ -6,6 +6,7 @@ angular.module('app.map.controllers', [])
     $scope.places = PlacesService;
 
     $scope.baseurl = map_baseurl;
+    $scope.attribution = map_attribution;
     $scope.polygons = {};
     $scope.polygons.aul = {};
     $scope.polygons.bbg = {};
@@ -144,7 +145,7 @@ angular.module('app.map.controllers', [])
             }
         }).addTo(map)
 
-        map.attributionControl.setPrefix('<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">&copy; MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>');
+        map.attributionControl.setPrefix($scope.attribution);
 
         $scope.districtMarkers = L.layerGroup();
 

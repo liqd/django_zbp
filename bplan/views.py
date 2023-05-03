@@ -26,6 +26,7 @@ class BezirkDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['afs_behoer'] = self.request.GET.get('afs_behoer', '')
         context['map_baseurl'] = settings.MAP_BASEURL
+        context['map_attribution'] = settings.MAP_ATTRIBUTION
         return context
 
 
@@ -36,8 +37,9 @@ class StadtView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['map_baseurl'] = settings.MAP_BASEURL
         context['afs_behoer'] = self.request.GET.get('afs_behoer', '')
+        context['map_baseurl'] = settings.MAP_BASEURL
+        context['map_attribution'] = settings.MAP_ATTRIBUTION
         return context
 
 
