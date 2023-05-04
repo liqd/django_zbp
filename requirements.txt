@@ -4,7 +4,7 @@ django-cloudflare-push==0.2.1
 django-cors-headers==3.14.0
 django-filter==21.1
 djangorestframework-gis==0.18
-djangorestframework==3.13.1
+djangorestframework==3.14.0
 psycopg2==2.9.3
 python-dateutil==2.8.2
 rcssmin==1.1.0
