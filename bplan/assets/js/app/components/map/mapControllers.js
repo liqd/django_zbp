@@ -136,8 +136,8 @@ angular.module('app.map.controllers', [])
             style: $scope.baseurl,
             maxZoom: 19,
         }).addTo(map)
+        $scope.maplibreMap = maplibreMap
 
-        map.attributionControl.setPrefix($scope.attribution);
 
         $scope.districtMarkers = L.layerGroup();
 
@@ -191,7 +191,7 @@ angular.module('app.map.controllers', [])
         map.on('dragend', function (e){
             getMultipolygons();
         });
-        return map;
+        return {map, maplibreMap};
     };
 
     var updatePolygonAfterBplanChange = function(marker, multipolygon){
@@ -344,15 +344,33 @@ angular.module('app.map.controllers', [])
 
     $scope.$on('data:loaded', function() {
         $scope.places.initMap().then(function() {
-            $scope.map = createMap();
+            var maps = createMap();
+            $scope.map = maps.map
             $scope.bplansPerDistrict = {}
             addGeojson($scope.places.bplan_points.features, 0);
+            // if no attribution is set, try to get it from style source
+            if (!$scope.attribution) {
+              var maplibreMap = maps.maplibreMap.getMaplibreMap();
+              maplibreMap.on("style.load", function () {
+                var sources = maplibreMap.getStyle().sources;
+                var keys = Object.keys(sources);
+                keys.every((key, index) => {
+                  if ("attribution" in sources[key]) {
+                    $scope.map.attributionControl.
+                                    addAttribution(sources[key].attribution);
+                    return false;
+                  }
+                  return true;
+                });
+              });
+            } else {
+              $scope.map.attributionControl.addAttribution($scope.attribution);
+            }
             if(area){
                 _.forEach($scope.bplansPerDistrict, function(clustergroup) {
                     clustergroup.addTo($scope.map);
                 })
             }
-
         });
     });
 
