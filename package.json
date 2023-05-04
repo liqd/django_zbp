@@ -27,7 +27,7 @@
     "postcss": "8.4.14",
     "postcss-loader": "7.3.0",
     "sass-loader": "13.2.2",
-    "terser-webpack-plugin": "5.3.3",
+    "terser-webpack-plugin": "5.3.7",
     "webpack": "5.82.0",
     "webpack-merge": "5.8.0"
   },
