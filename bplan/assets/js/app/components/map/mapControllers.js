@@ -132,17 +132,9 @@ angular.module('app.map.controllers', [])
         var map = $window.L.map('map', {
             maxZoom: 19
         });
-        var token = '9aVUrssbx7PKNUKo3WtXY6MqETI6Q336u5D142QS'
-        var colouredMap = L.mapboxGL({
+        var maplibreMap = L.maplibreGL({
             style: $scope.baseurl,
             maxZoom: 19,
-            transformRequest: function (url, resourceType) {
-                if(resourceType === 'Tile' && 0 === url.indexOf('https://maps')) {
-                  return {
-                    url: url+"?token="+token
-                  }
-                }
-            }
         }).addTo(map)
 
         map.attributionControl.setPrefix($scope.attribution);
