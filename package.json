@@ -23,7 +23,7 @@
     "maplibre-gl": "2.4.0",
     "@maplibre/maplibre-gl-leaflet": "0.0.19",
     "mini-css-extract-plugin": "2.7.5",
-    "node-sass": "7.0.1",
+    "node-sass": "7.0.3",
     "postcss": "8.4.14",
     "postcss-loader": "7.3.0",
     "sass-loader": "13.2.2",
