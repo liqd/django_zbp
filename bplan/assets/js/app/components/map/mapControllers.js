@@ -351,11 +351,11 @@ angular.module('app.map.controllers', [])
             // if no attribution is set, try to get it from style source
             if (!$scope.attribution) {
               var maplibreMap = maps.maplibreMap.getMaplibreMap();
-              maplibreMap.on("style.load", function () {
-                var sources = maplibreMap.getStyle().sources;
-                var keys = Object.keys(sources);
+              maplibreMap.on('style.load', function () {
+                const sources = maplibreMap.getStyle().sources;
+                const keys = Object.keys(sources);
                 keys.every((key, index) => {
-                  if ("attribution" in sources[key]) {
+                  if ('attribution' in sources[key]) {
                     $scope.map.attributionControl.
                                     addAttribution(sources[key].attribution);
                     return false;
