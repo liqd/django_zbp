@@ -1,4 +1,5 @@
 VIRTUAL_ENV ?= venv
+SOURCE_DIRS = bplan django_zbp
 
 .PHONY: install
 install:
@@ -39,3 +40,33 @@ clean:
 	if [ -f package-lock.json ]; then rm package-lock.json; fi
 	if [ -d node_modules ]; then rm -rf node_modules; fi
 	if [ -d venv ]; then rm -rf venv; fi
+
+.PHONY: lint
+lint:
+	EXIT_STATUS=0; \
+	$(VIRTUAL_ENV)/bin/isort --diff -c $(SOURCE_DIRS) ||  EXIT_STATUS=$$?; \
+	$(VIRTUAL_ENV)/bin/flake8 $(SOURCE_DIRS) --exclude migrations,settings ||  EXIT_STATUS=$$?; \
+	$(VIRTUAL_ENV)/bin/python manage.py makemigrations --dry-run --check --noinput || EXIT_STATUS=$$?; \
+	exit $${EXIT_STATUS}
+
+.PHONY: lint-quick
+lint-quick:
+	EXIT_STATUS=0; \
+	$(VIRTUAL_ENV)/bin/python manage.py makemigrations --dry-run --check --noinput || EXIT_STATUS=$$?; \
+	exit $${EXIT_STATUS}
+
+.PHONY: lint-python-files
+lint-python-files:
+	EXIT_STATUS=0; \
+	$(VIRTUAL_ENV)/bin/black $(ARGUMENTS) || EXIT_STATUS=$$?; \
+	$(VIRTUAL_ENV)/bin/isort --diff -c $(ARGUMENTS) --filter-files || EXIT_STATUS=$$?; \
+	$(VIRTUAL_ENV)/bin/flake8 $(ARGUMENTS) || EXIT_STATUS=$$?; \
+	exit $${EXIT_STATUS}
+
+.PHONY: lint-fix
+lint-fix:
+	EXIT_STATUS=0; \
+	$(VIRTUAL_ENV)/bin/isort $(SOURCE_DIRS) ||  EXIT_STATUS=$$?; \
+	exit $${EXIT_STATUS}
+
+
