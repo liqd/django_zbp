@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.4.0",
+    "@maplibre/maplibre-gl-leaflet": "0.0.19",
     "acorn": "8.8.2",
     "angular": "1.8.3",
     "angular-animate": "1.8.3",
@@ -15,13 +16,13 @@
     "css-loader": "6.7.3",
     "fibers": "5.0.3",
     "file-loader": "6.2.0",
+    "husky": "8.0.3",
     "jquery": "3.6.4",
     "leaflet": "1.9.3",
     "leaflet-defaulticon-compatibility": "0.1.1",
     "leaflet.markercluster": "github:liqd/Leaflet.markercluster#3528578a642e0e4f16ff46d051037a34e4c4c301",
     "lodash": "4.17.21",
     "maplibre-gl": "2.4.0",
-    "@maplibre/maplibre-gl-leaflet": "0.0.19",
     "mini-css-extract-plugin": "2.7.5",
     "postcss": "8.4.23",
     "postcss-loader": "7.3.0",
@@ -37,6 +38,7 @@
   "scripts": {
     "build:prod": "webpack --config webpack.prod.js --mode production",
     "build": "webpack --config webpack.dev.js --mode development",
+    "postinstall": "husky install",
     "watch": "webpack --config webpack.dev.js --watch --mode development"
   },
   "repository": {
