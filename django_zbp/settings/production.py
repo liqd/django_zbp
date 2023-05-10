@@ -2,13 +2,13 @@ from .base import *
 
 DEBUG = False
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'djanog_zbp',
-        'TIMEOUT': 1800,
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "djanog_zbp",
+        "TIMEOUT": 1800,
     }
 }
 

@@ -1,15 +1,14 @@
-import os
 import json
+import os
 
-from tqdm import tqdm
-
-from django.utils.text import slugify
-from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos import Point
+from django.core.management.base import BaseCommand
 from django.db.models import Min
+from django.utils.text import slugify
+from tqdm import tqdm
 
 from bplan.models import Address
 from bplan.models import Bezirk
@@ -26,10 +25,10 @@ class Command(BaseCommand):
         return int(string)
 
     def _get_search_name(self, strname, hsnr):
-        strname = strname.replace(' ', '').replace('-', '').replace('ß', 'ss')
-        if strname[-3:] == 'str':
+        strname = strname.replace(" ", "").replace("-", "").replace("ß", "ss")
+        if strname[-3:] == "str":
             strname += "asse"
-        elif strname[-4:] == 'str.':
+        elif strname[-4:] == "str.":
             strname = strname[:-1] + "asse"
         return (strname + hsnr).lower()
 
@@ -39,24 +38,24 @@ class Command(BaseCommand):
         return string
 
     def handle(self, *args, **options):
-
         qs = Address.objects.all()
-        streets = qs.values('strname', 'plz').order_by().annotate(Min('hsnr'))
+        streets = qs.values("strname", "plz").order_by().annotate(Min("hsnr"))
 
         for street in streets:
             base_address = Address.objects.filter(
-                strname=street['strname'],
-                plz=street['plz'],
-                hsnr=street['hsnr__min']).first()
+                strname=street["strname"], plz=street["plz"], hsnr=street["hsnr__min"]
+            ).first()
 
             search_name = self._get_search_name(
-                self._get_string(base_address.strname), '').rstrip(' ')
+                self._get_string(base_address.strname), ""
+            ).rstrip(" ")
             new_address, created = Address.objects.get_or_create(
                 point=base_address.point,
                 strname=base_address.strname,
                 search_name=search_name,
-                hsnr='',
+                hsnr="",
                 plz=base_address.plz,
-                gml_id=base_address.gml_id + '_no_hsnr',
+                gml_id=base_address.gml_id + "_no_hsnr",
                 spatial_name=base_address.spatial_name,
-                bezirk=base_address.bezirk)
+                bezirk=base_address.bezirk,
+            )

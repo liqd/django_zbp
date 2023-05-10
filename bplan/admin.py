@@ -1,13 +1,14 @@
 from django.contrib.gis import admin
+
+from .models import Address
 from .models import Bezirk
-from .models import Ortsteil
 from .models import BPlan
 from .models import Download
-from .models import Address
+from .models import Ortsteil
 
 
 class DownloadAdmin(admin.ModelAdmin):
-    list_filter = ('bplan', )
+    list_filter = ("bplan",)
 
 
 admin.site.register(Bezirk, admin.GeoModelAdmin)
