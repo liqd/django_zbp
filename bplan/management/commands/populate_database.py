@@ -3,7 +3,6 @@ import subprocess
 import sys
 from os.path import dirname
 
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 SHELL_SCRIPT = """

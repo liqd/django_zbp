@@ -1,8 +1,5 @@
 from django import forms
 from django.contrib.auth import authenticate
-from django.contrib.auth import login
-from django.contrib.auth import logout
-from django.forms import ModelForm
 
 
 class LoginForm(forms.Form):

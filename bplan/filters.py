@@ -1,12 +1,7 @@
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
-from django.db.models import Q
 from django.utils import timezone
 from rest_framework import filters
-from rest_framework_gis import filters as gis_filters
-
-from .models import Bezirk
-from .models import Ortsteil
 
 
 class StatusFilter(filters.BaseFilterBackend):
@@ -101,7 +96,7 @@ class BPlanAddressFilter(filters.BaseFilterBackend):
         try:
             (x, y) = (float(n) for n in point_string.split(","))
         except ValueError:
-            raise ParseError(
+            raise Exception(
                 "Invalid geometry string supplied for parameter {0}".format(
                     self.point_param
                 )

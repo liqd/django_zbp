@@ -10,16 +10,12 @@ Then you get a zip file: https://fbinter.stadt-berlin.de/fb/atom/AD/AD_AdressenB
 Here you may find your .gml file with all addresses of Berlin
 """
 
-import json
 import os
 import xml.etree.ElementTree as etree
 
 from django.conf import settings
-from django.contrib.gis.gdal import DataSource
-from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos import Point
 from django.core.management.base import BaseCommand
-from django.utils.text import slugify
 from tqdm import tqdm
 
 from bplan.models import Address

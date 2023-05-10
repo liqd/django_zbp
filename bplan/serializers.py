@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.contrib.gis.geos import Point
 from django.utils import timezone
 from rest_framework import serializers
