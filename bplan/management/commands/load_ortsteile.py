@@ -1,13 +1,14 @@
-import os
 import json
+import os
 
-from tqdm import tqdm
-
-from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.contrib.gis.gdal import DataSource
-from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
+from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.geos import MultiPolygon
+from django.contrib.gis.geos import Polygon
+from django.core.management.base import BaseCommand
 from django.utils.text import slugify
+from tqdm import tqdm
 
 from bplan.models import Bezirk
 from bplan.models import Ortsteil

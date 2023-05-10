@@ -3,7 +3,6 @@ from django.utils import timezone
 
 
 class Download(models.Model):
-
     created = models.DateTimeField(editable=False)
     errors = models.TextField(blank=True, null=True)
 
@@ -27,8 +26,10 @@ class Bezirk(models.Model):
 
 class Ortsteil(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    slug = models.CharField(max_length=50, default='')
-    bezirk = models.ForeignKey(Bezirk, related_name='ortsteile', on_delete=models.CASCADE)
+    slug = models.CharField(max_length=50, default="")
+    bezirk = models.ForeignKey(
+        Bezirk, related_name="ortsteile", on_delete=models.CASCADE
+    )
     polygon = models.MultiPolygonField(srid=4326)
 
     def __str__(self):
@@ -46,11 +47,10 @@ class Address(models.Model):
     bezirk = models.ForeignKey(Bezirk, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.strname + ' ' + self.hsnr
+        return self.strname + " " + self.hsnr
 
 
 class BPlan(models.Model):
-
     bplanID = models.CharField(max_length=50, unique=True)
     planname = models.CharField(max_length=50)
     multipolygon = models.MultiPolygonField(srid=4326)
@@ -78,12 +78,13 @@ class BPlan(models.Model):
     fsg_gvbl_s = models.CharField(max_length=50, blank=True, null=True)
     fsg_gvbl_d = models.DateField(blank=True, null=True)
     normkontr = models.CharField(max_length=50, blank=True, null=True)
-    download = models.ForeignKey(Download, blank=True, null=True, on_delete=models.CASCADE)
+    download = models.ForeignKey(
+        Download, blank=True, null=True, on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.planname
 
     class Meta:
-        index_together = [["bbg_anfang", "bbg_ende"],
-                          ["aul_anfang", "aul_ende"]]
-        ordering = ['id']
+        index_together = [["bbg_anfang", "bbg_ende"], ["aul_anfang", "aul_ende"]]
+        ordering = ["id"]
