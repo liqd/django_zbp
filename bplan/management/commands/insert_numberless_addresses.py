@@ -1,14 +1,5 @@
-import json
-import os
-
-from django.conf import settings
-from django.contrib.gis.gdal import DataSource
-from django.contrib.gis.geos import GEOSGeometry
-from django.contrib.gis.geos import Point
 from django.core.management.base import BaseCommand
 from django.db.models import Min
-from django.utils.text import slugify
-from tqdm import tqdm
 
 from bplan.models import Address
 from bplan.models import Bezirk
