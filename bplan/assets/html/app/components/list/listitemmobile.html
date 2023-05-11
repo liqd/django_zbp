@@ -1,6 +1,6 @@
 <div class="bplan-list-item bplan-list-item-{{ status }}" data-ng-class="{highlighted: highlight()}">
     <div class="row">
-        <div class="col-xs-9">
+        <div class="col-9">
             <div><b>Bebauungs&#173;plan-Nr.:</b> {{ bplan.planname }}</div>
             <div><b>Bezirk:</b> {{ bplan.bezirk_name }}</div>
             <div data-ng-if="bplan.status == 'aul'"><b>Enddatum:</b> {{ bplan.aul_ende | date : 'dd.MM.yyyy' }}</div>
@@ -9,15 +9,15 @@
             <div data-ng-if="bplan.status == 'festg'"><b>Festgesetzt am:</b> {{ bplan.festsg_am | date : 'dd.MM.yyyy'}}</div>
         </div>
 
-        <div class="col-xs-3">
+        <div class="col-3">
             <div data-ng-if="bplan.ausleg_www">
-                <div><a class="custom-btn btn-primary btn-xs listitemmobile-button" target="_blank" href="{{ bplan.ausleg_www }}">Website</a></div>
+                <div><a class="custom-btn btn-primary btn-sm listitemmobile-button" target="_blank" href="{{ bplan.ausleg_www }}">Website</a></div>
             </div>
             <div data-ng-if="bplan.scan_www">
-                <div><a class="custom-btn btn-primary btn-xs listitemmobile-button" target="_blank" href="{{ bplan.scan_www }}">zum B-Plan</a></div>
+                <div><a class="custom-btn btn-primary btn-sm listitemmobile-button" target="_blank" href="{{ bplan.scan_www }}">zum B-Plan</a></div>
             </div>
             <div data-ng-if="bplan.grund_www">
-                <div><a  class="custom-btn btn-primary btn-xs listitemmobile-button" target="_blank" href="{{ bplan.grund_www }}">Begründung</a></div>
+                <div><a  class="custom-btn btn-primary btn-sm listitemmobile-button" target="_blank" href="{{ bplan.grund_www }}">Begründung</a></div>
             </div>
         </div>
     </div>

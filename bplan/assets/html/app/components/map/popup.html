@@ -1,19 +1,19 @@
 <div class="popup popup-{{bplan.status}}">
     <div class="row">
-        <div class="col-xs-8 col-sm-8 col-md-8">
+        <div class="col-8">
             <div class="popup-entry">
                 <div><b>Bebauungs&#173;plan-Nr.:</b></div>
                 <div>{{ bplan.planname }}</div>
             </div>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="col-4">
             <button class="fa-pull-right close-button" data-ng-click="closePopup()">
                 <i class="fas fa-times fa-2x" aria-label="Popup schließen"></i>
             </button>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-8 col-sm-8 col-md-8">
+        <div class="col-8">
             <div class="popup-entry">
                 <div><b>Bezirk:</b></div>
                 <div>{{ bplan.bezirk_name }}</div>
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-12">
             <div class="popup-entry">
                 <div><b>Aktueller Status: </b></div>
                 <div data-ng-if="bplan.status_normkontr !== ''">{{ bplan.status | status }}, {{ bplan.status_normkontr }}</div>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-12">
             <div class="popup-entry">
                 <div data-ng-if="bplan.status == 'aul' || status == 'bbg'"><b>Enddatum:</b></div>
                 <div data-ng-if="bplan.status == 'imVerfahren'"><b>Aufstellungsbeschluss:</b></div>
@@ -43,16 +43,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="popup-entry">
-            <div data-ng-if="bplan.ausleg_www" class="col-xs-3 col-sm-3 col-md-3">
-                <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.ausleg_www }}">Website</a></div>
-            </div>
-            <div data-ng-if="bplan.scan_www" class="col-xs-3 col-sm-3 col-md-3">
-                <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.scan_www }}">zum B-Plan</a></div>
-            </div>
-            <div data-ng-if="bplan.grund_www" class="col-xs-3 col-sm-3 col-md-3">
-                <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.grund_www }}">Begründung</a></div>
-            </div>
+        <div data-ng-if="bplan.ausleg_www" class="col">
+            <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.ausleg_www }}">Website</a></div>
+        </div>
+        <div data-ng-if="bplan.scan_www" class="col">
+            <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.scan_www }}">zum B-Plan</a></div>
+        </div>
+        <div data-ng-if="bplan.grund_www" class="col">
+            <div><a class="custom-btn btn-primary" target="_blank" href="{{ bplan.grund_www }}">Begründung</a></div>
         </div>
     </div>
 </div>

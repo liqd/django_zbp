@@ -9,11 +9,14 @@ angular.module('app.shared.directives', [])
         link: function(scope) {
 
             scope.toggleDropdown = function(event) {
-                var element = $(event.currentTarget.parentNode);
-                if(element.hasClass('open')) {
-                    element.removeClass('open');
+                var element = $(event.currentTarget);
+                var siblingElement = $(element.nextElementSibling);
+                if(element.hasClass('show')) {
+                    element.removeClass('show');
+                    siblingElement.removeClass('show');
                 } else {
-                    element.addClass('open');
+                    element.addClass('show');
+                    siblingElement.addClass('show');
                 }
             }
         }

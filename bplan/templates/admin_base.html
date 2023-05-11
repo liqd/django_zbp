@@ -1,3 +1,5 @@
+<!-- Not updated to Bootstrap 5 due to no use -->
+
 {% load static %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -21,7 +23,7 @@
         <div class="container">
             <ul class="nav nav-pills fa-pull-right">
                 <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                       {% if request.user.is_authenticated %}{{request.user}}{% else %}Benutzer{% endif %} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">

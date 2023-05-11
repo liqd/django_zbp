@@ -14,22 +14,24 @@
         </a>
     </li>
     <li class="textinput" data-ng-class="{open: searchResultCount > 1 && searchstring}">
-        <form class="navbar-form navbar-left" ng-submit="getDataForSearch()" navbar-input-group" role="search">
+        <form class="navbar-form navbar-left navbar-input-group" ng-submit="getDataForSearch()" role="search">
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" class="form-control" data-ng-model="searchstring" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bebauungsplan-Nr.">
-                    <div
-                        class="input-group-addon search-button"
+                    <button
+                        class="btn search-button"
+                        type="button"
                         data-ng-click="getDataForSearch()"
                         data-ng-class="{middle: searchstring}">
                         <i class="fas fa-search" aria-label="Adresse oder Bebauungsplan-Nr. suchen"></i>
-                    </div>
-                    <div
+                    </button>
+                    <button
                         data-ng-if="searchstring"
-                        class="input-group-addon search-button"
+                        type="button"
+                        class="btn search-button"
                         data-ng-click="resetSearch()">
                         <i class="fas fa-times" aria-label="Suche löschen"></i>
-                    </div>
+                </button>
                 </div>
             </div>
         </form>
@@ -62,7 +64,7 @@
             href="#" role="button"
             aria-haspopup="true"
             aria-expanded="false">
-            {{ places.currentOrtsteilName }} <span class="caret" data-ng-class="{'fa-pull-right': isMobile}"></span>
+            {{ places.currentOrtsteilName }}
         </a>
         <ul class="dropdown-menu">
             <li data-ng-hide="places.currentOrtsteilName == 'Alle Ortsteile'"
@@ -78,22 +80,30 @@
             </li>
         </ul>
     </li>
-    <li class="dropdown nav-status-filter" data-ng-class="{'open': dropdownOpen }">
-        <a class="dropdown-toggle"
-           data-ng-click="toggleDropdown($event)"
-           href="#" role="button"
-           aria-haspopup="true"
-           aria-expanded="false">
+
+
+    <li class="dropdown nav-status-filter">
+        <button
+            class="dropdown-toggle"
+            data-ng-class="{'show': dropdownOpen }"
+            data-ng-click="toggleDropdown($event)"
+            href="#"
+            type="button"
+            id="navStatusFilter"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+        >
             <i class="fas fas bbg-checked" data-ng-class="{'fa-check-square': places.filters.bbg, 'fa-square': !places.filters.bbg}" aria-hidden="true"></i>
             <i class="fas fas aul-checked" data-ng-class="{'fa-check-square': places.filters.aul, 'fa-square': !places.filters.aul}" aria-hidden="true"></i>
             <i class="fas fas imVerfahren-checked" data-ng-class="{'fa-check-square': places.filters.imVerfahren, 'fa-square': !places.filters.imVerfahren}" aria-hidden="true"></i>
             <i class="fas fas festg-checked" data-ng-class="{'fa-check-square': places.filters.festg, 'fa-square': !places.filters.festg}" aria-hidden="true"></i>
-            Verfahrensstatus <span class="caret" data-ng-class="{'fa-pull-right': isMobile}"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <label class="dropdown-menu-title">In Beteiligung</label>
+            Verfahrensstatus
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="navStatusFilter">
+            <label class="dropdown-header dropdown-menu-title">In Beteiligung</label>
             <li>
-                <div class="custom-checkbox custom-checkbox-bbg">
+                <div class="mb-2 custom-checkbox custom-checkbox-bbg">
                     <input
                         type="checkbox"
                         id="checkbox_bbg"
@@ -103,7 +113,7 @@
                 </div>
             </li>
             <li>
-                <div class="custom-checkbox custom-checkbox-aul">
+                <div class="mb-2 custom-checkbox custom-checkbox-aul">
                     <input
                         type="checkbox"
                         id="checkbox_aul"
@@ -112,7 +122,7 @@
                         <label for="checkbox_aul">{{'aul' | status }}</label>
                 </div>
             </li>
-            <li role="separator" class="divider"></li>
+            <li role="separator" class="dropdown-divider"></li>
             <li>
                 <div class="custom-checkbox custom-checkbox-imVerfahren">
                     <input
@@ -123,7 +133,7 @@
                         <label for="checkbox_imVerfahren">{{'imVerfahren' | status }}</label>
                 </div>
             </li>
-            <li role="separator" class="divider"></li>
+            <li role="separator" class="dropdown-divider"></li>
             <li>
                 <div class="custom-checkbox custom-checkbox-festg">
                     <input
@@ -136,6 +146,7 @@
             </li>
         </ul>
     </li>
+
     <li role="presentation" class="info-button">
         <a href="https://mein.berlin.de/b-plan-karte-hilfe/" target="_blank" aria-label="Allgemeine Informationen">
             <span class="fa-stack fa-lg" aria-hidden="true">
