@@ -23,6 +23,12 @@ $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 
+$primary:       $brand-primary !default;
+$success:       $brand-success !default;
+$info:          $brand-info !default;
+$warning:       $brand-warning !default;
+$danger:        $brand-danger !default;
+
 $brand-brand1:           #018dd0; // Blue
 $brand-brand2:           #fab61b; // Yellow
 $brand-brand3:           #5dbeba; // Green
@@ -34,10 +40,6 @@ $status-imVerfahren: #47c6dd;
 $status-festg: #e72323;
 
 $map-height: 450px;
-
-$font-size: 13px;
-$font-size-small: 11px;
-
 
 //== Blocks
 //
@@ -73,10 +75,10 @@ $font-family-serif:       "Arimo", serif !default;
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
-$font-size-base:          13px !default;
-$font-size-large:         20px !default; // ~18px
-$font-size-xlarge:        30px !default; // ~18px
-$font-size-small:         12px !default; // ~12px
+$font-size-base:          0.9 * 1rem !default; // ~13px
+$font-size-large:         1.538 *  $font-size-base !default; // ~20px
+$font-size-xlarge:        2.3 * $font-size-base !default; // ~30px
+$font-size-small:         0.923 *  $font-size-base !default; // ~12px
 
 $font-size-h1:            floor(($font-size-base * 2.6)) !default; // ~36px
 $font-size-h2:            floor(($font-size-base * 2.15)) !default; // ~30px
@@ -117,17 +119,17 @@ $icon-font-svg-id:        "glyphicons_halflingsregular" !default;
 //
 //## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
-$padding-base-vertical:     6px !default;
-$padding-base-horizontal:   12px !default;
+$padding-base-vertical:     0.375 * 1rem !default; // ~6px
+$padding-base-horizontal:   2 * $padding-base-vertical !default; // ~12px
 
-$padding-large-vertical:    10px !default;
-$padding-large-horizontal:  16px !default;
+$padding-large-vertical:    1.67 * $padding-base-vertical !default; // ~10px
+$padding-large-horizontal:  2.67 * $padding-large-vertical !default; // ~16px
 
-$padding-small-vertical:    5px !default;
-$padding-small-horizontal:  10px !default;
+$padding-small-vertical:    0.834 * $padding-base-vertical !default; // ~5px
+$padding-small-horizontal:  1.67 * $padding-base-vertical!default; // ~10px
 
-$padding-xs-vertical:       1px !default;
-$padding-xs-horizontal:     5px !default;
+$padding-xs-vertical:       0.167 * $padding-base-vertical !default; // ~1px
+$padding-xs-horizontal:     0.667 * $padding-base-vertical !default; // ~4px
 
 $line-height-large:         1.3333333 !default; // extra decimals for Win 8.1 Chrome
 $line-height-small:         1.5 !default;
@@ -387,12 +389,12 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    75px !default;
+$navbar-height:                    4.69 * 1rem !default; // ~75px
 $navbar-margin-bottom:             $line-height-computed !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width * 0.5)) !default;
 $navbar-padding-vertical:          (($navbar-height - $line-height-computed) * 0.5) !default;
-$navbar-collapse-max-height:       340px !default;
+$navbar-collapse-max-height:       22.25 * 1rem !default; // ~340px
 
 $navbar-default-color:             #777 !default;
 $navbar-default-bg:                #f8f8f8 !default;
