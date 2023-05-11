@@ -26,20 +26,22 @@
         {% verbatim %}
         <div>
             <div class="container-fluid" ng-app="app">
-                <div class="row" ng-controller="ViewController">
+                <div ng-controller="ViewController">
 
-                    <div class="no-padding col-md-12">
-                        <data-shared-nav></data-shared-nav>
+                    <div class="row">
+                        <div class="no-padding col-md-12">
+                            <data-shared-nav></data-shared-nav>
+                        </div>
                     </div>
 
-                    <div ng-controller="MapController">
+                    <div class="row" ng-controller="MapController">
 
-                        <div data-ng-class="{'col-md-12 col-sm-12 col-xs-12' : !popupopen, 'col-md-6 col-sm-6 col-xs-6': popupopen}"
-                             data-ng-show="currentView === 'map'" class="no-right-padding no-left-padding">
+                        <div data-ng-class="{'col-12' : !popupopen, 'col-6': popupopen}"
+                             data-ng-show="currentView === 'map'" class="no-padding">
                             <div class='bplan-map' id="map"></div>
                         </div>
 
-                        <div class="col-md-6 col-sm-6 col-xs-6 no-left-padding no-right-padding"
+                        <div class="col-6 no-left-padding no-right-padding popup__container"
                              data-ng-if ="currentView === 'map' && popupopen">
                             <data-popup data-ng-if="currentItem" closepopup="closePopup" resetsearch="resetSearch" bplan="currentItem"></data-popup>
                         </div>
@@ -57,7 +59,7 @@
                         <div
                             class="row bplan-list"
                             data-ng-if="list.length > 0">
-                            <div class="col-md-12 col-lg-12 fa-pull-right">
+                            <div class="col-12">
                                 <nav>
                                     <ul class="pagination">
                                         <li data-ng-class="{'disabled': currentPage==0}">
@@ -92,7 +94,7 @@
                             </div>
                         </div>
                         <div data-ng-if="!isMobile" class="row">
-                            <div class="col-md-12" data-ng-show="currentView === 'list'">
+                            <div class="no-padding col-md-12" data-ng-show="currentView === 'list'">
                                 <div
                                     class="row"
                                     data-ng-if="list.length > 0"
@@ -108,9 +110,8 @@
                             </div>
                         </div>
                         <div data-ng-if="isMobile" class="row">
-                            <div class="col-md-12" data-ng-show="currentView === 'list'">
+                            <div class="no-padding col-md-12" data-ng-show="currentView === 'list'">
                                 <div
-                                    class="row"
                                     data-ng-if="list.length > 0"
                                     data-ng-repeat="bplan in list| startFrom:currentPage*pageSize | limitTo:pageSize">
                                     <listitemmobile
