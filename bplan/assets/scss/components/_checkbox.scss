@@ -13,7 +13,7 @@
     position: absolute;
     left: 0;
     top: 50%;
-    margin-top: -8px;
+    margin-top: -6px;
     width: 12px;
     height: 12px;
     border-radius: 2px;
@@ -40,18 +40,20 @@
 }
 
 %extend_3 {
-    font: normal normal normal 8px/1 'Glyphicons Halflings';
-    content: '\e013';
+    font-family: "Font Awesome\ 6 Free", sans-serif;
+    font-weight: 900;
+    font-size: $font-size-small;
+    content: '\f00c';
     position: absolute;
-    top: 50%;
+    top: 35%;
     margin-top: -6px;
-    left: 2px;
+    left: 1px;
     color: $white;
-    xtransition: all .2s;
+    transition: all .2s;
 }
 
 %extend_4 {
-    content: '\2212';
+    content: '\f00c';
     left: 2px;
     opacity: 1;
     transform: scale(1);
@@ -147,6 +149,7 @@
                 }
                 &:after {
                     @extend %extend_3;
+                    margin-top: -4px;
                     opacity: 1;
                     transform: scale(1);
                 }
@@ -258,6 +261,7 @@
     > label {
         margin-bottom: 0 !important;
         user-select: none;
+        font-weight: bold;
     }
     > [type="checkbox"][data-indeterminate] + label:after {
         @extend %extend_4;
@@ -324,6 +328,7 @@
     > label {
         margin-bottom: 0 !important;
         user-select: none;
+        font-weight: bold;
     }
     > [type="checkbox"][data-indeterminate] + label:after {
         @extend %extend_4;

@@ -1,7 +1,12 @@
-.popup {
+.popup__container {
     height: $map-height;
+}
+
+
+.popup {
+    height: 100%;
     color: $gray-light;
-    font-size: $font-size;
+    font-size: $font-size-base;
     font-family: 'Arimo', serif;
     padding: 25px;
 }

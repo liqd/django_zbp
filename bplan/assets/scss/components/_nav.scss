@@ -1,13 +1,15 @@
 .nav {
 	padding: 10px 0 10px 0;
-	font-size: $font-size;
+	font-size: $font-size-base;
 	color: $gray-light;
 	font-family: 'Arimo', serif;
 
 	& li {
 		& a {
+			display: block;
+			padding: $padding-xs-vertical $padding-base-vertical;
+			margin: $padding-xs-vertical;
 			color: $gray-light;
-			padding: 2px 7px 2px 7px;
 			@media (max-width: $screen-xs-max) {
 				padding: 5px 7px 5px 7px;
 			}
@@ -39,20 +41,20 @@
 					border-bottom: 1px solid $gray-lighter;
 					border-right: none;
 					border-radius: 0px;
-					font-size: $font-size;
+					font-size: $font-size-base;
 					font-family: 'Arimo', serif;
 					-webkit-box-shadow: none;
 					-moz-box-shadow: none;
 					box-shadow: none;
-					padding: 3px 7px 1px 7px;
+					padding: 3px 7px;
 					height: auto;
 					outline: none;
 					min-width: 210px;
 					&:focus {
 						outline:0px;
-                        -webkit-appearance:none;
-                        box-shadow: none;
-                        border-color: $gray-lighter;
+						-webkit-appearance: none;
+						box-shadow: none;
+						border-color: $gray-lighter;
 					}
 					@media (max-width: $screen-xs-max) {
 						padding: 5px 7px 5px 7px;
@@ -63,7 +65,12 @@
 	}
 
 	& .dropdown {
-		border: 1px solid $gray-lighter;
+		& .dropdown-toggle {
+			color: $gray-light;
+			background: none;
+			border: 1px solid $gray-lighter;
+			padding: $padding-xs-horizontal;
+		}
 
 		& .bbg-checked {
 			color: $status-bbg;
@@ -83,6 +90,13 @@
 
 		.dropdown-menu-title {
 			padding-left: 22px;
+			font-weight: bold;
+			font-size: $font-size-base;
+		}
+
+		label {
+			color: $gray-light;
+			display: block;
 		}
 	}
 	& .no-dropdown {
@@ -96,30 +110,9 @@
 		}
 	}
 
-	& .open {
-		& a {
-			background-color: #fff;
-			position: relative;
-			z-index: 2;
-		}
-		& a:hover {
-			background-color: #fff;
-			text-decoration: none;
-		}
-		& a:focus {
-			background-color: #fff;
-			text-decoration: none;
-		}
-		& form {
-			z-index: 2;
-		}
-
-		border-bottom: 0;
-	}
-
 	& .dropdown-menu {
 		border: 1px solid $gray-lighter;
-		font-size: $font-size;
+		font-size: $font-size-base;
 		font-family: 'Arimo', serif;
 		padding: 7px;
 		border-radius: 0px;
@@ -183,16 +176,25 @@
   }
 }
 
+.nav {
+	margin: 0;
+	padding-bottom: 0.5 * $spacer;
+}
+
 .nav-pills {
-	> li {
+	> li,
+	.dropdown-toggle {
+		text-align: start;
+
 		@media (max-width: $screen-xs-max) {
 			float: none;
+			width: 100%;
+			margin-bottom: $padding-base-vertical;
 
-			.caret {
+			:after {
 				float: right;
 				margin: 6px 0;
 			}
 		}
 	}
 }
-
