@@ -75,3 +75,6 @@ $ make watch
 ```
 
 go to http://localhost:8005/admin/
+
+### testing the embedded version
+To test an embedded version open the file `test.html` after running `make watch`
