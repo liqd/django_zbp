@@ -4,7 +4,7 @@
 	color: $gray-light;
 	font-family: 'Arimo', serif;
 
-	li + .open .dropdown-menu {
+	li.open .dropdown-menu {
 		display: block;
 	}
 
