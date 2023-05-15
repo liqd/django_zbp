@@ -59,10 +59,12 @@
         </ul>
     </li>
     <li data-ng-if="area" class="dropdown">
-        <a class="dropdown-toggle"
+        <a
+            class="dropdown-toggle"
             data-ng-click="toggleDropdown($event)"
-            href="#" role="button"
-            aria-haspopup="true"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
             aria-expanded="false">
             {{ places.currentOrtsteilName }}
         </a>
