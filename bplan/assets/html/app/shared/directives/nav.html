@@ -20,9 +20,11 @@
                     <input type="text" class="form-control" data-ng-model="searchstring" data-ng-change="removeTagOnBackspace()" placeholder="Adresse oder Bebauungsplan-Nr.">
                     <button
                         class="btn search-button"
-                        type="button"
+                        data-ng-class="{middle: searchstring}"
                         data-ng-click="getDataForSearch()"
-                        data-ng-class="{middle: searchstring}">
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <i class="fas fa-search" aria-label="Adresse oder Bebauungsplan-Nr. suchen"></i>
                     </button>
                     <button
@@ -59,15 +61,15 @@
         </ul>
     </li>
     <li data-ng-if="area" class="dropdown">
-        <a
+        <button
             class="dropdown-toggle"
+            data-ng-class="{'show': dropdownOpen }"
             data-ng-click="toggleDropdown($event)"
-            href="#"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false">
             {{ places.currentOrtsteilName }}
-        </a>
+        </button>
         <ul class="dropdown-menu">
             <li data-ng-hide="places.currentOrtsteilName == 'Alle Ortsteile'"
                 data-ng-click="resetOrtsteil();">
@@ -89,7 +91,6 @@
             class="dropdown-toggle"
             data-ng-class="{'show': dropdownOpen }"
             data-ng-click="toggleDropdown($event)"
-            href="#"
             type="button"
             id="navStatusFilter"
             data-bs-toggle="dropdown"
