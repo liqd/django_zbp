@@ -4,6 +4,10 @@
 	color: $gray-light;
 	font-family: 'Arimo', serif;
 
+	li + .open .dropdown-menu {
+		display: block;
+	}
+
 	& li {
 		& a {
 			display: block;
