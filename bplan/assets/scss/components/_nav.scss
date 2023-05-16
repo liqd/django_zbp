@@ -68,6 +68,10 @@
 		}
 	}
 
+	& .dropdown + .dropdown {
+		margin-right: $padding-xs-horizontal;
+	}
+
 	& .dropdown {
 		& .dropdown-toggle {
 			color: $gray-light;
