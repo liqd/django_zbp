@@ -53,14 +53,14 @@ class BezirkViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Bezirk.objects.all()
     serializer_class = BezirkSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ("name", "slug")
+    filterset_fields = ("name", "slug")
 
 
 class OrtsteilViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ortsteil.objects.all()
     serializer_class = OrtsteilSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ("name",)
+    filterset_fields = ("name",)
 
 
 class BPlanViewSet(viewsets.ReadOnlyModelViewSet):
@@ -77,7 +77,7 @@ class BPlanViewSet(viewsets.ReadOnlyModelViewSet):
     )
     bbox_filter_include_overlapping = True
     bbox_filter_field = "multipolygon"
-    filter_fields = (
+    filterset_fields = (
         "bplanID",
         "planname",
         "bezirk",
@@ -92,7 +92,7 @@ class BPlanDataViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = SimpleBPlanSerializer
     pagination_class = CustomPagination
     filter_backends = (DjangoFilterBackend, StatusFilter, OrtsteilFilter)
-    filter_fields = (
+    filterset_fields = (
         "bplanID",
         "planname",
         "bezirk",
@@ -116,7 +116,7 @@ class BPlanPointViewSet(viewsets.ReadOnlyModelViewSet):
     )
     bbox_filter_field = "point"
     bbox_filter_include_overlapping = True
-    filter_fields = (
+    filterset_fields = (
         "bplanID",
         "planname",
         "bezirk",
@@ -140,7 +140,7 @@ class BPlanMultipolygonViewSet(viewsets.ReadOnlyModelViewSet):
     )
     bbox_filter_include_overlapping = True
     bbox_filter_field = "multipolygon"
-    filter_fields = (
+    filterset_fields = (
         "bplanID",
         "planname",
         "bezirk",
