@@ -5,7 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.management import call_command
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.urls import reverse
+from django.views.decorators.cache import never_cache
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
@@ -18,6 +20,7 @@ from .models import Download
 class BezirkDetailView(DetailView):
     model = Bezirk
 
+    @method_decorator(never_cache)
     @xframe_options_exempt
     def dispatch(self, *args, **kwargs):
         return super(BezirkDetailView, self).dispatch(*args, **kwargs)
@@ -34,6 +37,7 @@ class BezirkDetailView(DetailView):
 
 
 class StadtView(TemplateView):
+    @method_decorator(never_cache)
     @xframe_options_exempt
     def dispatch(self, *args, **kwargs):
         return super(StadtView, self).dispatch(*args, **kwargs)
@@ -49,6 +53,7 @@ class StadtView(TemplateView):
         return context
 
 
+@never_cache
 def login_user(request):
     form = LoginForm(request.POST or None)
     if request.method == "POST":
@@ -63,11 +68,13 @@ def login_user(request):
     return render(request, "login.html", {"form": form})
 
 
+@never_cache
 def logout_user(request):
     logout(request)
     return render(request, "logout.html")
 
 
+@never_cache
 @login_required
 def downloads(request):
     errors = []
