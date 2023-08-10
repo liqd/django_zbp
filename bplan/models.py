@@ -9,7 +9,7 @@ class Download(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = timezone.now()
-        return super(Download, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.created)
@@ -86,5 +86,8 @@ class BPlan(models.Model):
         return self.planname
 
     class Meta:
-        index_together = [["bbg_anfang", "bbg_ende"], ["aul_anfang", "aul_ende"]]
+        indexes = [
+            models.Index(fields=["bbg_anfang", "bbg_ende"]),
+            models.Index(fields=["aul_anfang", "aul_ende"]),
+        ]
         ordering = ["id"]

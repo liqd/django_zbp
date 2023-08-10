@@ -2,16 +2,16 @@
 
 ![Build Status](https://github.com/liqd/django_zbp/actions/workflows/django.yml/badge.svg)
 
-Zentrale Bplan Plattform for Berlin based on Django 1.9.4 and PostgreSQL/PostGIS
+Zentrale Bplan Plattform for Berlin based on Django 4.2.4 and PostgreSQL/PostGIS
 
 
 ## Set up
 
 ### Requirements:
 
- * postgresql
- * gdal
- * postgis
+ * PostgreSQL >= 12
+ * GDAL >= 2.2
+ * PostGIS >= 2.5 
 
 ``` bash
 $ git clone git@github.com:liqd/django_zbp.git
