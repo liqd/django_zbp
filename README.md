@@ -24,7 +24,7 @@ create a postgres db and superuser
 $ sudo -u postgres psql
 postgres=# create database my_database;
 postgres=# create user my_user with encrypted password 'my_password';
-postgres=# grant all privileges on database'my_database' to my_user;
+postgres=# grant all privileges on database my_database to my_user;
 ```
 if the last step does not work, you can also do
 ``` bash
