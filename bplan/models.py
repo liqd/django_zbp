@@ -9,7 +9,7 @@ class Download(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = timezone.now()
-        return super(Download, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.created)
