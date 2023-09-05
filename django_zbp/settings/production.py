@@ -2,7 +2,10 @@ from .base import *
 
 DEBUG = False
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+try:
+    STORAGES["staticfiles"] = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+except NameError:
+    STORAGES = dict(staticfiles="whitenoise.storage.CompressedManifestStaticFilesStorage")
 
 CACHES = {
     "default": {

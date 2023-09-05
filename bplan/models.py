@@ -86,5 +86,8 @@ class BPlan(models.Model):
         return self.planname
 
     class Meta:
-        index_together = [["bbg_anfang", "bbg_ende"], ["aul_anfang", "aul_ende"]]
+        indexes = [
+            models.Index(fields=["bbg_anfang", "bbg_ende"]),
+            models.Index(fields=["aul_anfang", "aul_ende"]),
+        ]
         ordering = ["id"]
