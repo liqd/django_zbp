@@ -2,10 +2,14 @@ from .base import *
 
 DEBUG = False
 
-try:
-    STORAGES["staticfiles"] = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-except NameError:
-    STORAGES = dict(staticfiles="whitenoise.storage.CompressedManifestStaticFilesStorage")
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 CACHES = {
     "default": {
