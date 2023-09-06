@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
     services:
       postgres:
-        image: postgis/postgis:14-3.4
+        image: postgis/postgis:15-3.4
         env:
           POSTGRES_PASSWORD: postgres
         ports:
