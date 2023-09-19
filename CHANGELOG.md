@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 Since version v2309 the format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 This project (not yet) adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2309.1
+
+### Changed
+- update dependency bootstrap to v5.3.2
+- update dependency postcss to v8.4.30
+- update dependency @maplibre/maplibre-gl-leaflet to v0.0.20
+- update dependency django-filter to v23.3
+- update dependency maplibre-gl to v3
+
 ## v2309
 
 ### Changed
