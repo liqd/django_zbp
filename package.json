@@ -22,7 +22,7 @@
     "leaflet-defaulticon-compatibility": "0.1.2",
     "leaflet.markercluster": "github:liqd/Leaflet.markercluster#3528578a642e0e4f16ff46d051037a34e4c4c301",
     "lodash": "4.17.21",
-    "maplibre-gl": "3.3.1",
+    "maplibre-gl": "3.6.2",
     "mini-css-extract-plugin": "2.9.0",
     "@popperjs/core": "2.11.8",
     "postcss": "8.4.31",
