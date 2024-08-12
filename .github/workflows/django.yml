@@ -35,7 +35,7 @@ jobs:
           psql -c 'create database django_zbp;' -U postgres
           psql -c 'create database django_test;' -U postgres
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '14.x'
       - name: Cache node modules
