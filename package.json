@@ -4,7 +4,7 @@
   "description": "Zentrale Bplan Plattform for Berlin based on Django 1.9.4 and PostgreSQL/PostGIS",
   "main": "index.js",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "6.4.2",
+    "@fortawesome/fontawesome-free": "6.6.0",
     "@maplibre/maplibre-gl-leaflet": "0.0.22",
     "acorn": "8.12.1",
     "angular": "1.8.3",
