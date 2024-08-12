@@ -31,7 +31,7 @@
     "sass-loader": "13.3.3",
     "terser-webpack-plugin": "5.3.10",
     "webpack": "5.93.0",
-    "webpack-merge": "5.10.0"
+    "webpack-merge": "6.0.1"
   },
   "devDependencies": {
     "webpack-cli": "5.1.4"
