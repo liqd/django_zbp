@@ -31,10 +31,6 @@ release:
 	$(VIRTUAL_ENV)/bin/python3 -m pip install -r requirements.txt -q
 	$(VIRTUAL_ENV)/bin/python3 manage.py collectstatic --noinput -v0 --ignore firebug-lite
 
-.PHONY: compile-scss
-compile-scss:
-	$(VIRTUAL_ENV)/bin/sassc bplan/assets/scss/all.scss bplan/assets/css/all.css
-
 .PHONY: clean
 clean:
 	if [ -f package-lock.json ]; then rm package-lock.json; fi
