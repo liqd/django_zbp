@@ -7,7 +7,7 @@ djangorestframework-gis==1.0
 djangorestframework==3.14.0
 psycopg==3.2.1
 python-dateutil==2.9.0.post0
-rcssmin==1.1.1
+rcssmin==1.1.2
 rjsmin==1.2.1
 six==1.16.0
 sqlparse==0.4.4
