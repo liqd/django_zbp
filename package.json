@@ -23,7 +23,7 @@
     "leaflet.markercluster": "github:liqd/Leaflet.markercluster#3528578a642e0e4f16ff46d051037a34e4c4c301",
     "lodash": "4.17.21",
     "maplibre-gl": "4.5.2",
-    "mini-css-extract-plugin": "2.9.0",
+    "mini-css-extract-plugin": "2.9.1",
     "@popperjs/core": "2.11.8",
     "postcss": "8.4.41",
     "postcss-loader": "8.1.1",
